@@ -779,10 +779,14 @@ definitions:
     format: base64url
     example: "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs"
   walletInformation:
-    type: array
-    items:
-      $ref: '#/definitions/paymentMeans'
-  paymentMeans:
+    type: object
+    additionalProperties: true
+    properties:
+      paymentMeans:
+        type: array
+        items:
+          $ref: '#/definitions/paymentMean'
+  paymentMean:
     type: object
     properties:
       paymentMeansId:
