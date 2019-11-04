@@ -303,7 +303,7 @@ paths:
         Set preferred payment service provider registered to token. This method
         is used for retrieving a payment service which the traveller has selected
         as preferred, and which should be used for withdrawing funds as
-        appropriate.
+        appropriate. There can be only one preferred PSP per token.
       operationId: postTokenPsp
       produces:
         - application/json
