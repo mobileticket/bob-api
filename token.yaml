@@ -481,7 +481,7 @@ definitions:
       expire:
         description: |
           Expire time stamp as ISO 8601:2004 profile extended format to
-          indicate when the entry should be removed from the hint list
+          indicate when the entry should be purged from the hint list
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
