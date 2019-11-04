@@ -245,9 +245,9 @@ paths:
               description: URL of the created transaction
               type: string
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden, transaction denied       
+          description: Forbidden, transaction denied
   '/traveller/{travellerId}/wallet/transaction/{transactionId}':
     get:
       tags:
@@ -278,7 +278,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
     put:
       tags:
         - traveller
@@ -314,9 +314,9 @@ paths:
               description: URL of the updated transaction
               type: string
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden, transaction denied       
+          description: Forbidden, transaction denied
   '/notify/{travellerId}':
     post:
       tags:
@@ -477,9 +477,9 @@ paths:
               description: URL of the created transaction
               type: string
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden, transaction denied       
+          description: Forbidden, transaction denied
   '/token/{tokenId}/wallet/transaction/{transactionId}':
     get:
       tags:
@@ -510,7 +510,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
     put:
       tags:
         - token
@@ -546,9 +546,9 @@ paths:
               description: URL of the updated transaction
               type: string
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden, transaction denied       
+          description: Forbidden, transaction denied
   '/mtb/{issuerSignature}/productSets':
     get:
       tags:
@@ -575,14 +575,14 @@ paths:
           schema:
             $ref: '#/definitions/productSets'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
           description: Forbidden
   '/productSet/{productSetIdentifier}':
     get:
       tags:
         - productSet
-      summary: Get information on product set 
+      summary: Get information on product set
       operationId: getProductSetInformation
       produces:
         - application/json
@@ -603,14 +603,14 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
           description: Forbidden
   '/productSet/{productSetIdentifier}/status':
     get:
       tags:
         - productSet
-      summary: Get product set status 
+      summary: Get product set status
       operationId: getProductSetStatus
       produces:
         - application/json
@@ -631,9 +631,9 @@ paths:
           schema:
             $ref: '#/definitions/productSetStatus'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden     
+          description: Forbidden
     put:
       tags:
         - productSet
@@ -658,9 +658,9 @@ paths:
           schema:
             $ref: '#/definitions/productSetStatus'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden       
+          description: Forbidden
   '/productSet/{productSetIdentifier}/recreate':
     post:
       tags:
@@ -686,9 +686,9 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
-          description: Unauthorized      
+          description: Unauthorized
         '403':
-          description: Forbidden, recreation failed       
+          description: Forbidden, recreation failed
 definitions:
   travellerNotification:
     type: object
@@ -741,7 +741,7 @@ definitions:
         type: array
         items:
           description: |
-            Token identifier, JWK SHA-256 thumbprint of public key 
+            Token identifier, JWK SHA-256 thumbprint of public key
             (RFC 7638) base64url-encoded.
           type: string
   walletInformation:
@@ -756,7 +756,7 @@ definitions:
         type: string
       paymentMeansPreference:
         description: |
-          Traveller's preference of the payment means (lower number means 
+          Traveller's preference of the payment means (lower number means
           higher preference. Zero indicates no preference.)
         type: number
       paymentMeansName:
@@ -795,7 +795,7 @@ definitions:
         pattern: "^\\d{4,}$"
       transactionCommit:
         description: |
-          Set to false if transaction should be created as a reservation of 
+          Set to false if transaction should be created as a reservation of
           amount, true if it should be finalised in one request (default).
         type: boolean
   transactionInformation:
@@ -815,7 +815,7 @@ definitions:
         type: string
       transactionCommitted:
         description: |
-          Set to false if transaction is a reservation of an amount, true 
+          Set to false if transaction is a reservation of an amount, true
           if it has been finalised.
         type: boolean
       transactionCancelled:
@@ -1073,7 +1073,7 @@ definitions:
       fareCategoryId:
         description: Type of fare
       description:
-        description: Text describing the item 
+        description: Text describing the item
       vatAmount:
         description: VAT amount
         type: number
