@@ -184,7 +184,7 @@ paths:
         - name: X-BoB-AuthToken
           in: header
           description: JWT authentication token
-          required: false
+          required: true
           type: string
         - name: hint
           in: body
@@ -238,7 +238,8 @@ paths:
       summary: Delete token hint
       description: |
         Delete token hint matching the query. This method is used for
-        deleting a specific hint of tickets issued to the token.
+        deleting a specific hint of tickets issued to the token. Only the
+        participant creating the hint may delete it.
       operationId: deleteTokenHint
       produces:
         - application/json
@@ -259,7 +260,7 @@ paths:
         - name: X-BoB-AuthToken
           in: header
           description: JWT authentication token
-          required: false
+          required: true
           type: string
       responses:
         200:
@@ -318,7 +319,7 @@ paths:
         - name: X-BoB-AuthToken
           in: header
           description: JWT authentication token
-          required: false
+          required: true
           type: string
         - name: hint
           in: body
@@ -351,7 +352,7 @@ paths:
         - name: X-BoB-AuthToken
           in: header
           description: JWT authentication token
-          required: false
+          required: true
           type: string
         - name: hint
           in: body
@@ -479,8 +480,8 @@ definitions:
         example: 1
       expire:
         description: |
-          Expire time stamp as ISO 8601:2004 profile extended format to indicate
-          when the entry automatically should be removed from the hint list
+          Expire time stamp as ISO 8601:2004 profile extended format to
+          indicate when the entry should be removed from the hint list
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
