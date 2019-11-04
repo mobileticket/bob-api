@@ -996,6 +996,16 @@ definitions:
             type: string
             format: date-time
             example: "2018-11-13T20:20:39+00:00"
+          startOfValiidty:
+            description: Date and time for start of validity 
+            type: string
+            format: date-time
+            example: "2018-11-13T20:20:39+00:00"
+          endOfValiidty:
+            description: Date and time for end of validity 
+            type: string
+            format: date-time
+            example: "2018-11-13T20:20:39+00:00"
           timeOfActivation:
             description: Date and time for when product set was activated
             type: string
