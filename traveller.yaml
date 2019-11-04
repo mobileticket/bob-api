@@ -706,6 +706,7 @@ definitions:
       notificationLang:
         description: Language of notification message (RFC 3066)
         type: string
+        example: "sv-SE"
       notificationMessage:
         description: Notification message
         type: string
@@ -716,29 +717,37 @@ definitions:
     properties:
       travellerId:
         type: string
+        example: 9ACFAB16-3A5C-4310-AB88-1E96E5EB34A4
       travellerName:
         description: Name
         type: string
+        example: Anders Andersson
       travellerDOB:
         description: Date of birth
         type: string
         format: date
+        example: "1984-01-01"
       travellerEmail:
         description: Email address
         type: string
         format: email
+        example: "user@example.com"
       travellerPhone:
         description: Phone number (E.164)
         type: string
         pattern: "^\\+[1-9]\\d{1,14}$"
+        example: "+4686001000"
       travellerPhotoURL:
         description: URL to photo
         type: string
+        format: uri
+        example: "https://example.com/CBC392F0-C026-4201-9ABA-56915A2B5478.png"
       travellerPrefLang:
-        description: List of preferred languages (RFC 3066)
+        description: Ordered list of preferred languages (RFC 3066)
         type: array
         items:
           type: string
+          example: "sv-SE"
       travellerTokens:
         description: List of tokens tied to the traveller
         type: array
@@ -757,23 +766,29 @@ definitions:
       paymentMeansId:
         description: Identifier of the payment means
         type: string
+        example: 3D456793-6384-4E50-AF00-636A2520065E
       paymentMeansPreference:
         description: |
           Traveller's preference of the payment means (lower number means
           higher preference. Zero indicates no preference.)
         type: number
+        example: 0
       paymentMeansName:
         description: User-distinguishable name of the payment means
         type: string
+        example: Kundkassa
       paymentMeansCurrency:
         description: Payment currency (ISO 4217)
         type: string
+        example: SEK
       paymentMeansLimitPIN:
         description: Transaction limit if used in combination with PIN
         type: number
+        example: 10000
       paymentMeansLimit:
         description: Transaction limit if used without PIN
         type: number
+        example: 200
   walletTransactionRequest:
     type: object
     properties:
@@ -786,16 +801,19 @@ definitions:
       transactionAmount:
         description: Total amount of the transaction (can be negative)
         type: number
+        example: 120
       paymentMeansId:
         description: |
           Identifier of the payment means to use. If no paymentMeansId is
           given, the payment means with the highest preference and available
           funds will be used.
         type: string
+        example: 3D456793-6384-4E50-AF00-636A2520065E
       paymentMeansPIN:
         description: User-provided PIN-code
         type: string
         pattern: "^\\d{4,}$"
+        example: "1234"
       transactionCommit:
         description: |
           Set to false if transaction should be created as a reservation of
