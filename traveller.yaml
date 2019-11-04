@@ -34,6 +34,7 @@ paths:
           in: query
           required: false
           type: string
+          format: email
         - name: phone
           description: Filter on phone number
           in: query
@@ -725,6 +726,7 @@ definitions:
       travellerEmail:
         description: Email address
         type: string
+        format: email
       travellerPhone:
         description: Phone number (E.164)
         type: string
