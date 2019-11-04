@@ -5,9 +5,11 @@ info:
   description: |
     The token API is used to fetch information about issued tokens. Information
     can be searched using a filter (e.g., pid and serial number) or directly
-    looked up using the token thumbprint as primary key. The token API can
-    also be used to query token revocation status, either per token or by
-    fetching a complete token revocation list.
+    looked up using the token thumbprint as primary key. The token API provides
+    token revocation status, either per token or by fetching a complete token
+    revocation list. The API can also be used for registering hints about where
+    one can find tickets issued for the token as well as a registering a
+    default payment service provider for the token.
 host: schemas.mobileticket.se
 basePath: /api/v1
 schemes:
