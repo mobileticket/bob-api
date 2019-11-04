@@ -752,10 +752,32 @@ definitions:
         description: List of tokens tied to the traveller
         type: array
         items:
-          description: |
-            Token identifier, JWK SHA-256 thumbprint of public key
-            (RFC 7638) base64url-encoded.
-          type: string
+          $ref: '#/definitions/travellerToken'
+  travellerToken:
+    type: object
+    additionalProperties: true
+    required:
+      - pid
+      - thumbprint
+    properties:
+      pid:
+        type: integer
+        format: int64
+        example: 1
+      serial:
+        $ref: '#/definitions/serial'
+      thumbprint:
+        $ref: '#/definitions/thumbprint'
+  serial:
+    description: Token serial number
+    type: number
+    format: int64
+    example: 42
+  thumbprint:
+    description: JWK SHA-256 thumbprint of public key (RFC 7638)
+    type: string
+    format: base64url
+    example: "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs"
   walletInformation:
     type: array
     items:
