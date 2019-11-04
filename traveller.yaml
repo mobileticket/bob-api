@@ -773,13 +773,16 @@ definitions:
       - thumbprint
     properties:
       pid:
-        type: integer
-        format: int64
-        example: 1
+        $ref: '#/definitions/pid'
       serial:
         $ref: '#/definitions/serial'
       thumbprint:
         $ref: '#/definitions/thumbprint'
+  pid:
+    description: Participant Identifier
+    type: number
+    format: int64
+    example: 1
   serial:
     description: Token serial number
     type: number
@@ -932,9 +935,7 @@ definitions:
           type: object
           properties:
             pid:
-              description: Participant Identifier
-              type: number
-              format: int64
+              $ref: '#/definitions/pid'
             ticketId:
               description: Ticket Identifier
               type: string
@@ -976,7 +977,7 @@ definitions:
         $ref: '#/definitions/productSetStatus'
       remainingActivations:
         description: |
-          Remaining number of times the ticket bundle can be activated
+          Remaining number of times the product set can be activated
         type: number
         example: 1
       travellersPerCategory:
@@ -991,17 +992,17 @@ definitions:
           - timeOfIssue
         properties:
           timeOfIssue:
-            description: Date and time for when bundle was issued
+            description: Date and time for when product set was issued
             type: string
             format: date-time
             example: "2018-11-13T20:20:39+00:00"
           timeOfActivation:
-            description: Date and time for when bundle was activated
+            description: Date and time for when product set was activated
             type: string
             format: date-time
             example: "2018-11-13T20:20:39+00:00"
           relativeValidity:
-            description: Validity period in ISO 8601 duration format)
+            description: Validity period in ISO 8601 duration format
             type: string
             example: "PT24H"
           other:
@@ -1011,7 +1012,7 @@ definitions:
               type: string
               example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
       spatialConstraints:
-        description: Bundle spatial constraints
+        description: Product set spatial constraints
         type: array
         items:
           type: object
@@ -1140,6 +1141,17 @@ definitions:
         type: string
         format: date-time
 
+  place:
+    type: object
+    properties:
+      stopId:
+        type: string
+      name:
+        type: string
+        example: "Halmstad C"
+      coordinate:
+        $ref: '#/definitions/geoPosition'
+
   fare:
     description: Fare information, amount, currency and VAT.
     type: object
@@ -1168,14 +1180,3 @@ definitions:
         description: VAT percent
         type: number
         format: float
-
-  place:
-    type: object
-    properties:
-      stopId:
-        type: string
-      name:
-        type: string
-        example: "Halmstad C"
-      coordinate:
-        $ref: '#/definitions/geoPosition'
