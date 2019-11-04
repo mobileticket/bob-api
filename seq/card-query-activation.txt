@@ -1,22 +1,26 @@
+# https://sequencediagram.org/
+
 title Card query and optional ticket activation
 
 participant "Traveller" as traveller
 participant "Foreign Sales Channel" as foreignSales
-participant "Token Issuer" as tokenIssuer
-participant "Home Sales Channel" as homeSales
+participant "Token Issuer\n(Token API)" as tokenIssuer
+participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
 
 
 traveller->foreignSales: Presents travel card
 foreignSales->tokenIssuer: Query for hints
-foreignSales<-tokenIssuer: List of sales channels
+foreignSales<--tokenIssuer: List of sales channels
 foreignSales->homeSales: Card query
-foreignSales<-homeSales: Product set info
+foreignSales<--homeSales: Product set info
+traveller<--foreignSales: Show products
 
 == Product Set Activation ==
 opt activation procedure 
 
 traveller->foreignSales: Selects activate
 foreignSales->homeSales: Activate product set
-foreignSales<-homeSales: Product set status
+foreignSales<--homeSales: Product set status
+traveller<--foreignSales: Confirm activation
 
 end 

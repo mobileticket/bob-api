@@ -1,26 +1,27 @@
+# https://sequencediagram.org/
+
 title Purchase in foreign sales channel 
 
 participant "Traveller" as traveller
 participant "Foreign Sales Channel" as foreignSales
-participant "Token Issuer" as tokenIssuer
-participant "Home Sales Channel (PSP)" as homeSales
+participant "Token Issuer\n(Token API)" as tokenIssuer
+participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
 
 
-traveller<-foreignSales: Offers to purchase ticket
-traveller->foreignSales: Presents travel card to purchase
+traveller<--foreignSales: Offers to purchase ticket
+traveller->foreignSales: Presents travel card for purchase
 foreignSales->tokenIssuer: Query for PSP
-foreignSales<-tokenIssuer: PID of PSP
+foreignSales<--tokenIssuer: PID of PSP
 foreignSales->homeSales: Wallet query
-foreignSales<-homeSales: Payment means and limits
+foreignSales<--homeSales: Payment means and limits
+traveller<--foreignSales: Payment means and limits
 
 traveller->foreignSales: Selects payment means
 foreignSales->homeSales: Wallet transaction\n(reserve amount)
-foreignSales<-homeSales: Ok/Not ok
+foreignSales<--homeSales: OK/Not OK
 
-box over foreignSales: Sales Channel proceeds to ticketing if ok
+box over foreignSales: Sales Channel proceeds to ticketing if OK
 foreignSales->homeSales: Wallet transaction\n(finalise)
-foreignSales<-homeSales: Ok
+foreignSales<--homeSales: OK
 
-traveller<-foreignSales: Purchase completed
-
-
+traveller<--foreignSales: Purchase completed
