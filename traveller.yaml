@@ -690,7 +690,10 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden, recreation failed
+
+
 definitions:
+
   travellerNotification:
     type: object
     properties:
@@ -710,6 +713,7 @@ definitions:
       notificationMessage:
         description: Notification message
         type: string
+
   travellerInformation:
     type: object
     required:
@@ -753,6 +757,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/travellerToken'
+
   travellerToken:
     type: object
     additionalProperties: true
@@ -778,6 +783,7 @@ definitions:
     type: string
     format: base64url
     example: "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs"
+
   walletInformation:
     type: object
     additionalProperties: true
@@ -786,11 +792,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/paymentMean'
+
   paymentMean:
     type: object
     properties:
       paymentMeansId:
-        description: Identifier of the payment means
+        description: Identifier of the payment means (unique per traveller)
         type: string
         example: 3D456793-6384-4E50-AF00-636A2520065E
       paymentMeansPreference:
@@ -815,6 +822,7 @@ definitions:
         description: Transaction limit if used without PIN
         type: number
         example: 200
+
   walletTransactionRequest:
     type: object
     properties:
@@ -845,6 +853,7 @@ definitions:
           Set to false if transaction should be created as a reservation of
           amount, true if it should be finalised in one request (default).
         type: boolean
+
   transactionInformation:
     type: object
     properties:
@@ -870,6 +879,7 @@ definitions:
         type: boolean
       authenticationData:
         $ref: '#/definitions/tokenProof'
+
   tokenChallenge:
     type: object
     properties:
@@ -877,6 +887,7 @@ definitions:
         description: The challenge to be used as authentication input
         type: string
         format: base64url
+
   tokenProof:
     type: object
     properties:
@@ -892,11 +903,13 @@ definitions:
         description: The signed authentication input recieved from the token
         type: string
         format: base64url
+
   productSets:
     description: List of product information
     type: array
     items:
       $ref: '#/definitions/productSetInformation'
+
   productSetInformation:
     description: Product Set Information
     type: object
@@ -1000,6 +1013,18 @@ definitions:
               type: string
             areas:
               $ref: '#/definitions/geoAreas'
+
+  productSetStatus:
+    description: Product set status
+    type: string
+    enum:
+      - recreated
+      - issued
+      - activated
+      - expired
+      - revoked
+    example: "issued"
+
   travellersPerCategory:
     description: Information about all travellers
     type: array
@@ -1027,6 +1052,7 @@ definitions:
           type: array
           items:
             type: string
+
   geoAreas:
     type: object
     description: Geographical areas (union)
@@ -1043,6 +1069,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/polyline'
+
   circle:
     description: Geographical circle
     type: object
@@ -1057,16 +1084,19 @@ definitions:
         description: Radius of circle in meters
         type: number
         format: double
+
   polygon:
     description: Geographical polygon
     type: array
     items:
       $ref: '#/definitions/geoPosition'
+
   polyline:
     description: Geographical polygonal path
     type: array
     items:
       $ref: '#/definitions/geoPosition'
+
   geoPosition:
     description: Geopos (WGS84 decimal)
     type: object
@@ -1086,6 +1116,7 @@ definitions:
         description: Altitude
         type: number
         format: double
+
   ride:
     type: object
     properties:
@@ -1101,6 +1132,7 @@ definitions:
       arrivalDateTime:
         type: string
         format: date-time
+
   fare:
     description: Fare information, amount, currency and VAT.
     type: object
@@ -1129,6 +1161,7 @@ definitions:
         description: VAT percent
         type: number
         format: float
+
   place:
     type: object
     properties:
@@ -1139,13 +1172,3 @@ definitions:
         example: "Halmstad C"
       coordinate:
         $ref: '#/definitions/geoPosition'
-  productSetStatus:
-    description: Product set status
-    type: string
-    enum:
-      - recreated
-      - issued
-      - activated
-      - expired
-      - revoked
-    example: "issued"
