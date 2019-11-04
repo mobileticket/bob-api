@@ -496,4 +496,4 @@ definitions:
       name:
         description: Name of the participant providing the payment service
         type: string
-        example: "Grönköpings lokaltrafik"
+        example: "Grönköpings lokaltrafik (GLT)"
