@@ -730,6 +730,7 @@ definitions:
       travellerPhone:
         description: Phone number (E.164)
         type: string
+        pattern: "^\\+[1-9]\\d{1,14}$"
       travellerPhotoURL:
         description: URL to photo
         type: string
