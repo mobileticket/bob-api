@@ -1,0 +1,26 @@
+title Purchase in foreign sales channel 
+
+participant "Traveller" as traveller
+participant "Foreign Sales Channel" as foreignSales
+participant "Token Issuer" as tokenIssuer
+participant "Home Sales Channel (PSP)" as homeSales
+
+
+traveller<-foreignSales: Offers to purchase ticket
+traveller->foreignSales: Presents travel card to purchase
+foreignSales->tokenIssuer: Query for PSP
+foreignSales<-tokenIssuer: PID of PSP
+foreignSales->homeSales: Wallet query
+foreignSales<-homeSales: Payment means and limits
+
+traveller->foreignSales: Selects payment means
+foreignSales->homeSales: Wallet transaction\n(reserve amount)
+foreignSales<-homeSales: Ok/Not ok
+
+box over foreignSales: Sales Channel proceeds to ticketing if ok
+foreignSales->homeSales: Wallet transaction\n(finalise)
+foreignSales<-homeSales: Ok
+
+traveller<-foreignSales: Purchase completed
+
+

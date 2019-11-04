@@ -1,0 +1,39 @@
+title Registration of payment means
+
+participant "Traveller" as traveller
+participant "Home Sales Channel\n(with PSP)" as homeSales
+participant "Token Issuer" as tokenIssuer
+
+
+traveller->homeSales: Presents travel card
+
+box over homeSales: Home Sales Channel proceeds\nto create traveller account
+
+traveller->homeSales: Registers payments means\nor deposits funds into purse
+
+traveller-->homeSales: Optionally selects PIN
+
+traveller-->homeSales: Optionally selects\n payment means preference
+
+
+
+homeSales->tokenIssuer: Checks if preferred PSP\nis registered
+
+alt 
+homeSales<-tokenIssuer: No preferred PSP\nis registered
+homeSales->tokenIssuer: Registers as preferred PSP
+
+else If other PSP is already registered
+
+homeSales<-tokenIssuer: Preferred PSP\nis registered
+
+traveller<-homeSales: Asks if travellers wants to\nupdate preferred PSP
+
+homeSales-->tokenIssuer: Registers as preferred PSP
+
+end 
+
+traveller<-homeSales: Registration completed
+
+
+

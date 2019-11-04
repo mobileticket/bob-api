@@ -1,0 +1,1101 @@
+swagger: '2.0'
+info:
+  version: 1.3.2
+  title: BoB.Traveller.API
+host: schemas.mobileticket.se
+basePath: /api/v1
+schemes:
+  - https
+paths:
+  '/traveller':
+    get:
+      tags:
+        - traveller
+      summary: Search for traveller
+      operationId: searchTravellerInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: name
+          description: Filter on name (exact)
+          in: query
+          required: false
+          type: string
+        - name: email
+          description: Filter on email address
+          in: query
+          required: false
+          type: string
+        - name: phone
+          description: Filter on phone number
+          in: query
+          required: false
+          type: string
+        - name: dob
+          description: Filter on date of birth
+          in: query
+          required: false
+          type: string
+          format: date
+        - name: tokenIdentifier
+          description: |
+            Filter on token thumbprint of public key (RFC 7638) base64url
+          in: query
+          required: false
+          type: string
+          format: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/travellerInformation'
+    post:
+      tags:
+        - traveller
+      summary: Create traveller
+      operationId: createTravellerInformation
+      consumes:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerInformation
+          in: body
+          description: Traveller information
+          required: true
+          schema:
+            $ref: '#/definitions/travellerInformation'
+      responses:
+        '201':
+          description: created
+          headers:
+            location:
+              description: URL of traveller information
+              type: string
+  '/traveller/{travellerId}':
+    get:
+      tags:
+        - traveller
+      summary: Get traveller information
+      operationId: getTravellerInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/travellerInformation'
+    put:
+      tags:
+        - traveller
+      summary: Update traveller information
+      operationId: updateTravellerInformation
+      consumes:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: travellerInformation
+          in: body
+          description: Traveller information to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/travellerInformation'
+      responses:
+        '200':
+          description: successful operation
+    delete:
+      tags:
+        - traveller
+      summary: Delete traveller information
+      operationId: deleteTravellerInformation
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+      responses:
+        '204':
+          description: successful operation
+  '/traveller/{travellerId}/ticket':
+    post:
+      tags:
+        - traveller
+      summary: Post request to purchase ticket on behalf of traveller
+      operationId: requestTravellerTicket
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: pid
+          in: query
+          description: Participant ID to purchase from
+          required: true
+          type: integer
+          format: int64
+        - name: productId
+          in: query
+          description: Product ID to purchase
+          required: true
+          type: string
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of created ticket bundle
+              type: string
+  '/traveller/{travellerId}/wallet':
+    get:
+      tags:
+        - traveller
+      summary: Get information on traveller's wallet
+      operationId: getTravellerWalletInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/walletInformation'
+  '/traveller/{travellerId}/wallet/transaction':
+    post:
+      tags:
+        - traveller
+      summary: Post request to perform transaction on travellers wallet
+      operationId: postTravellerWalletTransactionRequest
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: walletTransaction
+          in: body
+          description: Transaction object
+          required: true
+          schema:
+            $ref: '#/definitions/walletTransactionRequest'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of the created transaction
+              type: string
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden, transaction denied       
+  '/traveller/{travellerId}/wallet/transaction/{transactionId}':
+    get:
+      tags:
+        - traveller
+      summary: Get information on traveller's wallet transaction
+      operationId: getTransactionInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: Transaction ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
+        '401':
+          description: Unauthorized      
+    put:
+      tags:
+        - traveller
+      summary: Update transaction
+      operationId: updateTransactionInformation
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: Transaction ID
+          required: true
+          type: string
+        - name: walletTransaction
+          in: body
+          description: Transaction object
+          required: true
+          schema:
+            $ref: '#/definitions/transactionInformation'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of the updated transaction
+              type: string
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden, transaction denied       
+  '/notify/{travellerId}':
+    post:
+      tags:
+        - traveller
+      summary: Post notification to traveller
+      operationId: sendTravellerNotification
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: travellerNotification
+          in: body
+          description: Traveller notification message
+          required: true
+          schema:
+            $ref: '#/definitions/travellerNotification'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of created notification
+              type: string
+  '/notify/{travellerId}/{notificationId}':
+    get:
+      tags:
+        - traveller
+      summary: Get notification sent to traveller
+      operationId: getTravellerNotification
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: travellerId
+          in: path
+          description: Travellers ID
+          required: true
+          type: string
+        - name: notificationId
+          in: path
+          description: Notification ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/travellerNotification'
+  '/token/{tokenId}/productSets':
+    get:
+      tags:
+        - token
+      summary: Get information on products sets tied to token
+      operationId: getTokenProductSetInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSets'
+  '/token/{tokenId}/challenge':
+    get:
+      tags:
+        - token
+      summary: Get challenge to authenticate token
+      operationId: getTokenChallenge
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/tokenChallenge'
+  '/token/{tokenId}/wallet':
+    get:
+      tags:
+        - token
+      summary: Get information on wallet tied to token
+      operationId: getTokenWalletInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/walletInformation'
+  '/token/{tokenId}/wallet/transaction':
+    post:
+      tags:
+        - token
+      summary: Post request to perform transaction on wallet tied to token
+      operationId: postTokenWalletTransactionRequest
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+        - name: walletTransaction
+          in: body
+          description: Transaction object
+          required: true
+          schema:
+            $ref: '#/definitions/walletTransactionRequest'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of the created transaction
+              type: string
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden, transaction denied       
+  '/token/{tokenId}/wallet/transaction/{transactionId}':
+    get:
+      tags:
+        - token
+      summary: Get information on transaction tied to token
+      operationId: getTokenTransactionInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: Transaction ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
+        '401':
+          description: Unauthorized      
+    put:
+      tags:
+        - token
+      summary: Update transaction tied to token
+      operationId: updateTokenTransactionInformation
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: Transaction ID
+          required: true
+          type: string
+        - name: walletTransaction
+          in: body
+          description: Transaction object
+          required: true
+          schema:
+            $ref: '#/definitions/transactionInformation'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of the updated transaction
+              type: string
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden, transaction denied       
+  '/mtb/{issuerSignature}/productSets':
+    get:
+      tags:
+        - mtb
+      summary: Get information on product sets in MTB
+      operationId: getMTBProductSetInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: issuerSignature
+          in: path
+          description: MTB issuer signature
+          required: true
+          type: string
+          format: base64url
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSets'
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden
+  '/productSet/{productSetIdentifier}':
+    get:
+      tags:
+        - productSet
+      summary: Get information on product set 
+      operationId: getProductSetInformation
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetIdentifier
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden
+  '/productSet/{productSetIdentifier}/status':
+    get:
+      tags:
+        - productSet
+      summary: Get product set status 
+      operationId: getProductSetStatus
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetIdentifier
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetStatus'
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden     
+    put:
+      tags:
+        - productSet
+      summary: Update product set status
+      operationId: putProductSetStatus
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetIdentifier
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetStatus'
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden       
+  '/productSet/{productSetIdentifier}/recreate':
+    post:
+      tags:
+        - productSet
+      summary: Recreate an equivalent product set
+      operationId: recreateProductSet
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetIdentifier
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+        '401':
+          description: Unauthorized      
+        '403':
+          description: Forbidden, recreation failed       
+definitions:
+  travellerNotification:
+    type: object
+    properties:
+      notificationId:
+        type: string
+      notificationStatus:
+        type: string
+        enum:
+          - queued
+          - sent
+          - acknowleded
+          - discarded
+      notificationLang:
+        description: Language of notification message (RFC 3066)
+        type: string
+      notificationMessage:
+        description: Notification message
+        type: string
+  travellerInformation:
+    type: object
+    required:
+      - travellerId
+    properties:
+      travellerId:
+        type: string
+      travellerName:
+        description: Name
+        type: string
+      travellerDOB:
+        description: Date of birth
+        type: string
+        format: date
+      travellerEmail:
+        description: Email address
+        type: string
+      travellerPhone:
+        description: Phone number (E.164)
+        type: string
+      travellerPhotoURL:
+        description: URL to photo
+        type: string
+      travellerPrefLang:
+        description: List of preferred languages (RFC 3066)
+        type: array
+        items:
+          type: string
+      travellerTokens:
+        description: List of tokens tied to the traveller
+        type: array
+        items:
+          description: |
+            Token identifier, JWK SHA-256 thumbprint of public key 
+            (RFC 7638) base64url-encoded.
+          type: string
+  walletInformation:
+    type: array
+    items:
+      $ref: '#/definitions/paymentMeans'
+  paymentMeans:
+    type: object
+    properties:
+      paymentMeansId:
+        description: Identifier of the payment means
+        type: string
+      paymentMeansPreference:
+        description: |
+          Traveller's preference of the payment means (lower number means 
+          higher preference. Zero indicates no preference.)
+        type: number
+      paymentMeansName:
+        description: User-distinguishable name of the payment means
+        type: string
+      paymentMeansCurrency:
+        description: Payment currency (ISO 4217)
+        type: string
+      paymentMeansLimitPIN:
+        description: Transaction limit if used in combination with PIN
+        type: number
+      paymentMeansLimit:
+        description: Transaction limit if used without PIN
+        type: number
+  walletTransactionRequest:
+    type: object
+    properties:
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
+      transactionDescription:
+        description: User-distinguishable description of the transaction
+        type: string
+      transactionAmount:
+        description: Total amount of the transaction (can be negative)
+        type: number
+      paymentMeansId:
+        description: |
+          Identifier of the payment means to use. If no paymentMeansId is
+          given, the payment means with the highest preference and available
+          funds will be used.
+        type: string
+      paymentMeansPIN:
+        description: User-provided PIN-code
+        type: string
+        pattern: "^\\d{4,}$"
+      transactionCommit:
+        description: |
+          Set to false if transaction should be created as a reservation of 
+          amount, true if it should be finalised in one request (default).
+        type: boolean
+  transactionInformation:
+    type: object
+    properties:
+      transactionId:
+        description: The transaction identifier
+        type: string
+      transactionDescription:
+        description: User-distinguishable description of the transaction
+        type: string
+      transactionAmount:
+        description: Total amount of the transaction (can be negative)
+        type: number
+      paymentMeansId:
+        description: Identifier of the payment means to use
+        type: string
+      transactionCommitted:
+        description: |
+          Set to false if transaction is a reservation of an amount, true 
+          if it has been finalised.
+        type: boolean
+      transactionCancelled:
+        description: Set to true if transaction has been cancelled
+        type: boolean
+      authenticationData:
+        $ref: '#/definitions/tokenProof'
+  tokenChallenge:
+    type: object
+    properties:
+      authenticationChallenge:
+        description: The challenge to be used as authentication input
+        type: string
+        format: base64url
+  tokenProof:
+    type: object
+    properties:
+      tokenMTB:
+        description: The signed MTB retrieved from the token
+        type: string
+        format: base64url
+      authenticationChallenge:
+        description: The challenge used as authentication input to the token
+        type: string
+        format: base64url
+      authenticationResponse:
+        description: The signed authentication input recieved from the token
+        type: string
+        format: base64url
+  productSets:
+    description: List of product information
+    type: array
+    items:
+      $ref: '#/definitions/productSetInformation'
+  productSetInformation:
+    description: Product Set Information
+    type: object
+    properties:
+      productSetId:
+        description: Product Set Identifier
+        type: string
+        example: "562FA1FA-A4C0-4D90-8E44-85E9040BDCC3"
+      ticketIds:
+        description: Ticket identifiers
+        type: array
+        items:
+          type: object
+          properties:
+            pid:
+              description: Participant Identifier
+              type: number
+              format: int64
+            ticketId:
+              description: Ticket Identifier
+              type: string
+              example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
+      title:
+        description: Ticket title
+        type: string
+        example: "My fine ticket"
+      description:
+        description: Ticket description
+        type: string
+        example: >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+      rides:
+        description: Ordered list of planned rides
+        type: array
+        items:
+          $ref: '#/definitions/ride'
+      fares:
+        description: |
+          List of all fares for the product set.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
+      conditions:
+        description: Production conditions
+        type: array
+        items:
+          type: string
+          example: |
+            "Cykel får medföras utan kostnad, dock ej 0600-0900 och 1600-1800."
+      status:
+        $ref: '#/definitions/productSetStatus'
+      remainingActivations:
+        description: |
+          Remaining number of times the ticket bundle can be activated
+        type: number
+        example: 1
+      travellersPerCategory:
+        description: |
+          Defines a group of travellers (used mutually exclusively of
+          travellerCategoryIds)
+        $ref: '#/definitions/travellersPerCategory'
+      timeConstraints:
+        description: Bundle time constraints
+        type: object
+        required:
+          - timeOfIssue
+        properties:
+          timeOfIssue:
+            description: Date and time for when bundle was issued
+            type: string
+            format: date-time
+            example: "2018-11-13T20:20:39+00:00"
+          timeOfActivation:
+            description: Date and time for when bundle was activated
+            type: string
+            format: date-time
+            example: "2018-11-13T20:20:39+00:00"
+          relativeValidity:
+            description: Validity period in ISO 8601 duration format)
+            type: string
+            example: "PT24H"
+          other:
+            description: Other time constraints
+            type: array
+            items:
+              type: string
+              example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
+      spatialConstraints:
+        description: Bundle spatial constraints
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            areas:
+              $ref: '#/definitions/geoAreas'
+  travellersPerCategory:
+    description: Information about all travellers
+    type: array
+    items:
+      type: object
+      properties:
+        cat:
+          description: Traveller category
+          type: string
+          example: "a"
+        cls:
+          description: Class of service
+          type: string
+        tra:
+          description: Number of travellers
+          type: number
+          example: 1
+        trs:
+          description: Traveller Identifiers
+          type: array
+          items:
+            type: string
+        sts:
+          description: Seating reservations
+          type: array
+          items:
+            type: string
+  geoAreas:
+    type: object
+    description: Geographical areas (union)
+    properties:
+      circles:
+        type: array
+        items:
+          $ref: '#/definitions/circle'
+      polygons:
+        type: array
+        items:
+          $ref: '#/definitions/polygon'
+      polylines:
+        type: array
+        items:
+          $ref: '#/definitions/polyline'
+  circle:
+    description: Geographical circle
+    type: object
+    required:
+      - center
+      - radius
+    properties:
+      center:
+        description: Center of circle
+        $ref: '#/definitions/geoPosition'
+      radius:
+        description: Radius of circle in meters
+        type: number
+        format: double
+  polygon:
+    description: Geographical polygon
+    type: array
+    items:
+      $ref: '#/definitions/geoPosition'
+  polyline:
+    description: Geographical polygonal path
+    type: array
+    items:
+      $ref: '#/definitions/geoPosition'
+  geoPosition:
+    description: Geopos (WGS84 decimal)
+    type: object
+    required:
+      - lat
+      - long
+    properties:
+      lat:
+        description: Latitude
+        type: number
+        format: double
+      long:
+        description: Longitude
+        type: number
+        format: double
+      alt:
+        description: Altitude
+        type: number
+        format: double
+  ride:
+    type: object
+    properties:
+      boardingPlace:
+        $ref: '#/definitions/place'
+      alightingPlace:
+        $ref: '#/definitions/place'
+      serviceJourneyReference:
+        type: string
+      departureDateTime:
+        type: string
+        format: date-time
+      arrivalDateTime:
+        type: string
+        format: date-time
+  fare:
+    description: Fare information, amount, currency and VAT.
+    type: object
+    required:
+      - amount
+      - currency
+      - vatAmount
+      - vatPercent
+    properties:
+      amount:
+        description: Fare cost excluding VAT
+        type: number
+        format: float
+      currency:
+        description: Currency code (ISO 4217)
+        type: string
+      fareCategoryId:
+        description: Type of fare
+      description:
+        description: Text describing the item 
+      vatAmount:
+        description: VAT amount
+        type: number
+        format: float
+      vatPercent:
+        description: VAT percent
+        type: number
+        format: float
+  place:
+    type: object
+    properties:
+      stopId:
+        type: string
+      name:
+        type: string
+        example: "Halmstad C"
+      coordinate:
+        $ref: '#/definitions/geoPosition'
+  productSetStatus:
+    description: Product set status
+    type: string
+    enum:
+      - recreated
+      - issued
+      - activated
+      - expired
+      - revoked
+    example: "issued"

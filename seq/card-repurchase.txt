@@ -1,0 +1,47 @@
+title Re-purchase in foreign sales channel 
+
+participant "Traveller" as traveller
+participant "Foreign Sales Channel" as foreignSales
+participant "Token Issuer" as tokenIssuer
+participant "Home Sales Channel (PSP)" as homeSales
+
+traveller->foreignSales: Presents travel card
+foreignSales->tokenIssuer: Query for hints
+foreignSales<-tokenIssuer: List of sales channels
+foreignSales->homeSales: Card query
+foreignSales<-homeSales: Product set info
+
+
+traveller<-foreignSales: Expired product
+traveller->foreignSales: Selects re-purchase
+
+foreignSales->homeSales: Recreate product set
+
+box over homeSales: Home Sales Channel re-iterates the same\nproduct searches as was done to purchase\nthe original product set. 
+
+foreignSales<-homeSales: Product set\n(recreated status)
+
+traveller<-foreignSales: Product Set information\n(including price)
+traveller->foreignSales: Purchase product set
+
+alt
+traveller-->foreignSales: Local payment\n(undefined means)
+traveller-->foreignSales: Payment means register at\nhome sales channel\n(see flow chart for remote payment)
+
+end 
+
+
+foreignSales->homeSales: Issue product set\n(set issued status)
+
+box over homeSales: Home Sales Channel calls off the\nmanifests and combines the product set 
+
+foreignSales<-homeSales: Product set\n(issued status)
+
+tokenIssuer<-homeSales: Provide hint of\n issued product set
+
+
+traveller<-foreignSales: Purchase completed
+
+
+
+

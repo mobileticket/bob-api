@@ -1,0 +1,22 @@
+title Card query and optional ticket activation
+
+participant "Traveller" as traveller
+participant "Foreign Sales Channel" as foreignSales
+participant "Token Issuer" as tokenIssuer
+participant "Home Sales Channel" as homeSales
+
+
+traveller->foreignSales: Presents travel card
+foreignSales->tokenIssuer: Query for hints
+foreignSales<-tokenIssuer: List of sales channels
+foreignSales->homeSales: Card query
+foreignSales<-homeSales: Product set info
+
+== Product Set Activation ==
+opt activation procedure 
+
+traveller->foreignSales: Selects activate
+foreignSales->homeSales: Activate product set
+foreignSales<-homeSales: Product set status
+
+end 
