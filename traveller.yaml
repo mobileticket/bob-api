@@ -318,7 +318,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden, transaction denied
-  '/notify/{travellerId}':
+  '/traveller/{travellerId}/notification':
     post:
       tags:
         - traveller
@@ -348,7 +348,7 @@ paths:
             location:
               description: URL of created notification
               type: string
-  '/notify/{travellerId}/{notificationId}':
+  '/traveller/{travellerId}/notification/{notificationId}':
     get:
       tags:
         - traveller
@@ -713,6 +713,13 @@ definitions:
       notificationMessage:
         description: Notification message
         type: string
+      notificationExpire:
+        description: |
+          Expire time stamp as ISO 8601:2004 profile extended format
+          (MTS8, chapter 2.3)
+        type: string
+        format: date-time
+        example: "1985-04-12T23:20:50.52Z"
 
   travellerInformation:
     type: object
