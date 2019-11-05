@@ -996,12 +996,12 @@ definitions:
             type: string
             format: date-time
             example: "2018-11-13T20:20:39+00:00"
-          startOfValiidty:
+          startOfValidity:
             description: Date and time for start of validity 
             type: string
             format: date-time
             example: "2018-11-13T20:20:39+00:00"
-          endOfValiidty:
+          endOfValidity:
             description: Date and time for end of validity 
             type: string
             format: date-time
