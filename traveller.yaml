@@ -1016,7 +1016,7 @@ definitions:
             type: string
             example: "PT24H"
           other:
-            description: Other time constraints
+            description: Other time constraints (text)
             type: array
             items:
               type: string
@@ -1028,6 +1028,7 @@ definitions:
           type: object
           properties:
             name:
+              description: Other spatial constraint (text)
               type: string
             areas:
               $ref: '#/definitions/geoAreas'
@@ -1089,7 +1090,7 @@ definitions:
           $ref: '#/definitions/polyline'
 
   circle:
-    description: Geographical circle
+    description: Geographical circle (area)
     type: object
     required:
       - center
@@ -1104,13 +1105,13 @@ definitions:
         format: double
 
   polygon:
-    description: Geographical polygon
+    description: Geographical polygon (area)
     type: array
     items:
       $ref: '#/definitions/geoPosition'
 
   polyline:
-    description: Geographical polygonal path
+    description: Geographical polygonal path (line)
     type: array
     items:
       $ref: '#/definitions/geoPosition'
@@ -1136,6 +1137,7 @@ definitions:
         format: double
 
   ride:
+    description: A ride within a journey
     type: object
     properties:
       boardingPlace:
