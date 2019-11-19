@@ -46,13 +46,11 @@ paths:
           required: false
           type: string
           format: date
-        - name: tokenIdentifier
-          description: |
-            Filter on token thumbprint of public key (RFC 7638) base64url
+        - name: tokenId
           in: query
-          required: false
+          description: Filter on token ID
+          required: False
           type: string
-          format: string
       responses:
         '200':
           description: successful operation
@@ -770,14 +768,14 @@ definitions:
     additionalProperties: true
     required:
       - pid
-      - thumbprint
+      - tokenId
     properties:
       pid:
         $ref: '#/definitions/pid'
       serial:
         $ref: '#/definitions/serial'
-      thumbprint:
-        $ref: '#/definitions/thumbprint'
+      tokenId:
+        type: string
   pid:
     description: Participant Identifier
     type: number
@@ -788,11 +786,6 @@ definitions:
     type: number
     format: int64
     example: 42
-  thumbprint:
-    description: JWK SHA-256 thumbprint of public key (RFC 7638)
-    type: string
-    format: base64url
-    example: "NzbLsXh8uDCcd-6MNwXF4W_7noWXFZAfHkxZsRGC9Xs"
 
   walletInformation:
     type: object
