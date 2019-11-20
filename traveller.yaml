@@ -921,8 +921,8 @@ definitions:
         description: Product Set Identifier
         type: string
         example: "562FA1FA-A4C0-4D90-8E44-85E9040BDCC3"
-      ticketIds:
-        description: Ticket identifiers
+      tickets:
+        description: Ticket components
         type: array
         items:
           type: object
@@ -933,6 +933,37 @@ definitions:
               description: Ticket Identifier
               type: string
               example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
+            productCategoryId:
+              description: Product category identifier
+              type: string
+            travellersPerCategory:
+              description: Information about all travellers
+              type: array
+              items:
+                type: object
+                properties:
+                  cat:
+                    description: Traveller category
+                    type: string
+                    example: "a"
+                  cls:
+                    description: Class of service
+                    type: string
+                  tra:
+                    description: Number of travellers
+                    type: number
+                    example: 1
+                  trs:
+                    description: Traveller Identifiers
+                    type: array
+                    items:
+                      type: string
+                  sts:
+                    description: Seating reservations
+                    type: array
+                    items:
+                      type: string
+
       title:
         description: Ticket title
         type: string
@@ -1036,34 +1067,6 @@ definitions:
       - expired
       - revoked
     example: "issued"
-
-  travellersPerCategory:
-    description: Information about all travellers
-    type: array
-    items:
-      type: object
-      properties:
-        cat:
-          description: Traveller category
-          type: string
-          example: "a"
-        cls:
-          description: Class of service
-          type: string
-        tra:
-          description: Number of travellers
-          type: number
-          example: 1
-        trs:
-          description: Traveller Identifiers
-          type: array
-          items:
-            type: string
-        sts:
-          description: Seating reservations
-          type: array
-          items:
-            type: string
 
   geoAreas:
     type: object
