@@ -936,6 +936,12 @@ definitions:
             productCategoryId:
               description: Product category identifier
               type: string
+            fares:
+              description: |
+                List of all fares for the product set.
+              type: array
+              items:
+                $ref: '#/definitions/fare'
             travellersPerCategory:
               description: Information about all travellers
               type: array
@@ -984,12 +990,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ride'
-      fares:
-        description: |
-          List of all fares for the product set.
-        type: array
-        items:
-          $ref: '#/definitions/fare'
       conditions:
         description: Production conditions
         type: array
@@ -1004,11 +1004,6 @@ definitions:
           Remaining number of times the product set can be activated
         type: number
         example: 1
-      travellersPerCategory:
-        description: |
-          Defines a group of travellers (used mutually exclusively of
-          travellerCategoryIds)
-        $ref: '#/definitions/travellersPerCategory'
       timeConstraints:
         description: Bundle time constraints
         type: object
