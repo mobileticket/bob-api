@@ -929,9 +929,12 @@ definitions:
           properties:
             pid:
               $ref: '#/definitions/pid'
-            ticketId:
-              description: Ticket Identifier
-              type: string
+            ticketIds:
+              description: Ticket Identifiers
+              type: array
+              items:
+                description: Ticket Identifier
+                type: string
               example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
             productCategoryId:
               description: Product category identifier
