@@ -1005,6 +1005,10 @@ definitions:
                 $ref: '#/definitions/fare'
             travellersPerCategory:
               $ref: '#/definitions/travellersPerCategory'
+            productProperties:
+              type: array
+              items:
+                $ref: '#/definitions/productProperty
 
       title:
         description: Ticket title
