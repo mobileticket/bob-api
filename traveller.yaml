@@ -278,7 +278,7 @@ paths:
             $ref: '#/definitions/transactionInformation'
         '401':
           description: Unauthorized
-    put:
+    patch:
       tags:
         - traveller
       summary: Update transaction
@@ -304,7 +304,7 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionInformation'
+            $ref: '#/definitions/transactionUpdate'
       responses:
         '201':
           description: successful operation
@@ -510,7 +510,7 @@ paths:
             $ref: '#/definitions/transactionInformation'
         '401':
           description: Unauthorized
-    put:
+    patch:
       tags:
         - token
       summary: Update transaction tied to token
@@ -536,7 +536,7 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionInformation'
+            $ref: '#/definitions/transactionUpdate'
       responses:
         '201':
           description: successful operation
@@ -885,6 +885,18 @@ definitions:
         type: boolean
       authenticationData:
         $ref: '#/definitions/tokenProof'
+
+  transactionUpdate:
+    type: object
+    properties:
+      transactionCommitted:
+        description: |
+          Set to false if transaction is a reservation of an amount, true
+          if it has been finalised.
+        type: boolean
+      transactionCancelled:
+        description: Set to true if transaction has been cancelled
+        type: boolean
 
   tokenChallenge:
     type: object
