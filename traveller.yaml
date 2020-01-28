@@ -679,6 +679,11 @@ paths:
           description: Product set ID
           required: true
           type: string
+        - name: productSetOptions
+          in: body
+          description: Product set options
+          schema:
+            $ref: '#/definitions/productSetOptions'
       responses:
         '200':
           description: successful operation
@@ -912,6 +917,59 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/productSetInformation'
+
+  productSetOptions:
+     type: object
+     properties:
+       travellersPerCategory:
+         $ref: '#/definitions/travellersPerCategory'
+       productProperties:
+         description: List of product properties assignments
+         type: array
+         items:
+           $ref: '#/definitions/productProperty'
+
+  productProperty:
+     description: Product property assignments
+     type: object
+     required:
+       - name
+       - value
+     properties:
+       name:
+         description: Product property name
+         type: string
+       value:
+         description: Product property value
+         type: string
+
+  travellersPerCategory:
+     description: Information about all travellers
+     type: array
+     items:
+       type: object
+       properties:
+         cat:
+           description: Traveller category
+           type: string
+           example: "a"
+         cls:
+           description: Class of service
+           type: string
+         tra:
+           description: Number of travellers
+           type: number
+           example: 1
+         trs:
+           description: Traveller Identifiers
+           type: array
+           items:
+             type: string
+         sts:
+           description: Seating reservations
+           type: array
+           items:
+             type: string
 
   productSetInformation:
     description: Product Set Information
