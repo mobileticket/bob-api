@@ -936,18 +936,58 @@ definitions:
         description: Product Set Identifier
         type: string
         example: "562FA1FA-A4C0-4D90-8E44-85E9040BDCC3"
-      ticketIds:
-        description: Ticket identifiers
+      tickets:
+        description: Ticket components
         type: array
         items:
           type: object
           properties:
             pid:
               $ref: '#/definitions/pid'
-            ticketId:
-              description: Ticket Identifier
-              type: string
+            ticketIds:
+              description: Ticket Identifiers
+              type: array
+              items:
+                description: Ticket Identifier
+                type: string
               example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
+            productCategoryId:
+              description: Product category identifier
+              type: string
+            fares:
+              description: |
+                List of all fares for the product set.
+              type: array
+              items:
+                $ref: '#/definitions/fare'
+            travellersPerCategory:
+              description: Information about all travellers
+              type: array
+              items:
+                type: object
+                properties:
+                  cat:
+                    description: Traveller category
+                    type: string
+                    example: "a"
+                  cls:
+                    description: Class of service
+                    type: string
+                  tra:
+                    description: Number of travellers
+                    type: number
+                    example: 1
+                  trs:
+                    description: Traveller Identifiers
+                    type: array
+                    items:
+                      type: string
+                  sts:
+                    description: Seating reservations
+                    type: array
+                    items:
+                      type: string
+
       title:
         description: Ticket title
         type: string
@@ -968,12 +1008,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ride'
-      fares:
-        description: |
-          List of all fares for the product set.
-        type: array
-        items:
-          $ref: '#/definitions/fare'
       conditions:
         description: Production conditions
         type: array
@@ -988,11 +1022,6 @@ definitions:
           Remaining number of times the product set can be activated
         type: number
         example: 1
-      travellersPerCategory:
-        description: |
-          Defines a group of travellers (used mutually exclusively of
-          travellerCategoryIds)
-        $ref: '#/definitions/travellersPerCategory'
       timeConstraints:
         description: Bundle time constraints
         type: object
@@ -1051,34 +1080,6 @@ definitions:
       - expired
       - revoked
     example: "issued"
-
-  travellersPerCategory:
-    description: Information about all travellers
-    type: array
-    items:
-      type: object
-      properties:
-        cat:
-          description: Traveller category
-          type: string
-          example: "a"
-        cls:
-          description: Class of service
-          type: string
-        tra:
-          description: Number of travellers
-          type: number
-          example: 1
-        trs:
-          description: Traveller Identifiers
-          type: array
-          items:
-            type: string
-        sts:
-          description: Seating reservations
-          type: array
-          items:
-            type: string
 
   geoAreas:
     type: object
