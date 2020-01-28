@@ -1023,7 +1023,7 @@ definitions:
             productProperties:
               type: array
               items:
-                $ref: '#/definitions/productProperty
+                $ref: '#/definitions/productProperty'
 
       title:
         description: Ticket title
