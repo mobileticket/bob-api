@@ -863,6 +863,9 @@ definitions:
       transactionId:
         description: The transaction identifier
         type: string
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
       transactionDescription:
         description: User-distinguishable description of the transaction
         type: string
