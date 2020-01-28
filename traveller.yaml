@@ -1004,32 +1004,7 @@ definitions:
               items:
                 $ref: '#/definitions/fare'
             travellersPerCategory:
-              description: Information about all travellers
-              type: array
-              items:
-                type: object
-                properties:
-                  cat:
-                    description: Traveller category
-                    type: string
-                    example: "a"
-                  cls:
-                    description: Class of service
-                    type: string
-                  tra:
-                    description: Number of travellers
-                    type: number
-                    example: 1
-                  trs:
-                    description: Traveller Identifiers
-                    type: array
-                    items:
-                      type: string
-                  sts:
-                    description: Seating reservations
-                    type: array
-                    items:
-                      type: string
+              $ref: '#/definitions/travellersPerCategory'
 
       title:
         description: Ticket title
