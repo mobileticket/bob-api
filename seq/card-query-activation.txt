@@ -5,7 +5,7 @@ title Card query and optional ticket activation
 participant "Traveller" as traveller
 participant "Foreign Sales Channel" as foreignSales
 participant "Token Issuer\n(Token API)" as tokenIssuer
-participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
+participant "Home Sales Channel\n(Traveller API)" as homeSales
 
 
 traveller->foreignSales: Presents travel card
