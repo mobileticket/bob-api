@@ -487,6 +487,8 @@ definitions:
         example: "1985-04-12T23:20:50.52Z"
   psp:
     type: object
+    required:
+      - pid
     properties:
       pid:
         description: Participant identifier which provides the payment service

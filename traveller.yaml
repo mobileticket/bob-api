@@ -795,6 +795,8 @@ definitions:
   walletInformation:
     type: object
     additionalProperties: true
+    required:
+      - paymentMeans
     properties:
       paymentMeans:
         type: array
