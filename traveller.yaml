@@ -806,33 +806,33 @@ definitions:
   paymentMean:
     type: object
     properties:
-      paymentMeansId:
+      id:
         description: Identifier of the payment means (unique per traveller)
         type: string
         example: 3D456793-6384-4E50-AF00-636A2520065E
-      paymentMeansPreference:
+      preference:
         description: |
           Traveller's preference of the payment means (lower number means
           higher preference. Zero indicates no preference.)
         type: number
         example: 0
-      paymentMeansName:
+      name:
         description: User-distinguishable name of the payment means
         type: string
         example: Kundkassa
-      paymentMeansCurrency:
+      currency:
         description: Payment currency (ISO 4217)
         type: string
         example: SEK
-      paymentMeansLimitPIN:
+      limitPIN:
         description: Transaction limit if used in combination with PIN
         type: number
         example: 10000
-      paymentMeansLimit:
+      limit:
         description: Transaction limit if used without PIN
         type: number
         example: 200
-      paymentMeansLimitTokenProofRequired:
+      tokenProofRequired:
         description: Does payment require token proof?
         type: boolean
         example: True
@@ -840,13 +840,13 @@ definitions:
   walletTransactionRequest:
     type: object
     properties:
-      transactionReference:
+      reference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
         example: 120
@@ -862,7 +862,7 @@ definitions:
         type: string
         pattern: "^\\d{4,}$"
         example: "1234"
-      transactionCommit:
+      commit:
         description: |
           Set to false if transaction should be created as a reservation of
           amount, true if it should be finalised in one request (default).
@@ -871,27 +871,27 @@ definitions:
   transactionInformation:
     type: object
     properties:
-      transactionId:
+      id:
         description: The transaction identifier
         type: string
-      transactionReference:
+      reference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
       paymentMeansId:
         description: Identifier of the payment means to use
         type: string
-      transactionCommitted:
+      committed:
         description: |
           Set to false if transaction is a reservation of an amount, true
           if it has been finalised.
         type: boolean
-      transactionCancelled:
+      cancelled:
         description: Set to true if transaction has been cancelled
         type: boolean
       tokenProof:
@@ -900,35 +900,35 @@ definitions:
   transactionUpdate:
     type: object
     properties:
-      transactionCommitted:
+      committed:
         description: |
           Set to false if transaction is a reservation of an amount, true
           if it has been finalised.
         type: boolean
-      transactionCancelled:
+      cancelled:
         description: Set to true if transaction has been cancelled
         type: boolean
 
   tokenChallenge:
     type: object
     properties:
-      authenticationChallenge:
-        description: The challenge to be used as authentication input
+      challenge:
+        description: The challenge used as authentication input to the token
         type: string
         format: base64url
 
   tokenProof:
     type: object
     properties:
-      tokenMTB:
+      mtb:
         description: The signed MTB retrieved from the token
         type: string
         format: base64url
-      authenticationChallenge:
+      challenge:
         description: The challenge used as authentication input to the token
         type: string
         format: base64url
-      authenticationResponse:
+      response:
         description: The signed authentication input recieved from the token
         type: string
         format: base64url
