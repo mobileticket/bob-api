@@ -10,28 +10,22 @@ participant "Home Sales Channel\n(Traveller API)" as homeSales
 
 traveller->foreignSales: Presents travel card
 
-linear
 foreignSales->tokenIssuer: Query for hints\n""GET /api/v1/token/{thumbprint}/hints""
 foreignSales<--tokenIssuer: List of sales channels
-linear off
 
 loop for each hint
-linear
 foreignSales->homeSales: Card query\n""GET /api/v1/token/{tokenId}/productSets""
 foreignSales<--homeSales: Product set info
-linear off
 end
 
 traveller<--foreignSales: Expired product
 traveller->foreignSales: Selects re-purchase
 
-linear
 foreignSales->>homeSales: Recreate product set\n""POST /productSet/{productSetIdentifier}/recreate""
 
 box over homeSales: Home Sales Channel re-iterates the same\nproduct searches as was done to purchase\nthe original product set. 
 
 foreignSales<--homeSales: Product set (recreated status)
-linear off
 
 traveller<--foreignSales: Product Set information (including price)
 traveller->foreignSales: Purchase product set
@@ -43,7 +37,6 @@ traveller<->foreignSales: Payment means register at\nhome sales channel\n(see fl
 end 
 
 
-linear
 foreignSales->homeSales: Issue product set (set issued status)\n""PUT /productSet/{productSetIdentifier}/status""
 
 box over homeSales: Home Sales Channel calls off the\nmanifests and combines the product set 
@@ -51,6 +44,5 @@ box over homeSales: Home Sales Channel calls off the\nmanifests and combines the
 foreignSales<--homeSales: Product set (issued status)
 
 tokenIssuer<-homeSales: Provide hint of\n issued product set
-linear off
 
 traveller<--foreignSales: Purchase completed

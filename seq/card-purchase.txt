@@ -11,35 +11,27 @@ participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
 traveller<--foreignSales: Offers to purchase ticket
 traveller->foreignSales: Presents travel card for purchase
 
-linear
 foreignSales->tokenIssuer: Query for PSP\n""GET /api/v1/token/{thumbprint}/psp""
 foreignSales<--tokenIssuer: PID of PSP
 foreignSales->homeSales: Wallet query\n""GET /api/v1/token/{thumbprint}/wallet""
 foreignSales<--homeSales: Payment means and limits
-linear off
 
 traveller<--foreignSales: Payment means and limits
 traveller->foreignSales: Selects payment means
 
 opt payment mean require card present proof
-linear
 foreignSales->homeSales: Wallet transaction (reserve amount)\n""GET /api/v1/token/{thumbprint}/challenge""
 foreignSales<--homeSales: Challenge
-linear off
 
 foreignSales<->traveller: Request signature\nof challenge
 end
 
-linear
 foreignSales->homeSales: Wallet transaction (reserve amount)\n""POST /api/v1/token/{thumbprint}/wallet/transaction""
 foreignSales<--homeSales: OK/Not OK
-linear off
 
 box over foreignSales: TVM buys ticket as vendor
 
-linear
 foreignSales->homeSales: Wallet transaction (finalise)\n""PATCH /api/v1/token/{thumbprint}/wallet/transaction/{transaction}""
 foreignSales<--homeSales: OK
-linear off
 
 traveller<--foreignSales: Purchase completed

@@ -10,16 +10,12 @@ participant "Home Sales Channel\n(Traveller API)" as homeSales
 
 traveller->foreignSales: Presents travel card
 
-linear
 foreignSales->tokenIssuer: Query for hints\n""GET /api/v1/token/{thumbprint}/hints""
 foreignSales<--tokenIssuer: List of sales channels
-linear off
 
 loop for each hint
-linear
 foreignSales->homeSales: Card query\n""GET /api/v1/token/{tokenId}/productSets""
 foreignSales<--homeSales: Product set info
-linear off
 end
 
 
@@ -29,10 +25,8 @@ opt product activation
 
 traveller->foreignSales: Selects activate
 
-linear
 foreignSales->homeSales: Activate product set\n""PUT /api/v1/productSet/{productSetIdentifier}/status""
 foreignSales<--homeSales: Product set status
-linear off
 
 traveller<--foreignSales: Confirm activation
 
