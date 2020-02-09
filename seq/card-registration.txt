@@ -2,7 +2,7 @@
 
 title Registration of payment means
 
-participant "Traveller" as traveller
+actor "Traveller" as traveller
 participant "Home Sales Channel\n(with PSP)" as homeSales
 participant "Token Issuer\n(Token API)" as tokenIssuer
 
@@ -14,28 +14,23 @@ box over homeSales: Home Sales Channel proceeds\nto create traveller account
 traveller->homeSales: Registers payments means\nor deposits funds into purse
 
 opt
-
 traveller->homeSales: Optionally selects PIN
-
 traveller-->homeSales: Optionally selects\n payment means preference
-
 end
 
-homeSales->tokenIssuer: Checks if preferred PSP\nis registered
-
-
+homeSales->tokenIssuer: Checks if preferred PSP is registered\n""GET /api/v1/token/{thumbprint}/psp""
 
 
 alt 
 
-homeSales<--tokenIssuer: No preferred PSP\nis registered
-homeSales->tokenIssuer: Registers as preferred PSP
+homeSales<--tokenIssuer: No preferred PSP is registered
+homeSales->tokenIssuer: Registers as preferred PSP\n""PUT /api/v1/token/{thumbprint}/psp""
 
 else If other PSP is already registered
 
-homeSales<--tokenIssuer: Preferred PSP\nis registered
+homeSales<--tokenIssuer: Preferred PSP is registered
 traveller<--homeSales: Asks if travellers wants to\nupdate preferred PSP
-homeSales->tokenIssuer: Registers as preferred PSP
+homeSales->tokenIssuer: Registers as preferred PSP\n""PUT /api/v1/token/{thumbprint}/psp""
 
 end 
 

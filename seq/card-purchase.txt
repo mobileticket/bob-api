@@ -1,27 +1,45 @@
 # https://sequencediagram.org/
 
-title Purchase in foreign sales channel 
+title Purchase in foreign sales channel via TVM
 
-participant "Traveller" as traveller
-participant "Foreign Sales Channel" as foreignSales
+actor "Traveller" as traveller
+participant "TVM" as foreignSales
 participant "Token Issuer\n(Token API)" as tokenIssuer
 participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
 
 
 traveller<--foreignSales: Offers to purchase ticket
 traveller->foreignSales: Presents travel card for purchase
-foreignSales->tokenIssuer: Query for PSP
+
+linear
+foreignSales->tokenIssuer: Query for PSP\n""GET /api/v1/token/{thumbprint}/psp""
 foreignSales<--tokenIssuer: PID of PSP
-foreignSales->homeSales: Wallet query
+foreignSales->homeSales: Wallet query\n""GET /api/v1/token/{thumbprint}/wallet""
 foreignSales<--homeSales: Payment means and limits
+linear off
+
 traveller<--foreignSales: Payment means and limits
-
 traveller->foreignSales: Selects payment means
-foreignSales->homeSales: Wallet transaction\n(reserve amount)
-foreignSales<--homeSales: OK/Not OK
 
-box over foreignSales: Sales Channel proceeds to ticketing if OK
-foreignSales->homeSales: Wallet transaction\n(finalise)
+opt payment mean require card present proof
+linear
+foreignSales->homeSales: Wallet transaction (reserve amount)\n""GET /api/v1/token/{thumbprint}/challenge""
+foreignSales<--homeSales: Challenge
+linear off
+
+foreignSales<->traveller: Request signature\nof challenge
+end
+
+linear
+foreignSales->homeSales: Wallet transaction (reserve amount)\n""POST /api/v1/token/{thumbprint}/wallet/transaction""
+foreignSales<--homeSales: OK/Not OK
+linear off
+
+box over foreignSales: TVM buys ticket as vendor
+
+linear
+foreignSales->homeSales: Wallet transaction (finalise)\n""PATCH /api/v1/token/{thumbprint}/wallet/transaction/{transaction}""
 foreignSales<--homeSales: OK
+linear off
 
 traveller<--foreignSales: Purchase completed
