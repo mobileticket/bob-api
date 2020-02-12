@@ -31,13 +31,13 @@ paths:
           in: query
           description: Participant ID of token issuer
           required: true
-          type: number
+          type: integer
           format: int64
         - name: serial
           in: query
           description: Token serial number
           required: true
-          type: number
+          type: integer
           format: int64
         - name: X-BoB-AuthToken
           in: header
@@ -408,7 +408,7 @@ definitions:
         format: byte
   serial:
     description: Token serial number
-    type: number
+    type: integer
     format: int64
     example: 42
   thumbprint:
