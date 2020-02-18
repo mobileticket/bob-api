@@ -31,13 +31,13 @@ paths:
           in: query
           description: Participant ID of token issuer
           required: true
-          type: number
+          type: integer
           format: int64
         - name: serial
           in: query
           description: Token serial number
           required: true
-          type: number
+          type: integer
           format: int64
         - name: X-BoB-AuthToken
           in: header
@@ -297,6 +297,8 @@ paths:
           description: Registered preferred payment service provider
           schema:
             $ref: '#/definitions/psp'
+        '204':
+          description: No preferred payment service provider found
     put:
       summary: Set preferred payment service provider registered to token
       description: |
@@ -304,7 +306,7 @@ paths:
         is used for retrieving a payment service which the traveller has selected
         as preferred, and which should be used for withdrawing funds as
         appropriate. There can be only one preferred PSP per token.
-      operationId: postTokenPsp
+      operationId: putTokenPsp
       produces:
         - application/json
       tags:
@@ -321,14 +323,14 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: hint
+        - name: psp
           in: body
           description: Payment Service Provider
           required: true
           schema:
             $ref: '#/definitions/psp'
       responses:
-        200:
+        204:
           description: successful operation
         401:
           description: unauthorized
@@ -354,14 +356,8 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: hint
-          in: body
-          description: Payment Service Provider
-          required: true
-          schema:
-            $ref: '#/definitions/psp'
       responses:
-        200:
+        204:
           description: successful operation
         401:
           description: unauthorized
@@ -408,7 +404,7 @@ definitions:
         format: byte
   serial:
     description: Token serial number
-    type: number
+    type: integer
     format: int64
     example: 42
   thumbprint:
