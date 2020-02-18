@@ -191,7 +191,7 @@ paths:
           description: Hint
           required: true
           schema:
-            $ref: '#/definitions/hintRequest'
+            $ref: '#/definitions/hint'
       responses:
         '201':
           description: created
@@ -233,7 +233,7 @@ paths:
         '200':
           description: Token hint
           schema:
-            $ref: '#/definitions/hintResponse'
+            $ref: '#/definitions/hint'
     delete:
       summary: Delete token hint
       description: |
@@ -431,7 +431,7 @@ definitions:
   tokenHints:
     type: array
     items:
-      $ref: '#/definitions/hintResponse'
+      $ref: '#/definitions/hintCompact'
   revocationStatus:
     type: object
     properties:
@@ -458,7 +458,7 @@ definitions:
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
-  hintRequest:
+  hint:
     type: object
     required:
       - pid
@@ -477,7 +477,7 @@ definitions:
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
-  hintResponse:
+  hintCompact:
     type: object
     required:
       - pid
@@ -494,11 +494,8 @@ definitions:
       - pid
     properties:
       pid:
-        description: Participant identifier which provides the payment service
+        description: |
+          Participant identifier which provides the payment service
         type: integer
         format: int64
         example: 1
-      name:
-        description: Name of the participant providing the payment service
-        type: string
-        example: "Grönköpings lokaltrafik (GLT)"
