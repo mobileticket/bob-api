@@ -191,7 +191,7 @@ paths:
           description: Hint
           required: true
           schema:
-            $ref: '#/definitions/hint'
+            $ref: '#/definitions/hintRequest'
       responses:
         '201':
           description: created
@@ -233,7 +233,7 @@ paths:
         '200':
           description: Token hint
           schema:
-            $ref: '#/definitions/hint'
+            $ref: '#/definitions/hintResponse'
     delete:
       summary: Delete token hint
       description: |
@@ -431,7 +431,7 @@ definitions:
   tokenHints:
     type: array
     items:
-      $ref: '#/definitions/hint'
+      $ref: '#/definitions/hintResponse'
   revocationStatus:
     type: object
     properties:
@@ -458,16 +458,12 @@ definitions:
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
-  hint:
+  hintRequest:
     type: object
     required:
       - pid
       - expire
     properties:
-      hintId:
-        description: Hint identifier (allocated when created)
-        type: string
-        example: 1A6C6217-DEFA-4C3A-B458-BE5DCF620A16
       pid:
         description: |
           Participant identifier which has issued a ticket to the token
@@ -481,6 +477,17 @@ definitions:
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"
+  hintResponse:
+    type: object
+    required:
+      - pid
+    properties:
+      pid:
+        description: |
+          Participant identifier which has issued a ticket to the token
+        type: integer
+        format: int64
+        example: 1
   psp:
     type: object
     required:
