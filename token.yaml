@@ -10,7 +10,6 @@ info:
     revocation list. The API can also be used for registering hints about where
     one can find tickets issued for the token as well as a registering a
     default payment service provider for the token.
-host: schemas.mobileticket.se
 basePath: /api/v1
 schemes:
   - https

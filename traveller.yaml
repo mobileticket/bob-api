@@ -5,7 +5,6 @@ info:
   description: |
     The traveller API contains information about travellers including their
     tokens, payment methods and recently bought products.
-host: schemas.mobileticket.se
 basePath: /api/v2
 schemes:
   - https
