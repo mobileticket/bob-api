@@ -5,6 +5,7 @@ info:
   description: |
     The traveller API contains information about travellers including their
     tokens, payment methods and recently bought products.
+host: schemas.mobileticket.se
 basePath: /api/v2
 schemes:
   - https
@@ -79,6 +80,8 @@ paths:
       responses:
         '201':
           description: created
+          schema:
+            $ref: '#/definitions/travellerInformation'
           headers:
             location:
               description: URL of traveller information
@@ -240,6 +243,8 @@ paths:
       responses:
         '201':
           description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
           headers:
             location:
               description: URL of the created transaction
@@ -248,6 +253,8 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden, transaction denied
+        '409':
+          description: Payment denied by payment service.
   '/traveller/{travellerId}/wallet/transaction/{transactionId}':
     get:
       tags:
@@ -311,6 +318,8 @@ paths:
       responses:
         '201':
           description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
           headers:
             location:
               description: URL of the updated transaction
@@ -480,6 +489,8 @@ paths:
       responses:
         '201':
           description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
           headers:
             location:
               description: URL of the created transaction
@@ -488,6 +499,8 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden, transaction denied
+        '409':
+          description: Payment denied by payment service.
   '/token/{tokenId}/wallet/transaction/{transactionId}':
     get:
       tags:
@@ -551,6 +564,8 @@ paths:
       responses:
         '201':
           description: successful operation
+          schema:
+            $ref: '#/definitions/transactionInformation'
           headers:
             location:
               description: URL of the updated transaction
@@ -588,7 +603,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-  '/productSet/{productSetIdentifier}':
+  '/productSet/{productSetId}':
     get:
       tags:
         - productSet
@@ -602,7 +617,7 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: productSetIdentifier
+        - name: productSetId
           in: path
           description: Product set ID
           required: true
@@ -616,7 +631,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-  '/productSet/{productSetIdentifier}/status':
+  '/productSet/{productSetId}/status':
     get:
       tags:
         - productSet
@@ -630,7 +645,7 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: productSetIdentifier
+        - name: productSetId
           in: path
           description: Product set ID
           required: true
@@ -657,7 +672,7 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: productSetIdentifier
+        - name: productSetId
           in: path
           description: Product set ID
           required: true
@@ -675,7 +690,7 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
-  '/productSet/{productSetIdentifier}/issue':
+  '/productSet/{productSetId}/issue':
     post:
       tags:
         - productSet
@@ -689,7 +704,7 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: productSetIdentifier
+        - name: productSetId
           in: path
           description: Product set ID
           required: true
@@ -703,11 +718,13 @@ paths:
       responses:
         '200':
           description: successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
         '401':
           description: Unauthorized
         '403':
           description: Forbidden, recreation failed
-  '/productSet/{productSetIdentifier}/recreate':
+  '/productSet/{productSetId}/recreate':
     post:
       tags:
         - productSet
@@ -723,7 +740,7 @@ paths:
           description: JWT authentication token
           required: true
           type: string
-        - name: productSetIdentifier
+        - name: productSetId
           in: path
           description: Product set ID
           required: true
@@ -850,9 +867,9 @@ definitions:
       paymentMeans:
         type: array
         items:
-          $ref: '#/definitions/paymentMean'
+          $ref: '#/definitions/paymentMeans'
 
-  paymentMean:
+  paymentMeans:
     type: object
     properties:
       paymentMeansId:
