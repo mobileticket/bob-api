@@ -156,41 +156,6 @@ paths:
       responses:
         '204':
           description: successful operation
-  '/traveller/{travellerId}/ticket':
-    post:
-      tags:
-        - traveller
-      summary: Post request to purchase ticket on behalf of traveller
-      operationId: requestTravellerTicket
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: travellerId
-          in: path
-          description: Travellers ID
-          required: true
-          type: string
-        - name: pid
-          in: query
-          description: Participant ID to purchase from
-          required: true
-          type: integer
-          format: int64
-        - name: productId
-          in: query
-          description: Product ID to purchase
-          required: true
-          type: string
-      responses:
-        '201':
-          description: successful operation
-          headers:
-            location:
-              description: URL of created ticket bundle
-              type: string
   '/traveller/{travellerId}/wallet':
     get:
       tags:
@@ -437,6 +402,53 @@ paths:
           description: successful operation
           schema:
             $ref: '#/definitions/tokenChallenge'
+  '/token/{tokenId}/purchaseTicket':
+    post:
+      tags:
+        - token
+      summary: Post request to purchase ticket on behalf of traveller
+      operationId: postPurchaseTicket
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: tokenId
+          in: path
+          description: Token ID
+          required: true
+          type: string
+        - name: pid
+          in: query
+          description: Participant ID to purchase ticket from
+          required: true
+          type: integer
+          format: int64
+        - name: productId
+          in: query
+          description: Product ID to purchase
+          required: true
+          type: string
+        - name: tokenProof
+          in: body
+          description: Token proof object
+          required: true
+          schema:
+            $ref: '#/definitions/tokenProof'
+      responses:
+        '201':
+          description: successful operation
+          headers:
+            location:
+              description: URL of created ticket bundle
+              type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden, transaction denied
+        '409':
+          description: Payment denied by payment service.
   '/token/{tokenId}/wallet':
     get:
       tags:
