@@ -846,14 +846,16 @@ definitions:
         $ref: '#/definitions/serial'
       tokenId:
         type: string
+
   pid:
     description: Participant Identifier
-    type: number
+    type: integer
     format: int64
     example: 1
+
   serial:
     description: Token serial number
-    type: number
+    type: integer
     format: int64
     example: 42
 
