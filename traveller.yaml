@@ -888,14 +888,14 @@ definitions:
         type: string
         example: Kundkassa
       paymentMeansType:
-        description: Type of payment means
-        type: string
-        enum:
-        - purse
-        - paymentcard
-        - mobile
-        - invoice
-        - other
+         description: Type of payment means
+         type: string
+         enum:
+           - purse
+           - paymentcard
+           - mobile
+           - invoice
+           - other
       paymentMeansCurrency:
         description: Payment currency (ISO 4217)
         type: string
@@ -908,10 +908,14 @@ definitions:
         description: Transaction limit if used without PIN
         type: number
         example: 200
-      paymentMeansLimitTokenProofRequired:
-        description: Does payment require token proof?
+      paymentMeansTokenProofRequired:
+        description: True if token proof is required for all transactions
         type: boolean
-        example: True
+        example: true
+      paymentMeansBalance:
+        description: Current balance (if available)
+        type: number
+        example: 200
 
   walletTransactionRequest:
     type: object
