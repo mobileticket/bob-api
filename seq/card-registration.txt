@@ -1,6 +1,6 @@
 # https://sequencediagram.org/
 
-title Registration of payment means
+title Registration of Payment Service Provider
 
 actor "Traveller" as traveller
 participant "Home Sales Channel\n(with PSP)" as homeSales
@@ -30,7 +30,7 @@ else If other PSP is already registered
 
 homeSales<--tokenIssuer: Preferred PSP is registered
 traveller<--homeSales: Asks if travellers wants to\nupdate preferred PSP
-homeSales->tokenIssuer: Registers as preferred PSP\n""PUT /api/v1/token/{thumbprint}/psp""
+homeSales-->tokenIssuer: Registers as preferred PSP\n""PUT /api/v1/token/{thumbprint}/psp""
 
 end 
 
