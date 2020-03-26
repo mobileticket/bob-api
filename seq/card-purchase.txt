@@ -29,9 +29,10 @@ end
 foreignSales->homeSales: Wallet transaction (reserve amount)\n""POST /api/v1/token/{thumbprint}/wallet/transaction""
 foreignSales<--homeSales: OK/Not OK
 
-box over foreignSales: TVM buys ticket as vendor
+box over foreignSales: TVM buys ticket as ticket vendor
 
 foreignSales->homeSales: Wallet transaction (finalise)\n""PATCH /api/v1/token/{thumbprint}/wallet/transaction/{transaction}""
 foreignSales<--homeSales: OK
 
 traveller<--foreignSales: Purchase completed
+foreignSales-->tokenIssuer: Register hint
