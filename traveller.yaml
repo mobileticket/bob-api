@@ -1162,52 +1162,9 @@ definitions:
         type: number
         example: 1
       timeConstraints:
-        description: Bundle time constraints
-        type: object
-        required:
-          - timeOfIssue
-        properties:
-          timeOfIssue:
-            description: Date and time for when product set was issued
-            type: string
-            format: date-time
-            example: "2018-11-13T20:20:39+00:00"
-          startOfValidity:
-            description: Date and time for start of validity 
-            type: string
-            format: date-time
-            example: "2018-11-13T20:20:39+00:00"
-          endOfValidity:
-            description: Date and time for end of validity 
-            type: string
-            format: date-time
-            example: "2018-11-13T20:20:39+00:00"
-          timeOfActivation:
-            description: Date and time for when product set was activated
-            type: string
-            format: date-time
-            example: "2018-11-13T20:20:39+00:00"
-          relativeValidity:
-            description: Validity period in ISO 8601 duration format
-            type: string
-            example: "PT24H"
-          other:
-            description: Other time constraints (text)
-            type: array
-            items:
-              type: string
-              example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
+        $ref: '#/definitions/timeConstraints'
       spatialConstraints:
-        description: Product set spatial constraints
-        type: array
-        items:
-          type: object
-          properties:
-            name:
-              description: Other spatial constraint (text)
-              type: string
-            areas:
-              $ref: '#/definitions/geoAreas'
+        $ref: '#/definitions/spatialConstraints'
 
   productSetStatus:
     description: Product set status
@@ -1220,6 +1177,55 @@ definitions:
       - refunded
       - revoked
     example: "issued"
+
+  timeConstraints:
+    description: Bundle time constraints
+    type: object
+    required:
+      - timeOfIssue
+    properties:
+      timeOfIssue:
+        description: Date and time for when product set was issued
+        type: string
+        format: date-time
+        example: "2018-11-13T20:20:39+00:00"
+      startOfValidity:
+        description: Date and time for start of validity
+        type: string
+        format: date-time
+        example: "2018-11-13T20:20:39+00:00"
+      endOfValidity:
+        description: Date and time for end of validity
+        type: string
+        format: date-time
+        example: "2018-11-13T20:20:39+00:00"
+      timeOfActivation:
+        description: Date and time for when product set was activated
+        type: string
+        format: date-time
+        example: "2018-11-13T20:20:39+00:00"
+      relativeValidity:
+        description: Validity period in ISO 8601 duration format
+        type: string
+        example: "PT24H"
+      other:
+        description: Other time constraints (text)
+        type: array
+        items:
+          type: string
+          example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
+
+  spatialConstraints:
+    description: Product set spatial constraints
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          description: Other spatial constraint (text)
+          type: string
+        areas:
+          $ref: '#/definitions/geoAreas'
 
   geoAreas:
     type: object
