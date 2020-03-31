@@ -1100,33 +1100,7 @@ definitions:
         description: Ticket components
         type: array
         items:
-          type: object
-          properties:
-            pid:
-              $ref: '#/definitions/pid'
-            ticketIds:
-              description: Ticket Identifiers
-              type: array
-              items:
-                description: Ticket Identifier
-                type: string
-              example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
-            productCategoryId:
-              description: Product category identifier
-              type: string
-            fares:
-              description: |
-                List of all fares for the product set.
-              type: array
-              items:
-                $ref: '#/definitions/fare'
-            travellersPerCategory:
-              $ref: '#/definitions/travellersPerCategory'
-            productProperties:
-              type: array
-              items:
-                $ref: '#/definitions/productProperty'
-
+          $ref: '#/definitions/ticket'
       title:
         description: Ticket title
         type: string
@@ -1177,6 +1151,34 @@ definitions:
       - refunded
       - revoked
     example: "issued"
+
+  ticket:
+    type: object
+    properties:
+      pid:
+        $ref: '#/definitions/pid'
+      ticketIds:
+        description: Ticket Identifiers
+        type: array
+        items:
+          description: Ticket Identifier
+          type: string
+        example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
+      productCategoryId:
+        description: Product category identifier
+        type: string
+      fares:
+        description: |
+          List of all fares for the product set.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
+      travellersPerCategory:
+        $ref: '#/definitions/travellersPerCategory'
+      productProperties:
+        type: array
+        items:
+          $ref: '#/definitions/productProperty'
 
   timeConstraints:
     description: Bundle time constraints
