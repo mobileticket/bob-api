@@ -1342,8 +1342,10 @@ definitions:
         type: string
       fareCategoryId:
         description: Type of fare
+        type: string
       description:
         description: Text describing the item
+        type: string
       vatAmount:
         description: VAT amount
         type: number
