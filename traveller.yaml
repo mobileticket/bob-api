@@ -1099,11 +1099,10 @@ definitions:
         description: Product Set Identifier
         type: string
         example: "562FA1FA-A4C0-4D90-8E44-85E9040BDCC3"
-      tickets:
-        description: Ticket components
+      ticketBundles:
         type: array
         items:
-          $ref: '#/definitions/ticket'
+          $ref: '#/definitions/ticketBundle'
       title:
         description: Ticket title
         type: string
@@ -1155,27 +1154,52 @@ definitions:
       - revoked
     example: "issued"
 
-  ticket:
+  ticketBundle:
+    description: Tickets issued by a participant
     type: object
+    required:
+    - pid
+    - tickets
     properties:
       pid:
         $ref: '#/definitions/pid'
-      ticketIds:
-        description: Ticket Identifiers
+      tickets:
         type: array
         items:
-          description: Ticket Identifier
-          type: string
-        example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
-      productCategoryId:
-        description: Product category identifier
-        type: string
+          $ref: '#/definitions/ticket'
       fares:
         description: |
           List of all fares for the product set.
         type: array
         items:
           $ref: '#/definitions/fare'
+      title:
+        description: Product bundle title
+        type: string
+      description:
+        description: Product bundle description
+        type: string
+      ticketBundleId:
+        type: string
+
+  ticket:
+    type: object
+    properties:
+      title:
+        description: Product title
+        type: string
+      description:
+        description: Product description
+        type: string
+      ticketId:
+        description: Ticket Identifier
+        type: string
+        example: "7851FD3A-9DA6-48EE-B0DD-6958752539B2"
+      productCategoryId:
+        description: Product category identifier
+        type: string
+      fareCategoryId:
+        type: string
       travellersPerCategory:
         $ref: '#/definitions/travellersPerCategory'
       productProperties:
