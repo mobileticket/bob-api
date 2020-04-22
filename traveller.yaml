@@ -1036,35 +1036,35 @@ definitions:
       $ref: '#/definitions/productSetInformation'
 
   productSetOptions:
-     type: object
-     properties:
-       travellersPerCategory:
-         $ref: '#/definitions/travellersPerCategory'
-       productProperties:
-         description: List of product properties assignments
-         type: array
-         items:
-           $ref: '#/definitions/productProperty'
+    type: object
+    properties:
+      travellersPerCategory:
+        $ref: '#/definitions/travellersPerCategory'
+      productProperties:
+        description: List of product properties assignments
+        type: array
+        items:
+          $ref: '#/definitions/productProperty'
 
   productProperty:
-     description: Product property assignments
-     type: object
-     required:
-       - name
-       - value
-     properties:
-       name:
-         description: Product property name
-         type: string
-       value:
-         description: Product property value
-         type: string
+    description: Product property assignments
+    type: object
+    required:
+     - name
+     - value
+    properties:
+      name:
+        description: Product property name
+        type: string
+      value:
+        description: Product property value
+        type: string
 
   travellersPerCategory:
-     description: Information about all travellers
-     type: array
-     items:
-       $ref: '#/definitions/travellersPerCategoryItem'
+    description: Information about all travellers
+    type: array
+    items:
+      $ref: '#/definitions/travellersPerCategoryItem'
 
   travellersPerCategoryItem:
     type: object
