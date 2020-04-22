@@ -1110,7 +1110,7 @@ definitions:
         items:
           $ref: '#/definitions/ticketBundle'
       title:
-        description: Ticket title
+        description: Product set title
         type: string
         example: "My fine ticket"
       description:
@@ -1205,6 +1205,7 @@ definitions:
         description: Product category identifier
         type: string
       fareCategoryId:
+        description: Fare category identifier
         type: string
       travellersPerCategory:
         $ref: '#/definitions/travellersPerCategory'
@@ -1234,15 +1235,20 @@ definitions:
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
+      relativeValidity:
+        description: Validity period in ISO 8601 duration format
+        type: string
+        example: "PT24H"
       timeOfActivation:
         description: Date and time for when product set was activated
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
-      relativeValidity:
-        description: Validity period in ISO 8601 duration format
+      latestActivation:
+        description: Date and time for latest activation
         type: string
-        example: "PT24H"
+        format: date-time
+        example: "2018-11-13T20:20:39+00:00"
       other:
         description: Other time constraints (text)
         type: array
@@ -1370,11 +1376,8 @@ definitions:
       currency:
         description: Currency code (ISO 4217)
         type: string
-      fareCategoryId:
-        description: Type of fare
-        type: string
       description:
-        description: Text describing the item
+        description: Fare description
         type: string
       vatAmount:
         description: VAT amount
