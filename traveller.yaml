@@ -1059,6 +1059,9 @@ definitions:
       value:
         description: Product property value
         type: string
+      description:
+        description: Product property description
+        type: string
 
   travellersPerCategory:
     description: Information about all travellers
@@ -1090,6 +1093,9 @@ definitions:
         type: array
         items:
           type: string
+      description:
+        description: Traveller description
+        type: string
 
   productSetInformation:
     description: Product Set Information
