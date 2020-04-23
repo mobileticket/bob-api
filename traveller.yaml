@@ -894,14 +894,14 @@ definitions:
         type: string
         example: Kundkassa
       paymentMeansType:
-         description: Type of payment means
-         type: string
-         enum:
-           - purse
-           - paymentcard
-           - mobile
-           - invoice
-           - other
+        description: Type of payment means
+        type: string
+        enum:
+          - purse
+          - paymentcard
+          - mobile
+          - invoice
+          - other
       paymentMeansCurrency:
         description: Payment currency (ISO 4217)
         type: string
