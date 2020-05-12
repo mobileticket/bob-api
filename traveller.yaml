@@ -1062,6 +1062,9 @@ definitions:
       description:
         description: Product property description
         type: string
+      surcharge:
+        description: Product property surcharge
+        $ref: '#/definitions/fare'
 
   travellersPerCategory:
     description: Information about all travellers
