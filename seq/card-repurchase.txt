@@ -37,7 +37,7 @@ traveller<->foreignSales: Payment means register at\nhome sales channel\n(see fl
 end 
 
 
-foreignSales->homeSales: Issue product set (set issued status)\n""PUT /productSet/{productSetIdentifier}/status""
+foreignSales->homeSales: Issue product set (set issued status)\n""POST /productSet/{productSetIdentifier}/issue""
 
 box over homeSales: Home Sales Channel calls off the\nmanifests and combines the product set 
 
