@@ -1133,7 +1133,7 @@ definitions:
         items:
           $ref: '#/definitions/ride'
       conditions:
-        description: Production conditions
+        description: Product conditions
         type: array
         items:
           type: string
