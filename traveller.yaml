@@ -998,13 +998,12 @@ definitions:
   transactionUpdate:
     type: object
     properties:
-      transactionCommitted:
+      transactionCommit:
         description: |
-          Set to false if transaction is a reservation of an amount, true
-          if it has been finalised.
+          Set to true to withdraw from the wallet and commit the transaction.
         type: boolean
-      transactionCancelled:
-        description: Set to true if transaction has been cancelled
+      transactionCancel:
+        description: Set to true to cancel the wallet reservation or withdrawal.
         type: boolean
 
   tokenChallenge:
