@@ -1217,6 +1217,9 @@ definitions:
       fareCategoryId:
         description: Fare category identifier
         type: string
+      fareCategoryDescription:
+        description: Fare category description
+        type: string
       travellersPerCategory:
         $ref: '#/definitions/travellersPerCategory'
       productProperties:
