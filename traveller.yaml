@@ -1211,6 +1211,9 @@ definitions:
       productCategoryId:
         description: Product category identifier
         type: string
+      productCategoryDescription:
+        description: Product category description
+        type: string
       fareCategoryId:
         description: Fare category identifier
         type: string
