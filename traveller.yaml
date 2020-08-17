@@ -1145,11 +1145,6 @@ definitions:
             "Cykel får medföras utan kostnad, dock ej 0600-0900 och 1600-1800."
       status:
         $ref: '#/definitions/productSetStatus'
-      remainingActivations:
-        description: |
-          Remaining number of times the product set can be activated
-        type: number
-        example: 1
       timeConstraints:
         $ref: '#/definitions/timeConstraints'
       spatialConstraints:
@@ -1262,6 +1257,11 @@ definitions:
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
+      remainingActivations:
+        description: |
+          Remaining number of times the product set can be activated
+        type: number
+        example: 1
       other:
         description: Other time constraints (text)
         type: array
