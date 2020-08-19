@@ -1260,7 +1260,8 @@ definitions:
       remainingActivations:
         description: |
           Remaining number of times the product set can be activated
-        type: number
+        type: integer
+        format: int64
         example: 1
       other:
         description: Other time constraints (text)
