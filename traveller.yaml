@@ -608,6 +608,39 @@ paths:
           description: Unauthorized
         '403':
           description: Forbidden
+  '/mtb/{issuerSignature}/activate':
+    post:
+      tags:
+        - mtb
+      summary: Activate MTB
+      operationId: activateMTB
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: issuerSignature
+          in: path
+          description: MTB issuer signature
+          required: true
+          type: string
+          format: base64url
+        - name: activationData
+          in: body
+          description: MTB activation data
+          required: true
+          schema:
+            $ref: '#/definitions/activationData'
+      responses:
+        '204':
+          description: successful operation
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
   '/productSet/{productSetId}':
     get:
       tags:
@@ -922,6 +955,9 @@ definitions:
         description: Current balance (if available)
         type: number
         example: 200
+      paymentMeansDepositAllowed:
+        description: Is deposit (negative transactionAmount) allowed?
+        type: boolean
 
   walletTransactionRequest:
     type: object
@@ -1247,16 +1283,16 @@ definitions:
         description: Validity period in ISO 8601 duration format
         type: string
         example: "PT24H"
-      timeOfActivation:
-        description: Date and time for when product set was activated
-        type: string
-        format: date-time
-        example: "2018-11-13T20:20:39+00:00"
       latestActivation:
         description: Date and time for latest activation
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
+      latestActivationExpire:
+        description: Date and time for latest activation
+        type: string
+        format: date-time
+        example: "2018-11-14T20:20:39+00:00"
       remainingActivations:
         description: |
           Remaining number of times the product set can be activated
@@ -1401,3 +1437,21 @@ definitions:
         description: VAT percent
         type: number
         format: float
+
+  activationData:
+    type: object
+    properties:
+      activationDateTime:
+        description: Date and time for activation (default NOW)
+        type: string
+        format: date-time
+      pid:
+        description: Activating PID
+        type: integer
+        format: int64
+      ticketId:
+        description: Activating ticket identifier
+        type: string
+      eventId:
+        description: Activating event identifier
+        type: string
