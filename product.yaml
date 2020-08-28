@@ -720,6 +720,11 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/geoPosition'
+  polyline:
+    description: Geographical polygonal path (line)
+    type: array
+    items:
+      $ref: '#/definitions/geoPosition'
   geoPosition:
     description: Geopos (WGS84 decimal)
     type: object
@@ -842,6 +847,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/area'
+      polylines:
+        type: array
+        items:
+          $ref: '#/definitions/polyline'
       groups:
         type: array
         items:
