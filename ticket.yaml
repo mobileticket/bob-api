@@ -495,6 +495,36 @@ paths:
           description: Unauthorised
         '404':
           description: Ticket not found
+  '/ticket/{ticketId}/activation':
+    get:
+      tags:
+        - ticket
+      summary: Get ticket activation status
+      description: |
+        Get activation status for ticket with specified ticket identifier.
+      operationId: getTicketActivationStatus
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: ticketId
+          in: path
+          description: Ticket id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ticketActivationStatus'
+        '401':
+          description: Unauthorised
+        '404':
+          description: Ticket not found
   '/ticket/{ticketId}/event':
     get:
       tags:
@@ -845,6 +875,35 @@ definitions:
   ticketActiveStatus:
     description: True if ticket is active and ready to use, otherwise false.
     type: boolean
+  ticketActivationStatus:
+    description: Activation status
+    type: object
+    required:
+      - active
+    properties:
+      active:
+        description: 'True if ticket is active and ready to use, otherwise false.'
+        type: boolean
+      relativeValidity:
+        description: Validity period in ISO 8601 duration format
+        type: string
+        example: PT24H
+      latestActivation:
+        description: Date and time for latest activation
+        type: string
+        format: date-time
+        example: '2020-08-28T14:20:39+00:00'
+      latestActivationExpire:
+        description: Date and time for expiration of latest activation
+        type: string
+        format: date-time
+        example: '2020-08-29T03:00:00+00:00'
+      remainingActivations:
+        description: |
+          Remaining number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
   manifestCall:
     description: Manifest with parameter to be used for issuing tickets
     type: object
@@ -1026,6 +1085,9 @@ definitions:
       activeStatus:
         description: Ticket active status
         $ref: '#/definitions/ticketActiveStatus'
+      activationStatus:
+        description: Ticket activation status
+        $ref: '#/definitions/ticketActivationStatus'
       recoverStatus:
         description: Ticket recover status
         $ref: '#/definitions/recoverStatus'
