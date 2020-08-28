@@ -1,0 +1,895 @@
+swagger: '2.0'
+info:
+  version: 2.1.0
+  title: BoB.Product.API
+host: schemas.mobileticket.se
+basePath: /api/v2
+schemes:
+  - https
+paths:
+  '/product':
+    post:
+      tags:
+        - product
+      summary: Get available products matching product filter object
+      description: |
+        Get available products filtered with a set of filter parameters.
+        There are three basic spatial type of filters that can be used, area,
+        group and route.
+
+        Area -  Used for describing a geographical area with circles and
+                polygons, and the server will try to find a product that
+                covers all these areas. The server may also dynamically
+                construct a product that exactly match these requirements.
+
+        Group - Groups are a group of stopAreas, services, geographical
+                areas or some other server specific group that the provider
+                offer products to. The most obvious group is "zone", that
+                is a group of stopAreas. With a group search you specify
+                an number of group you want to travel in and the server
+                will find or construct products for this.
+
+        Route - Filter products that fulfils a specified route. The route
+                is an ordered list of 1 or more stopAreaIds or groupIds. You
+                can also mix these so that you can for example can specify a
+                route that starts at a stopArea, goes via a certain zone and
+                then end up at a stopArea.
+
+        The result from each of these filter types are concatenated together.
+        These products is then filtered, so that each is valid for at least
+        one from the list of fare categories, and then also filtered against
+        product and traveller categories.
+        A number of product properties may also be specified. These
+        properties are variants of the product, and may be used for selecting
+        different options, such as seating, a meal, et cetera.
+        Finally, there is an optional ingress and egress attribute to specify
+        exchange points with other participants. These are typically used
+        to indicate the joint operation over the border, which may affect
+        product pricing.
+        A server is not required to support all types of filters and filter
+        combinations and may issue an error response if such filters are set.
+        A server is neither required to provide all possible products for a
+        given filter. This is because if products are constructed dynamically
+        based on the filter, all the information needed to construct all
+        possible products may not be available.
+      operationId: postProductFilter
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+        - name: filter
+          in: body
+          description: Product filter search criteria
+          required: true
+          schema:
+            $ref: '#/definitions/productFilter'
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetAlternatives'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+            Expires:
+              description: Expiration of product validity
+              type: string
+        400:
+          description: Filter parameters illegal
+        422:
+          description: Illegal filter combination or data
+    get:
+      tags:
+        - product
+      summary: Get available products based on filter parameters
+      description: |
+        Get available products filtered with a simplified set of filter
+        parameters. These parameters are described below. The intended use
+        for this is primary testing since it allows to send requests
+        without a body. But it could also be used for simple TVMs, where
+        a small set of static pre-defined products are offered. For all
+        other cases the operation postProductFilter should be used.
+      operationId: getFilteredProducts
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+        - name: productCategoryId
+          in: query
+          description: Filter available products by product category
+          required: false
+          type: string
+        - name: fareCategoryId
+          in: query
+          description: Filter available products by fare category
+          required: false
+          type: string
+        - name: travellerCategoryId
+          in: query
+          description: Filter available products by traveller category
+          required: false
+          type: string
+        - name: originLocation
+          in: query
+          description: Filter available products by location (origin stopAreaId)
+          required: false
+          type: string
+        - name: destinationLocation
+          in: query
+          description: Filter available products by location (destination stopAreaId)
+          required: false
+          type: string
+        - name: productProperties
+          in: query
+          description: "Set product properties (format: name1=value1!name2=value2)"
+          required: false
+          type: string
+      responses:
+        200:
+          description: Successful operation, return list of product sets that fulfill the request
+          schema:
+            $ref: '#/definitions/productSetAlternatives'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+            Expires:
+              description: Expiration of product validity
+              type: string
+        400:
+          description: Filter parameters illegal
+        404:
+          description: Matching product not found
+  '/product/{productId}':
+    get:
+      tags:
+        - product
+      summary: Get product information
+      description: |
+        Get product information by product identifier. The product identifier
+        can be a static well known id or dynamic identifier with an expiry set
+        that is produced by the filter operations.
+      operationId: getProduct
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productId
+          in: path
+          description: Product identifier
+          required: true
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: "#/definitions/product"
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+            Expires:
+              description: Expiration of product validity
+              type: string
+        404:
+          description: Product not found
+  '/productcat/fare':
+    get:
+      tags:
+        - product
+      summary: Get fare categories
+      description: |
+        Get a list of all known fare categories within the system. The answer
+        contains the fareCategoryId and a short description of the category.
+        Fare categories are normally information about the how the traveller
+        is transported, that affects the ticket fare. Examples, 1Class, 2Class,
+        Express and Night.
+      operationId: getFareCategories
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/fareCategories'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+  '/productcat/product':
+    get:
+      tags:
+        - product
+      summary: Get product categories
+      description: |
+        Get a list of all known product categories within the system. The answer
+        contains the productCategoryId and an optional short description of the
+        category. Product categories are normally information about when the ticket
+        is valid that affects the ticket fare. Examples, Single, 1day and 30days.
+      operationId: getProductCategories
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productCategories'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+  '/productcat/traveller':
+    get:
+      tags:
+        - product
+      summary: Get traveller categories
+      description: |
+        Get a list of all known traveller categories within the system. The answer
+        contains the travellerCategoryId and a short description of the category.
+        Traveller categories are normally information about the traveller that
+        affects the ticket fare. Examples, Adult, Youth and Family.
+      operationId: getTravellerCategories
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/travellerCategories'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+  '/manifest':
+    post:
+      tags:
+        - product
+      summary: Create purchase manifest by product identifiers
+      description: |
+        Create a purchase manifest from a set of product identifiers
+        and optional tickets to recover in purchase. You can also
+        specify ticket specific properties that should be included
+        in the manifest.
+      operationId: createProductManifest
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+        - in: body
+          name: productManifestQuery
+          description: Requested products
+          required: true
+          schema:
+            $ref: '#/definitions/productManifestRequest'
+      responses:
+        201:
+          description: Created, return manifest MTB with manifest information.
+          schema:
+            $ref: '#/definitions/productSetManifest'
+          headers:
+            Location:
+              type: string
+              description: URL of manifest
+            Content-Language:
+              description: Language used in answer
+              type: string
+            Expires:
+              description: Expiration of manifest validity
+              type: string
+        404:
+          description: Product set not found
+  '/manifest/{manifestId}':
+    get:
+      tags:
+        - product
+      summary: Get previously created purchase manifest
+      description: |
+        Retrive a previously created purchase manifest. The manifest identifier can
+        be a static well known id or dynamic identifier with expire that is
+        produced by the create manifest operations. The manifest could also be a
+        distinct manifest, which means that it can only be used once.
+      operationId: getProductManifest
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: Accept-Language
+          in: header
+          description: List of preferred languages, follows w3.org Accept-Language header
+          required: false
+          type: string
+        - name: manifestId
+          in: path
+          description: Manifest identifier
+          required: true
+          type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/productSetManifest'
+          headers:
+            Content-Language:
+              description: Language used in answer
+              type: string
+            Expires:
+              description: Expiration of manifest validity
+              type: string
+        404:
+          description: Product set not found
+definitions:
+  productCategories:
+    description: List of product categories
+    type: array
+    items:
+      $ref: '#/definitions/productCategory'
+  fareCategories:
+    description: List of fare categories
+    type: array
+    items:
+      $ref: '#/definitions/fareCategory'
+  travellerCategories:
+    description: List of traveller categories
+    type: array
+    items:
+      $ref: '#/definitions/travellerCategory'
+  productCategory:
+    description: |
+      Product category information, contains the productCategoryId and a short
+      description of the category. Product categories are normally information
+      about when the ticket is valid that affects the ticket fare.
+      Examples, Single, 1day and 30days.
+    type: object
+    required:
+      - productCategoryId
+      - productCategoryDescription
+    properties:
+      productCategoryId:
+        description: Product category identifier
+        type: string
+      productCategoryDescription:
+        description: Short description of product category
+        type: string
+  fareCategory:
+    description: |
+      Fare category information, contains the fareCategoryId and a short
+      description of the category. Fare categories are normally information
+      about the how the traveller is transported, that affects the ticket fare.
+      Examples, 1Class, 2Class, Express and Night.
+    type: object
+    required:
+      - fareCategoryId
+      - fareCategoryDescription
+    properties:
+      fareCategoryId:
+        description: Fare category identifier
+        type: string
+      fareCategoryDescription:
+        description: Short description of fare category
+        type: string
+  travellerCategory:
+    description: |
+      Traveller categories information, contains the travellerCategoryId and a
+      short description of the category. Traveller categories are normally
+      information about the traveller that affects the ticket fare.
+      Examples, Adult, Youth and Family.
+    type: object
+    required:
+      - travellerCategoryId
+      - travellerCategoryDescription
+    properties:
+      travellerCategoryId:
+        description: Traveller category identifier
+        type: string
+      travellerCategoryDescription:
+        description: Short description of traveller category
+        type: string
+  productSetAlternatives:
+    description: Alternative product sets available to complete a journey
+    type: array
+    items:
+      $ref: '#/definitions/products'
+  productManifestRequest:
+    description: Request for manifest products
+    type: object
+    required:
+      - productSelections
+    properties:
+      recoverTickets:
+        description: List of MTBs to recover
+        type: array
+        items:
+          description: MTB to recover in transaction
+          type: string
+          format: byte
+      productSelections:
+        description: List of products with properties
+        type: array
+        items:
+          $ref: '#/definitions/productSelection'
+      discountCodes:
+        description: List of discount codes to use
+        $ref: '#/definitions/discountCodes'
+  productSelection:
+    description: Product selection, product identifier with optional properties
+    type: object
+    required:
+      - productId
+    properties:
+      productId:
+        description: Product identifier
+        type: string
+      productProperties:
+        description: List of product properties assignments
+        type: array
+        items:
+          $ref: '#/definitions/productProperty'
+  productSetManifest:
+    description: Manifest of set of products and manifest meta data
+    type: object
+    required:
+      - manifestId
+      - manifest
+    properties:
+      manifestId:
+        description: Manifest identifier
+        type: string
+      productSetTitle:
+        description: Short description of product set in manifest
+        type: string
+      productSetDescription:
+        description: Long description of product set in manifest
+        type: string
+      manifest:
+        description: Signed manifest with MTB template
+        type: string
+        format: base64url
+      manifestExpire:
+        description: Expire date-time for manifest, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        type: string
+        format: date-time
+      distinct:
+        description: If manifest is distinct or can be called multiple times
+        type: boolean
+      bookingRequired:
+        description: If manifest contains rides which requires booking
+        type: boolean
+      fares:
+        description: |
+          List of all fare parts for included products. Is normally one entry that is the sum of all product fare parts.
+          Can be several entries when product fare parts include base fares, discounts, different currencies or different
+          VAT percentages. Total cost of purchase is the sum of all entries for any given currency.
+          Discounts have negative amounts.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
+      products:
+        description: List of product identifiers for products included in the manifest
+        $ref: '#/definitions/products'
+      discountCodes:
+        description: List of discount codes for products included in the manifest
+        $ref: '#/definitions/discountCodes'
+      recoverTicketIds:
+        description: List of ticket identifiers, which will be recovered in issue transaction
+        type: array
+        items:
+          type: string
+  products:
+    description: List of product identifiers
+    type: array
+    items:
+      $ref: '#/definitions/product'
+  product:
+    description: Product description and properties
+    type: object
+    required:
+      - productId
+    properties:
+      productId:
+        description: Product identifier
+        type: string
+      productTitle:
+        description: Short description of product
+        type: string
+      productDescription:
+        description: Long description of product
+        type: string
+      validityPeriod:
+        description: Validity period as ISO 8601:2004 duration format (MTS8, chapter 2.3)
+        type: string
+      productCategoryId:
+        description: Product category identifier
+        type: string
+      fareCategoryId:
+        description: Fare category identifier
+        type: string
+      travellerCategoryId:
+        description: Traveller category identifier
+        type: string
+      travellersPerCategory:
+        description: Information about all travellers
+        $ref: '#/definitions/travellersPerCategory'
+      fares:
+        description: |
+          List of all fare parts. Can be several entries when fare parts include base fares, discounts, different
+          currencies or different VAT percentages. Total cost of the product is the sum of all entries for any given
+          currency. Discounts have negative amounts.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
+      productExpire:
+        description: Expire date-time for product, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        type: string
+        format: date-time
+      productProperties:
+        description: |
+          List of product properties available for product. Contains identifier,
+          type, a description and an optional default value.
+        type: array
+        items:
+          $ref: '#/definitions/productPropertyDeclaration'
+      spatialValidity:
+        $ref: '#/definitions/spatialValidity'
+  fare:
+    description: Fare information, amount, currency and VAT.
+    type: object
+    required:
+      - amount
+      - currency
+      - vatAmount
+      - vatPercent
+    properties:
+      amount:
+        description: Fare cost excluding VAT
+        type: number
+        format: float
+      currency:
+        description: Currency code (ISO 4217)
+        type: string
+      label:
+        description: Fare label
+        type: string
+        example: Group discount
+      vatAmount:
+        description: VAT amount
+        type: number
+        format: float
+      vatPercent:
+        description: VAT percent
+        type: number
+        format: float
+  productFilter:
+    description: Product filter. See operation postProductFilter for usage.
+    type: object
+    properties:
+      route:
+        $ref: '#/definitions/route'
+      group:
+        $ref: '#/definitions/group'
+      area:
+        $ref: '#/definitions/area'
+      fareCategoryIds:
+        description: List of fareCategoryIds (logical OR)
+        type: array
+        items:
+          description: FareCategoryId
+          type: string
+      productCategoryIds:
+        description: List of productCategoryIds (logical OR)
+        type: array
+        items:
+          description: ProductCategoryId
+          type: string
+      travellerCategoryIds:
+        description: List of travellerCategoryIds (logical OR)
+        type: array
+        items:
+          description: TravellerCategoryId
+          type: string
+      travellersPerCategory:
+        description: Defines a group of travellers (used mutually exclusively of travellerCategoryIds)
+        $ref: '#/definitions/travellersPerCategory'
+      productProperties:
+        description: List of product properties assignments
+        type: array
+        items:
+          $ref: '#/definitions/productProperty'
+      adjacencies:
+        description: |
+          Entry and exit points when the product is part of a set of products
+          that spans several participant organisations.
+        type: object
+        properties:
+          ingress:
+            description: Entry point
+            $ref: '#/definitions/adjacency'
+          egress:
+            description: Exit point
+            $ref: '#/definitions/adjacency'
+      temporal:
+        description: |
+          Used for requesting specific validity periods or to target
+          specific services
+        type: object
+        properties:
+          startOfValidity:
+            type: string
+            format: date-time
+            description: Date and time for requesting start of validity, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+          endOfValidity:
+            type: string
+            format: date-time
+            description: Date and time for requesting end of validity, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+          earliestDeparture:
+            type: string
+            format: date-time
+            description: Date and time for requesting an earliest departure for the specified trip, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+          latestArrival:
+            type: string
+            format: date-time
+            description: Date and time for requesting a latest arrival for the specified trip, as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+  circle:
+    description: Geographical circle
+    type: object
+    required:
+      - center
+      - radius
+    properties:
+      center:
+        description: Center of circle
+        $ref: '#/definitions/geoPosition'
+      radius:
+        description: Radius of circle in meters
+        type: number
+        format: double
+  polygon:
+    description: Geographical polygon
+    type: array
+    items:
+      $ref: '#/definitions/geoPosition'
+  geoPosition:
+    description: Geopos (WGS84 decimal)
+    type: object
+    required:
+      - lat
+      - long
+    properties:
+      lat:
+        description: Latitude
+        type: number
+        format: double
+      long:
+        description: Longitude
+        type: number
+        format: double
+  productProperty:
+    description: Product property assignments
+    type: object
+    required:
+      - name
+      - value
+    properties:
+      name:
+        description: Product property name
+        type: string
+      value:
+        description: Product property value
+        type: string
+  productPropertyDeclaration:
+    description: |
+      Product properties declaration. Contains identifier, type, description
+      and an optional default value.
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        description: Product property name
+        type: string
+      default:
+        description: Product property default value
+        type: string
+      mandatory:
+        description: Product property prerequisite for product
+        type: boolean
+      description:
+        description: Product property description
+        type: string
+      type:
+        description: Product property type (primitive json types)
+        type: string
+      surcharge:
+        description: |
+          Product property surcharge. May be removed in the future.
+        $ref: '#/definitions/fare'
+      surcharges:
+        description: |
+          Product property surcharges. Can be several entries when surcharges include product property surcharges, discounts, different
+          currencies or different VAT percentages. Total cost is the sum of all entries for any given currency.
+          Discounts have negative amounts.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
+  discountCodes:
+    description: List of discount codes
+    type: array
+    items:
+      description: Discount code
+      type: string
+  travellersPerCategory:
+    description: Information about all travellers
+    type: array
+    items:
+      type: object
+      properties:
+        cat:
+          description: Traveller category
+          type: string
+        cls:
+          description: Class of service
+          type: string
+        tra:
+          description: Number of travellers
+          type: number
+        trs:
+          description: Traveller Identifiers
+          type: array
+          items:
+            type: string
+        sts:
+          description: Seating reservations
+          type: array
+          items:
+            type: string
+  adjacency:
+    description: Border crossing position to another participant
+    type: object
+    required:
+      - pid
+    properties:
+      pid:
+        description: Participant identifier
+        type: integer
+        format: int64
+      coordinate:
+        description: Geographical position of border transit
+        $ref: '#/definitions/geoPosition'
+      extendedValidityPeriod:
+        description: Requested extended validity period for cross-border ticket as ISO 8601:2004 duration format (MTS8, chapter 2.4)
+        type: string
+  spatialValidity:
+    type: object
+    description: Collection of spatial elements to define product validity
+    properties:
+      routes:
+        type: array
+        items:
+          $ref: '#/definitions/route'
+      areas:
+        type: array
+        items:
+          $ref: '#/definitions/area'
+      groups:
+        type: array
+        items:
+          $ref: '#/definitions/group'
+  route:
+    description: ordered list of stopIds, groupIds or coordinates to define a route
+    type: array
+    items:
+      description: stopId or groupId
+      type: object
+      properties:
+        stopId:
+          type: string
+        coordinate:
+          $ref: '#/definitions/geoPosition'
+        groupId:
+          type: object
+          required:
+            - type
+            - id
+          properties:
+            type:
+              type: string
+            id:
+              type: string
+  group:
+    type: object
+    description: Collection of groupIds with a certain groupType (logical AND)
+    required:
+      - groupType
+      - groupIds
+    properties:
+      groupType:
+        type: string
+      groupIds:
+        type: array
+        items:
+          description: groupId
+          type: string
+  area:
+    type: object
+    description: Geographical areas (union)
+    properties:
+      circles:
+        type: array
+        items:
+          $ref: '#/definitions/circle'
+      polygons:
+        type: array
+        items:
+          $ref: '#/definitions/polygon'
