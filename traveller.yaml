@@ -1340,7 +1340,7 @@ definitions:
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       latestActivationExpire:
-        description: Date and time for latest activation
+        description: Date and time for expiry of latest activation
         type: string
         format: date-time
         example: "2018-11-14T20:20:39+00:00"
