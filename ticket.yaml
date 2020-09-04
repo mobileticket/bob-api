@@ -50,6 +50,11 @@ paths:
           description: Filter on active tickets
           required: False
           type: boolean
+        - name: suspended
+          in: query
+          description: Filter on suspended tickets
+          required: False
+          type: boolean
         - name: refunded
           in: query
           description: Filter on refunded tickets
@@ -525,6 +530,36 @@ paths:
           description: Unauthorised
         '404':
           description: Ticket not found
+  '/ticket/{ticketId}/suspended':
+    get:
+      tags:
+        - ticket
+      summary: Get ticket suspension status
+      description: |
+        Get suspension status for ticket with specified ticket identifier.
+      operationId: getTicketSuspensionStatus
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: ticketId
+          in: path
+          description: Ticket id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/suspensionStatus'
+        '401':
+          description: Unauthorised
+        '404':
+          description: Ticket not found
   '/ticket/{ticketId}/event':
     get:
       tags:
@@ -904,6 +939,20 @@ definitions:
         type: integer
         format: int64
         example: 1
+  suspensionStatus:
+    description: Suspension status
+    type: object
+    required:
+      - suspended
+    properties:
+      suspended:
+        description: 'True if ticket is suspended from use, otherwise false.'
+        type: boolean
+      suspensionExpire:
+        description: Date and time for expiration of the suspension status
+        type: string
+        format: date-time
+        example: '2020-08-29T03:00:00+00:00'
   manifestCall:
     description: Manifest with parameter to be used for issuing tickets
     type: object
@@ -1100,6 +1149,9 @@ definitions:
       hinderedStatus:
         description: Ticket hindered status
         $ref: '#/definitions/hinderedStatus'
+      suspendedStatus:
+        description: Ticket suspension status
+        $ref: '#/definitions/suspensionStatus'
   ticketBundle:
     description: |
       A group of tickets. All tickets must come from the same manifest
