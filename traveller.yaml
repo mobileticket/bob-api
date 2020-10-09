@@ -1070,10 +1070,15 @@ definitions:
         description: Set to true if transaction has been cancelled
         type: boolean
       transactionExpire:
-        description: Timestamp when a pending transaction expires and can no longer be committed nor cancelled
+        description: Timestamp when a pending transaction expires and can no longer be committed.
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
+      transactionCancellableExpire:
+        description: Timestamp when a comitted transaction can no longer be cancelled.
+        type: string
+        format: date-time
+        example: '2018-11-13T20:20:39+00:00'
       tokenProof:
         $ref: '#/definitions/tokenProof'
 
