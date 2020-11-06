@@ -155,6 +155,42 @@ paths:
           description: Unauthorised
         '404':
           description: Ticket not found
+    patch:
+      tags:
+        - ticket
+      summary: Update ticket information
+      description: |
+        Update information about ticket with specified ticket identifier,
+        issued by this server.
+      operationId: updateTicket
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: ticketId
+          in: path
+          description: Ticket identifier
+          required: true
+          type: string
+        - name: ticketUpdateRequest
+          in: body
+          description: Ticket update
+          required: true
+          schema:
+            $ref: '#/definitions/ticketUpdateRequest'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/ticket'
+        '401':
+          description: Unauthorised
+        '404':
+          description: Ticket not found
   '/ticket/{ticketId}/refundableStatus':
     get:
       tags:
@@ -1152,6 +1188,25 @@ definitions:
       suspendedStatus:
         description: Ticket suspension status
         $ref: '#/definitions/suspensionStatus'
+  ticketUpdateRequest:
+    description: Ticket update
+    type: object
+    properties:
+      tokenIssuer:
+        description: PID of token issuer
+        type: integer
+        format: int64
+        x-nullable: true
+      tokenId:
+        type: string
+        x-nullable: true
+      tokenPublicKey:
+        $ref: '#/definitions/jwkPublic'
+        x-nullable: true
+      startOfValidity:
+        description: Request start of validity set in the future (must be within the validity time of the manifest). Time stamp as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        format: date-time
+        type: string
   ticketBundle:
     description: |
       A group of tickets. All tickets must come from the same manifest
