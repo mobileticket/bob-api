@@ -831,7 +831,8 @@ definitions:
     properties:
       pid:
         description: Participant identifier
-        type: string
+        type: integer
+        format: int64
       ticketId:
         description: Ticket identifier
         type: string
