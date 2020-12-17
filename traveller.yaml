@@ -1062,12 +1062,6 @@ definitions:
       transactionCurrency:
         description: Currency code (ISO 4217)
         type: string
-      transactionFares:
-        description: |
-          List of all fares for the product set.
-        type: array
-        items:
-          $ref: '#/definitions/fare'
       paymentMeansId:
         description: Identifier of the payment means to use
         type: string
