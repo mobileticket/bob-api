@@ -1251,7 +1251,9 @@ definitions:
       timeConstraints:
         $ref: '#/definitions/timeConstraints'
       spatialConstraints:
-        $ref: '#/definitions/spatialConstraints'
+        type: array
+        items:
+          $ref: '#/definitions/spatialConstraint'
 
   productSetStatus:
     description: Product set status
@@ -1373,16 +1375,16 @@ definitions:
           type: string
           example: "Gäller ej vardagar 0600-0900 samt 1600-1800"
 
-  spatialConstraints:
+  spatialConstraint:
     description: Product set spatial constraints
-    type: array
-    items:
-      type: object
-      properties:
-        name:
-          description: Other spatial constraint (text)
-          type: string
-        areas:
+    type: object
+    properties:
+      name:
+        description: Other spatial constraint (text)
+        type: string
+      areas:
+        type: array
+        items:
           $ref: '#/definitions/geoAreas'
 
   geoAreas:
