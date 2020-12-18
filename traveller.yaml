@@ -372,6 +372,13 @@ paths:
           description: Token ID
           required: true
           type: string
+        - name: all
+          in: query
+          description: |
+            Include product sets that normally are excluded, like
+            archived products and products in a final state.
+          required: false
+          type: boolean
       responses:
         '200':
           description: successful operation
