@@ -1164,6 +1164,15 @@ definitions:
         description: Signed MTB container
         type: string
         format: base64url
+      tokenId:
+        description: Token to which the ticket is bound
+        type: string
+        x-nullable: true
+      tokenIssuer:
+        description: PID of token issuer
+        type: integer
+        format: int64
+        x-nullable: true
       ticketHolder:
         description: Ticket holder
         $ref: '#/definitions/ticketHolder'
