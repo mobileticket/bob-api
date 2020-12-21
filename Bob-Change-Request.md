@@ -52,6 +52,15 @@ The following sequence diagram describes the flow:
 [card-query-activation.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-query-activation.txt)
 
 
+### Support for multi-trip tickets
+
+Tied to the activation of formant cross-border tickets is the functionality to support multi-trip tickets, also in ID-based scenarios. Such tickets have traditionally been offered with a discount compared to buying single-trip tickets, and as a convienient way to purchase tickets in advance without having to deal with a ticket vending machine before embarking.
+
+Simple examples includes pre-purchasing of 10 trips, but more complex variants exists as well. Such examples are tickets which are valid for 20 trips within a time window of 60 days counting from the first trip. Another example is school-passes, which is valid for two trips per day during the semester, but only on work-days.
+
+To support this latter use case, a new ticket state is introduced ("suspended"). A school-pass with such restrictions would typically enter the suspended state after the second trip of a school day and over the weekend. In addition, information objects providing the sales channel with the insights into the applicable restrictions have been added to the product API.
+
+
 ### Ability to re-purchase (previously bought) products using foreign sales system 
 
 A traveller who has bought a travel pass in Region A which is valid for cross-border travel between Region A and Region B, may discover when being in Region B that the travel pass has expired and wants to re-new it for another period. However, the only party holding the original product search parameters is the sales channel in Region A, where the original purchase was made. In special cases, it may also be that only this sales channel has the required agreements in place to sell this specific product. The proposed solution to this challenge is to have a function to trigger the same product search again through the sales channel in Region A, using the current sales channel (for instance, a TVM in Region B). Using this functionality, the payment can also be made using payment means tied to the token in the original sales channel.
