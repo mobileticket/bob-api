@@ -1,6 +1,6 @@
 # BoB Change Request
 
-This document describes change request for BoB Traveller, Ticket, Token and Product API.
+This document describes a change request for BoB Traveller, Ticket, Token and Product API.
 
 ## Date
 
@@ -8,12 +8,10 @@ This document describes change request for BoB Traveller, Ticket, Token and Prod
 
 ## Requested by
 
-Fredrik Ljunggren
-Kirei AB
+Fredrik Ljunggren, Kirei AB
 fredrik@kirei.se
 
-Paul Ulvinius
-Stratiteq Sweden AB 
+Paul Ulvinius, Stratiteq Sweden AB 
 paul.ulvinius@stratiteq.com
 
 On behalf of Skånetrafiken, Blekingetrafiken, Hallandstrafiken, Jönköpings Länstrafik, Länstrafiken Kronoberg and Kalmar länstrafik.
@@ -24,18 +22,20 @@ Skånetrafiken, Blekingetrafiken, Hallandstrafiken, Jönköpings Länstrafik, L�
 
 During the design of functionality relating to Ticket Vending Machines (TVMs) a number of use-cases has been unravelled which requires extended functionality in the communication between the sales systems. Examples of such use-cases includes:
 
-•	Activation of dormant cross-border tickets
-•	Use of funds held in purse managed by foreign sales system
-•	Ability to re-purchase (previously bought) products using foreign sales system
+-	Activation of dormant cross-border tickets
+-	Use of funds held in purse managed by a foreign sales system
+-	Ability to re-purchase (previously bought) products using foreign sales system
 
 Some of these requirements are also outlined in the Sydtaxa 2.0, the foundational agreement between these regions for establishing functionality for cross-border ticketing.
 
-This CR also includes the functionality already discussed in BOBX-16, as it is closely related to the proposed functionality. BOBX-16 did not, however, take ID-based travelling into account. The purpose of BOBX-16 and its updated functionality in this CR is to provide human-readable description of a cross-border set of tickets which can be used in for example the following use-cases:
+This CR also includes the functionality already discussed in BOBX-16, as it is closely related to the proposed functionality. BOBX-16 did not, however, take ID-based travelling into account. The purpose of BOBX-16 and its updated functionality in this CR is to provide human-readable descriptions of a cross-border set of tickets which can be used for example in the following use-cases:
 
-•	During validation or inspection, to provide information on the complete journey (not only the current leg) which is an enabler to provide better customer support during the journey. It can also help in proving more detailed information if a ticket cannot be (positively) validated on a specific trip.
-•	To provide a recognised and understandable description of combined tickets when they are being offered for re-purchase.
+-	During validation or inspection, to provide information on the complete journey (not only the current leg) which is an enabler to provide better customer experience and support during the journey. It can also help in proving more detailed information if a ticket cannot be (positively) validated on a specific trip.
+-	To provide a recognised and understandable description of combined tickets when they are being offered for re-purchase.
 
 ## Desired situation and purpose
+
+The desired situation is to have the Bob APIs support these functions.
 
 ## Proposed solution
 
@@ -49,7 +49,7 @@ By recovering the hint list a TVM (for instance) can list what combined tickets 
 
 The following sequence diagram describes the flow:
 
-[card-query-activation.txt!](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-query-activation.txt)
+[card-query-activation.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-query-activation.txt)
 
 
 ### Ability to re-purchase (previously bought) products using foreign sales system 
@@ -58,23 +58,23 @@ A traveller who has bought a travel pass in Region A which is valid for cross-bo
 
 It is also proposed to add the ability to (optionally) alter some options related to the product query, these options are limited to travellersPerCategory and productProperties (only). A foreign sales channel may present the productProperties set in the productSetInformation if these are consistent across tickets, and allow the customer to alter such options. For instance, a productProperty could represent certain add-ons to the product which affects the price and may or may not be desirable for the re-purchase. It could also be possible to alter travellersPerCategory if that makes sense in the current context. For instance if the re-purchase operation references a single-journey ticket which the traveller frequently purchases. Allowing a traveller to quickly buy the same ticket for multiple travellers could be convenient. 
 
-[card-repurchase.txt!](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-repurchase.txt)
+[card-repurchase.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-repurchase.txt)
 
 
-### Use of funds held in purse managed by foreign sales system
+### Use of funds held in purse managed by a foreign sales system
 
-To use payment means held in a foreign sales system, a similar function to the hints is proposed to be added to the Token API, enabling a sales system to locate where the traveller has registered it. It is proposed that only one preferred provider can be registered to minimise complexity to a manageable level. A list of such providers can lead to unpredictable behaviours, even if the list is holding a priority indicator. For instance, lack of agreements and different limits on different providers can severely complicate matters
+To use payment means held in a foreign sales system, a similar function to the hints is proposed to be added to the Token API, enabling a sales system to locate where the traveller has the preferred payment means registered. It is proposed that only one preferred provider can be registered to minimise complexity to a manageable level. A list of such providers can lead to unpredictable behaviours, even if the list is holding a priority indicator. For instance, lack of agreements and different limits on different providers can severely complicate matters
 
-[card-purchase.txt!](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-purchase.txt)
+[card-purchase.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-purchase.txt)
 
 
 ### Registration of preferred payment service provider
 
-To register a preferred payment service provider, the sales channel (with the payment service provider) will register its own PID with the token issuer through the Token API. Reasons for registering this with the token provider is that a foreign sales channel may have no other information than the token ID and the PID of the issuer as a travel token is presented. The most straight-forward way to recover information relating to the token is to query the Token API (which has to be queried anyway, to ensure the token is not revoked and possibly also to recover the hints list).
+To register a preferred payment service provider, the sales channel (which has the relationship with the payment service provider) will register its own PID with the token issuer through the Token API. Reasons for registering this with the token provider is that a foreign sales channel may have no other information than the token ID and the PID of the issuer as a travel token is presented. The most straight-forward way to recover information relating to the token is to query the Token API (which has to be queried anyway, to ensure the token is not revoked and possibly also to recover the hints list).
 
 It should be noted that it is not a requirement to register a preferred PSP with the token provider, it is optional.
 
-[card-registration.txt!](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-registration.txt)
+[card-registration.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-registration.txt)
 
 
 ## Affected specifications and APIs
@@ -87,17 +87,21 @@ BoB Ticket API
 
 ## Other affected stakeholders
 
-Skånetrafiken, Blekingetrafiken, Hallandstrafiken, Jönköpings Länstrafik, Länstrafiken Kronoberg and Kalmar länstrafik.
+Only those stakeholders who implement the Traveller API and desire to use this functionality is affected.
 
 
 ## Technical consequences 
 
-The proposed change will alter some existing objects in the Traveller API, this CR therefor calls for a bump of the major version in this API. All other proposed changes are backwards compatible.
+The proposed change will alter some existing objects in the Traveller API, this CR therefor calls for a bump of the major version in this API. To our knowledge, no-one has implemented the current version of the Traveller API. 
+
+All other proposed changes are backwards compatible.
+
 
 ## Business consequences 
-The proposed functionality is critical for being able to support some quite common cross-border use-cases for travel cards, while also improving their user-experience when travelling across multiple operators. The functionality also enables Payment Service Providers (PSPs), holding authorisations to conduct banking or other financial business, to enter the BoB ecosystem as independent participants. This could overcome some difficult hurdles in, for instance, "Pay-as-you-go" scenarios.  
 
-As the Traveller API has not, to date, been implemented by any BoB Participants, there should be no negative consequences.
+The proposed functionality is critical for being able to support some quite common cross-border use-cases for ID-based travelling, while also improving the user experience when travelling across multiple operators. The functionality also enables Payment Service Providers (PSPs), holding authorisations to conduct banking or other financial business, to enter the BoB ecosystem as independent participants. This could overcome some difficult hurdles in, for instance, "Pay-as-you-go" scenarios.  
+
+As the current Traveller API has not, to our knowledge, been implemented by any BoB Participants there should be no negative consequences.
 
 
 ## Time schedule
@@ -109,7 +113,8 @@ As the Traveller API has not, to date, been implemented by any BoB Participants,
 
 The suggested changes are available for review at:
 
-https://github.com/mobileticket/bob-api/tree/cr2020q1
+[https://github.com/mobileticket/bob-api/tree/cr2020q1](https://github.com/mobileticket/bob-api/tree/cr2020q1)
+
 
 
 ## Risk analysis
