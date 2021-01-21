@@ -3,7 +3,7 @@
 title Registration of Payment Service Provider
 
 actor "Traveller" as traveller
-participant "Home Sales Channel\n(with PSP)" as homeSales
+participant "Home Sales Channel\n(with Wallet)" as homeSales
 participant "Token Issuer\n(Token API)" as tokenIssuer
 
 
