@@ -5,7 +5,7 @@ title Purchase in foreign sales channel via TVM
 actor "Traveller" as traveller
 participant "TVM" as foreignSales
 participant "Token Issuer\n(Token API)" as tokenIssuer
-participant "Home Sales Channel (PSP)\n(Traveller API)" as homeSales
+participant "Home Sales Channel (with Wallet)\n(Traveller API)" as homeSales
 
 
 traveller<--foreignSales: Offers to purchase ticket
