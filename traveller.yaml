@@ -1362,6 +1362,12 @@ definitions:
         type: string
         format: date-time
         example: "2018-11-14T20:20:39+00:00"
+      numberOfActivations:
+        description: |
+          Total number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
       remainingActivations:
         description: |
           Remaining number of times the product set can be activated
