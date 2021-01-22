@@ -536,7 +536,7 @@ paths:
           description: Unauthorised
         '404':
           description: Ticket not found
-  '/ticket/{ticketId}/activation':
+  '/ticket/{ticketId}/activationStatus':
     get:
       tags:
         - ticket
