@@ -778,7 +778,8 @@ definitions:
     type: object
     properties:
       relativeValidityStart:
-        description: Start of ticket validity period as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        description: Start of ticket's relative validity period in ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        example: 2020-01-22T03:00:00Z
         format: date-time
         type: string
       travellerPhotoURL:
