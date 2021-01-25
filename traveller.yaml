@@ -52,7 +52,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             type: array
             items:
@@ -78,7 +78,7 @@ paths:
             $ref: '#/definitions/travellerInformation'
       responses:
         '201':
-          description: created
+          description: Traveller created
           schema:
             $ref: '#/definitions/travellerInformation'
           headers:
@@ -106,7 +106,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/travellerInformation'
     put:
@@ -135,7 +135,7 @@ paths:
             $ref: '#/definitions/travellerInformation'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
     delete:
       tags:
         - traveller
@@ -154,7 +154,7 @@ paths:
           type: string
       responses:
         '204':
-          description: successful operation
+          description: Traveller deleted
   '/traveller/{travellerId}/wallet':
     get:
       tags:
@@ -176,7 +176,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/walletInformation'
   '/traveller/{travellerId}/wallet/transaction':
@@ -206,7 +206,7 @@ paths:
             $ref: '#/definitions/walletTransactionRequest'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
           headers:
@@ -245,7 +245,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
@@ -281,7 +281,7 @@ paths:
             $ref: '#/definitions/transactionUpdate'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
           headers:
@@ -319,7 +319,7 @@ paths:
             $ref: '#/definitions/travellerNotification'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           headers:
             location:
               description: URL of created notification
@@ -350,7 +350,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/travellerNotification'
   '/token/{tokenId}/productSets':
@@ -381,7 +381,7 @@ paths:
           type: boolean
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSets'
   '/token/{tokenId}/challenge':
@@ -405,7 +405,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/tokenChallenge'
   '/token/{tokenId}/ticket':
@@ -444,7 +444,7 @@ paths:
             $ref: '#/definitions/travellersPerCategory'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           headers:
             location:
               description: URL of created ticket bundle
@@ -470,7 +470,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/walletInformation'
   '/token/{tokenId}/wallet/transaction':
@@ -500,7 +500,7 @@ paths:
             $ref: '#/definitions/walletTransactionRequest'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
           headers:
@@ -539,7 +539,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
@@ -575,7 +575,7 @@ paths:
             $ref: '#/definitions/transactionUpdate'
       responses:
         '201':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
           headers:
@@ -608,7 +608,7 @@ paths:
           format: base64url
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSets'
         '401':
@@ -643,7 +643,7 @@ paths:
             $ref: '#/definitions/activationData'
       responses:
         '204':
-          description: successful operation
+          description: Successful operation
         '401':
           description: Unauthorized
         '403':
@@ -669,7 +669,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
@@ -697,7 +697,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetStatus'
         '401':
@@ -730,7 +730,7 @@ paths:
             $ref: '#/definitions/productSetStatus'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
         '401':
           description: Unauthorized
         '403':
@@ -739,7 +739,7 @@ paths:
     post:
       tags:
         - productSet
-      summary: Recreate an equivalent product set
+      summary: Create an equivalent product set
       operationId: issueProductSet
       consumes:
         - application/json
@@ -762,7 +762,7 @@ paths:
             $ref: '#/definitions/issueRequest'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
@@ -797,7 +797,7 @@ paths:
             $ref: '#/definitions/productSetOptions'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
@@ -825,11 +825,11 @@ paths:
             $ref: '#/definitions/ticketNotification'
       responses:
         '201':
-          description: createdk
+          description: Created ok
         '401':
           description: Unauthorized
         '403':
-          description: 'Forbidden, creation failed'
+          description: Forbidden, creation failed
 
 definitions:
 
@@ -870,7 +870,7 @@ definitions:
         enum:
           - queued
           - sent
-          - acknowleded
+          - acknowledged
           - discarded
       notificationLang:
         description: Language of notification message (RFC 3066)
@@ -994,27 +994,27 @@ definitions:
           - mobile
           - invoice
           - other
-      paymentMeansCurrency:
+      currency:
         description: Payment currency (ISO 4217)
         type: string
         example: SEK
-      paymentMeansLimitPIN:
+      limitPIN:
         description: Transaction limit if used in combination with PIN
         type: number
         example: 10000
-      paymentMeansLimit:
+      limit:
         description: Transaction limit if used without PIN
         type: number
         example: 200
-      paymentMeansTokenProofRequired:
+      tokenProofRequired:
         description: True if token proof is required for all transactions
         type: boolean
         example: true
-      paymentMeansBalance:
+      balance:
         description: Current balance (if available)
         type: number
         example: 200
-      paymentMeansDepositAllowed:
+      depositAllowed:
         description: Is deposit (negative transactionAmount) allowed?
         type: boolean
 
@@ -1053,6 +1053,8 @@ definitions:
 
   transactionInformation:
     type: object
+    required:
+      - transactionId
     properties:
       transactionId:
         description: The transaction identifier
@@ -1081,12 +1083,14 @@ definitions:
         description: Set to true if transaction has been cancelled
         type: boolean
       transactionExpire:
-        description: Timestamp when a pending transaction expires and can no longer be committed.
+        description: Timestamp when a pending transaction expires and can no longer be committed, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       transactionCancellableExpire:
-        description: Timestamp when a comitted transaction can no longer be cancelled.
+        description: Timestamp when a comitted transaction can no longer be cancelled, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
         format: date-time
         example: '2018-11-13T20:20:39+00:00'
@@ -1094,9 +1098,9 @@ definitions:
         $ref: '#/definitions/tokenProof'
 
   issueRequest:
+    type: object
     required:
       - transactionReference
-    type: object
     properties:
       transactionReference:
         description: Requestors transaction reference
@@ -1118,6 +1122,8 @@ definitions:
 
   tokenChallenge:
     type: object
+    required:
+      - authenticationChallenge
     properties:
       authenticationChallenge:
         description: The challenge to be used as authentication input
@@ -1183,6 +1189,8 @@ definitions:
 
   travellersPerCategoryItem:
     type: object
+    required:
+      - tra
     properties:
       cat:
         description: Traveller category
@@ -1212,6 +1220,8 @@ definitions:
   productSetInformation:
     description: Product Set Information
     type: object
+    required:
+      - productSetId
     properties:
       productSetId:
         description: Product Set Identifier
@@ -1228,14 +1238,8 @@ definitions:
       description:
         description: Ticket description
         type: string
-        example: >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+        example: |
+          Lorem ipsum dolor sit amet ...
       rides:
         description: Ordered list of planned rides
         type: array
@@ -1247,7 +1251,7 @@ definitions:
         items:
           type: string
           example: |
-            "Cykel får medföras utan kostnad, dock ej 0600-0900 och 1600-1800."
+            "Bike is allowed, no extra fee. Not allowed between 0600-0900 and 1600-1800."
       status:
         $ref: '#/definitions/productSetStatus'
       timeConstraints:
@@ -1299,6 +1303,8 @@ definitions:
 
   ticket:
     type: object
+    required:
+      - ticketId
     properties:
       title:
         description: Product title
@@ -1336,31 +1342,36 @@ definitions:
       - timeOfIssue
     properties:
       timeOfIssue:
-        description: Date and time for when product set was issued
+        description: Date and time for when product set was issued, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       startOfValidity:
-        description: Date and time for start of validity
+        description: Date and time for start of validity, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       endOfValidity:
-        description: Date and time for end of validity
+        description: Date and time for end of validity, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       relativeValidity:
-        description: Validity period in ISO 8601 duration format
+        description: Validity period in ISO 8601:2004 duration format (MTS8, chapter 2.4)
         type: string
         example: "PT24H"
       latestActivation:
-        description: Date and time for latest activation
+        description: Date and time for latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
       latestActivationExpire:
-        description: Date and time for expiry of latest activation
+        description: Date and time for expiry of latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: "2018-11-14T20:20:39+00:00"
@@ -1503,6 +1514,10 @@ definitions:
       currency:
         description: Currency code (ISO 4217)
         type: string
+      label:
+        description: Fare label
+        type: string
+        example: Group discount
       description:
         description: Fare description
         type: string

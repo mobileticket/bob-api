@@ -35,7 +35,7 @@ This CR also includes the functionality already discussed in BOBX-16, as it is c
 
 ## Desired situation and purpose
 
-The desired situation is to have the Bob APIs support these functions.
+The desired situation is to have the BoB APIs support these functions.
 
 ## Proposed solution
 
@@ -45,7 +45,7 @@ A cross-border ticket may have been sold in inactive state (being dormant) and t
 
 To enable this, it is suggested to add a simple function to the Token API where sales channels may register hints to a hint list. A hint is merely an entry in the list telling the inquirer which sales channels that may hold information on issued combined tickets. Each entry has an expiry time which should be set to the end of the absolute validity period. It should be noted that only cross-border tickets (or tickets valid at another operator) need to be registered in the hint list. It is the sales channels decision if it is relevant to register a hint or not.
 
-By recovering the hint list a TVM (for instance) can list what combined tickets are bound to a token and offer the traveller to also active dormant combined tickets. To active them, the TVM would request the selling party to activate them through each Ticket API.
+By recovering the hint list a TVM (for instance) can list what combined tickets are bound to a token and offer the traveller to also active dormant combined tickets. To activate them, the TVM would request the selling party to activate them through each Ticket API.
 
 The following sequence diagram describes the flow:
 
@@ -54,16 +54,16 @@ The following sequence diagram describes the flow:
 
 ### Support for multi-trip tickets
 
-Tied to the activation of formant cross-border tickets is the functionality to support multi-trip tickets, also in ID-based scenarios. Such tickets have traditionally been offered with a discount compared to buying single-trip tickets, and as a convienient way to purchase tickets in advance without having to deal with a ticket vending machine before embarking.
+Tied to the activation of dormant cross-border tickets is the functionality to support multi-trip tickets, also in ID-based scenarios. Such tickets have traditionally been offered with a discount compared to buying single-trip tickets, and as a convienient way to purchase tickets in advance without having to deal with a ticket vending machine before embarking.
 
-Simple examples includes pre-purchasing of 10 trips, but more complex variants exists as well. Such examples are tickets which are valid for 20 trips within a time window of 60 days counting from the first trip. Another example is school-passes, which is valid for two trips per day during the semester, but only on work-days.
+Simple examples includes pre-purchasing of 10 trips, but more complex variants exists as well. Such examples are tickets which are valid for 20 trips within a time window of 60 days counting from the first trip. Another example is school-passes, which is valid for two trips per day during the semester, but only on school-days.
 
-To support this latter use case, a new ticket state is introduced ("suspended"). A school-pass with such restrictions would typically enter the suspended state after the second trip of a school day and over the weekend. In addition, information objects providing the sales channel with the insights into the applicable restrictions have been added to the product API.
+To support this latter use case, a new ticket state is introduced ("suspended"). A school-pass with such restrictions would typically enter the suspended state after the second trip of a school day and over the weekend. In addition, information objects providing the sales channel with the insights into the applicable restrictions have been added to the Product API.
 
 
 ### Ability to re-purchase (previously bought) products using foreign sales system 
 
-A traveller who has bought a travel pass in Region A which is valid for cross-border travel between Region A and Region B, may discover when being in Region B that the travel pass has expired and wants to re-new it for another period. However, the only party holding the original product search parameters is the sales channel in Region A, where the original purchase was made. In special cases, it may also be that only this sales channel has the required agreements in place to sell this specific product. The proposed solution to this challenge is to have a function to trigger the same product search again through the sales channel in Region A, using the current sales channel (for instance, a TVM in Region B). Using this functionality, the payment can also be made using payment means tied to the token in the original sales channel.
+A traveller who has bought a travel pass in Region A which is valid for cross-border travel between Region A and Region B, may discover when being in Region B that the travel pass has expired and wants to renew it for another period. However, the only party holding the original product search parameters is the sales channel in Region A, where the original purchase was made. In special cases, it may also be that only this sales channel has the required agreements in place to sell this specific product. The proposed solution to this challenge is to have a function to trigger the same product search again through the sales channel in Region A, using the current sales channel (for instance, a TVM in Region B). Using this functionality, the payment can also be made using payment means tied to the token in the original sales channel.
 
 It is also proposed to add the ability to (optionally) alter some options related to the product query, these options are limited to travellersPerCategory and productProperties (only). A foreign sales channel may present the productProperties set in the productSetInformation if these are consistent across tickets, and allow the customer to alter such options. For instance, a productProperty could represent certain add-ons to the product which affects the price and may or may not be desirable for the re-purchase. It could also be possible to alter travellersPerCategory if that makes sense in the current context. For instance if the re-purchase operation references a single-journey ticket which the traveller frequently purchases. Allowing a traveller to quickly buy the same ticket for multiple travellers could be convenient. 
 
@@ -88,10 +88,10 @@ It should be noted that it is not a requirement to register a preferred PSP with
 
 ## Affected specifications and APIs
 
-BoB Traveller API
-BoB Token API
-BoB Product API
-BoB Ticket API
+* BoB Traveller API
+* BoB Token API
+* BoB Product API
+* BoB Ticket API
 
 
 ## Other affected stakeholders

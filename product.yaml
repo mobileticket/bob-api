@@ -76,7 +76,7 @@ paths:
             $ref: '#/definitions/productFilter'
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetAlternatives'
           headers:
@@ -186,7 +186,7 @@ paths:
           type: string
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: "#/definitions/product"
           headers:
@@ -225,7 +225,7 @@ paths:
           type: string
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/fareCategories'
           headers:
@@ -258,7 +258,7 @@ paths:
           type: string
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productCategories'
           headers:
@@ -291,7 +291,7 @@ paths:
           type: string
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/travellerCategories'
           headers:
@@ -378,7 +378,7 @@ paths:
           type: string
       responses:
         200:
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/productSetManifest'
           headers:
@@ -843,7 +843,7 @@ definitions:
     properties:
       absoluteValidity:
         description: The absolute validity period in which the ticket must be used
-          as ISO 8601:2004 duration format (MTS8, chapter 2.3). 
+          as ISO 8601:2004 time interval (MTS8, chapter 2.5).
         type: string
         example: 20200101/P1Y
       active:
@@ -852,10 +852,10 @@ definitions:
         type: boolean
       relativeValidity:
         description: Relative validity period of each activation in ISO 8601
-          duration format (MTS8, chapter 2.3).
+          duration format (MTS8, chapter 2.4).
         type: string
         example: P1M
-      relativeValdityStart:
+      relativeValidityStart:
         description: Start of relative the validity period if the relative validity 
           is not counted from the time of activation, defined as an unbounded ISO
           8601 recurring time interval (MTS8, chapter 2.6). 

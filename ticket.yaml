@@ -27,48 +27,48 @@ paths:
         - name: pid
           in: query
           description: Filter on participant ID requesting the ticket
-          required: False
+          required: false
           type: integer
           format: int64
         - name: requestId
           in: query
           description: Filter on request ID
-          required: False
+          required: false
           type: string
         - name: travellerId
           in: query
           description: Filter on travellers ID
-          required: False
+          required: false
           type: string
         - name: tokenId
           in: query
           description: Filter on token ID
-          required: False
+          required: false
           type: string
         - name: active
           in: query
           description: Filter on active tickets
-          required: False
+          required: false
           type: boolean
         - name: suspended
           in: query
           description: Filter on suspended tickets
-          required: False
+          required: false
           type: boolean
         - name: refunded
           in: query
           description: Filter on refunded tickets
-          required: False
+          required: false
           type: boolean
         - name: refundable
           in: query
           description: Filter on refundable tickets
-          required: False
+          required: false
           type: boolean
         - name: hindered
           in: query
           description: Filter on tickets with hinderedStatus set
-          required: False
+          required: false
           type: boolean
       responses:
         '200':
@@ -80,7 +80,7 @@ paths:
             items:
               $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorised
+          description: Unauthorized
     post:
       tags:
         - ticket
@@ -123,7 +123,7 @@ paths:
         '400':
           description: Manifest is invalid or from unknown participant
         '401':
-          description: Unauthorised
+          description: Unauthorized
   '/ticket/{ticketId}':
     get:
       tags:
@@ -152,7 +152,7 @@ paths:
           schema:
             $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
     patch:
@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/refundableStatus':
@@ -220,7 +220,7 @@ paths:
           schema:
             $ref: '#/definitions/refundableStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/refundStatus':
@@ -252,7 +252,7 @@ paths:
           schema:
             $ref: '#/definitions/refundStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
     put:
@@ -281,7 +281,7 @@ paths:
         '400':
           description: Ticket could not be refunded
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/recoverableStatus':
@@ -309,11 +309,11 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/recoverableStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/recoverStatus':
@@ -337,11 +337,11 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/recoverStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
     put:
@@ -370,7 +370,7 @@ paths:
         '400':
           description: Ticket could not be recovered
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/hinderedStatus':
@@ -402,7 +402,7 @@ paths:
           schema:
             $ref: '#/definitions/hinderedStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
     put:
@@ -438,7 +438,7 @@ paths:
         '400':
           description: Ticket hindered status could not be set
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/revoke':
@@ -468,7 +468,7 @@ paths:
         '200':
           description: Successful operation, ticket in revoved state.
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/active':
@@ -498,7 +498,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketActiveStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
     put:
@@ -533,10 +533,10 @@ paths:
         '200':
           description: Successful operation, ticket is now inactive
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
-  '/ticket/{ticketId}/activation':
+  '/ticket/{ticketId}/activationStatus':
     get:
       tags:
         - ticket
@@ -563,10 +563,10 @@ paths:
           schema:
             $ref: '#/definitions/ticketActivationStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
-  '/ticket/{ticketId}/suspended':
+  '/ticket/{ticketId}/suspendedStatus':
     get:
       tags:
         - ticket
@@ -593,7 +593,7 @@ paths:
           schema:
             $ref: '#/definitions/suspensionStatus'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/event':
@@ -626,7 +626,7 @@ paths:
             items:
               $ref: '#/definitions/ticketEventResult'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/event/{eventId}':
@@ -662,7 +662,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketEventResult'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket and event combination not found
   '/ticketbundle':
@@ -700,7 +700,7 @@ paths:
         '400':
           description: All the ticket didn't come from the same ticket bundle
         '401':
-          description: Unauthorised
+          description: Unauthorized
   '/ticketbundle/{ticketBundleId}':
     get:
       tags:
@@ -727,7 +727,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketBundle'
         '401':
-          description: Unauthorised
+          description: Unauthorized
         '404':
           description: Ticket bundle not found
 definitions:
@@ -953,19 +953,21 @@ definitions:
       - active
     properties:
       active:
-        description: 'True if ticket is active and ready to use, otherwise false.'
+        description: True if ticket is active and ready to use, otherwise false.
         type: boolean
       relativeValidity:
-        description: Validity period in ISO 8601 duration format
+        description: Validity period in ISO 8601 duration format (MTS8, chapter 2.4)
         type: string
         example: PT24H
       latestActivation:
-        description: Date and time for latest activation
+        description: Date and time for latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-28T14:20:39+00:00'
       latestActivationExpire:
-        description: Date and time for expiration of latest activation
+        description: Date and time for expiration of latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
@@ -982,10 +984,11 @@ definitions:
       - suspended
     properties:
       suspended:
-        description: 'True if ticket is suspended from use, otherwise false.'
+        description: True if ticket is suspended from use, otherwise false.
         type: boolean
       suspensionExpire:
-        description: Date and time for expiration of the suspension status
+        description: Date and time for expiration of the suspension status, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
