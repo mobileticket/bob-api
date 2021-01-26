@@ -134,7 +134,7 @@ paths:
           schema:
             $ref: '#/definitions/travellerInformation'
       responses:
-        '200':
+        '204':
           description: Successful operation
     delete:
       tags:
@@ -648,6 +648,8 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
+        '404':
+          description: MTB for issuer signature not found
   '/productSet/{productSetId}':
     get:
       tags:
@@ -729,8 +731,10 @@ paths:
           schema:
             $ref: '#/definitions/productSetStatus'
       responses:
-        '200':
+        '204':
           description: Successful operation
+        '400':
+          description: Invalid data in request
         '401':
           description: Unauthorised
         '403':
@@ -1192,6 +1196,14 @@ definitions:
       surcharge:
         description: Product property surcharge
         $ref: '#/definitions/fare'
+      surcharges:
+        description: |
+          Product property surcharges. Can be several entries when surcharges include product property surcharges, discounts, different
+          currencies or different VAT percentages. Total cost is the sum of all entries for any given currency.
+          Discounts have negative amounts.
+        type: array
+        items:
+          $ref: '#/definitions/fare'
 
   travellersPerCategory:
     description: Information about all travellers
