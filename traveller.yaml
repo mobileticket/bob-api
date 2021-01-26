@@ -1366,7 +1366,7 @@ definitions:
         example: "2018-11-14T20:20:39+00:00"
       numberOfActivations:
         description: |
-          Total number of times the product set can be activated
+          Initial value for number of activations
         type: integer
         format: int64
         example: 1
