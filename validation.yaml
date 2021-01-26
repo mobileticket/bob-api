@@ -437,6 +437,43 @@ definitions:
         $ref: '#/definitions/ticketMetadata'
       ticketEvent:
         $ref: '#/definitions/ticketEvent'
+      ticketActivationStatus:
+        $ref: '#/definitions/ticketActivationStatus'
+  ticketActivationStatus:
+    description: Activation status
+    type: object
+    required:
+      - active
+    properties:
+      active:
+        description: 'True if ticket is active and ready to use, otherwise false.'
+        type: boolean
+      relativeValidity:
+        description: Validity period in ISO 8601 duration format
+        type: string
+        example: PT24H
+      latestActivation:
+        description: Date and time for latest activation
+        type: string
+        format: date-time
+        example: '2020-08-28T14:20:39+00:00'
+      latestActivationExpire:
+        description: Date and time for expiration of latest activation
+        type: string
+        format: date-time
+        example: '2020-08-29T03:00:00+00:00'
+      numberOfActivations:
+        description: |
+          Total number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
+      remainingActivations:
+        description: |
+          Remaining number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
   ticketMetadata:
     description: Metadata associated with a ticket
     type: object
