@@ -754,6 +754,8 @@ definitions:
         $ref: '#/definitions/ticketMetadata'
       ticketEvent:
         $ref: '#/definitions/ticketEvent'
+      ticketActivationStatus:
+        $ref: '#/definitions/ticketActivationStatus'
   ticketBundleRequest:
     description: List of ticket identifiers of tickets to be included in ticket bundle
     type: object
@@ -970,6 +972,12 @@ definitions:
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
+      numberOfActivations:
+        description: |
+          Total number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
       remainingActivations:
         description: |
           Remaining number of times the product set can be activated
