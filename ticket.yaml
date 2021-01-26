@@ -958,16 +958,6 @@ definitions:
       active:
         description: 'True if ticket is active and ready to use, otherwise false.'
         type: boolean
-      startOfValidity:
-        description: Date and time for start of validity
-        type: string
-        format: date-time
-        example: '2018-11-13T20:20:39+00:00'
-      endOfValidity:
-        description: Date and time for end of validity
-        type: string
-        format: date-time
-        example: '2018-11-13T20:20:39+00:00'
       relativeValidity:
         description: Validity period in ISO 8601 duration format
         type: string
