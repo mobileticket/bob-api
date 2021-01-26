@@ -80,7 +80,7 @@ paths:
             items:
               $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorized
+          description: Unauthorised
     post:
       tags:
         - ticket
@@ -123,7 +123,7 @@ paths:
         '400':
           description: Manifest is invalid or from unknown participant
         '401':
-          description: Unauthorized
+          description: Unauthorised
   '/ticket/{ticketId}':
     get:
       tags:
@@ -152,7 +152,7 @@ paths:
           schema:
             $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
     patch:
@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/ticket'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/refundableStatus':
@@ -220,7 +220,7 @@ paths:
           schema:
             $ref: '#/definitions/refundableStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/refundStatus':
@@ -252,7 +252,7 @@ paths:
           schema:
             $ref: '#/definitions/refundStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
     put:
@@ -281,7 +281,7 @@ paths:
         '400':
           description: Ticket could not be refunded
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/recoverableStatus':
@@ -313,7 +313,7 @@ paths:
           schema:
             $ref: '#/definitions/recoverableStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/recoverStatus':
@@ -341,7 +341,7 @@ paths:
           schema:
             $ref: '#/definitions/recoverStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
     put:
@@ -370,7 +370,7 @@ paths:
         '400':
           description: Ticket could not be recovered
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/hinderedStatus':
@@ -402,7 +402,7 @@ paths:
           schema:
             $ref: '#/definitions/hinderedStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
     put:
@@ -438,7 +438,7 @@ paths:
         '400':
           description: Ticket hindered status could not be set
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/revoke':
@@ -468,7 +468,7 @@ paths:
         '200':
           description: Successful operation, ticket in revoved state.
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/active':
@@ -498,7 +498,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketActiveStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
     put:
@@ -533,7 +533,7 @@ paths:
         '200':
           description: Successful operation, ticket is now inactive
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/activationStatus':
@@ -563,7 +563,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketActivationStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/suspendedStatus':
@@ -593,7 +593,7 @@ paths:
           schema:
             $ref: '#/definitions/suspensionStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/event':
@@ -626,7 +626,7 @@ paths:
             items:
               $ref: '#/definitions/ticketEventResult'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket not found
   '/ticket/{ticketId}/event/{eventId}':
@@ -662,7 +662,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketEventResult'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket and event combination not found
   '/ticketbundle':
@@ -700,7 +700,7 @@ paths:
         '400':
           description: All the ticket didn't come from the same ticket bundle
         '401':
-          description: Unauthorized
+          description: Unauthorised
   '/ticketbundle/{ticketBundleId}':
     get:
       tags:
@@ -727,7 +727,7 @@ paths:
           schema:
             $ref: '#/definitions/ticketBundle'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '404':
           description: Ticket bundle not found
 definitions:
@@ -944,7 +944,7 @@ definitions:
       tokenTransaction:
         $ref: '#/definitions/tokenTransaction'
   ticketActiveStatus:
-    description: True if ticket is active and ready to use, otherwise false.
+    description: True if ticket is active, otherwise false.
     type: boolean
   ticketActivationStatus:
     description: Activation status
@@ -953,7 +953,7 @@ definitions:
       - active
     properties:
       active:
-        description: True if ticket is active and ready to use, otherwise false.
+        description: True if ticket is active, otherwise false.
         type: boolean
       relativeValidity:
         description: Validity period in ISO 8601 duration format (MTS8, chapter 2.4)

@@ -847,8 +847,7 @@ definitions:
         type: string
         example: 20200101/P1Y
       active:
-        description: True if ticket is always issued in active state and 
-          ready to use, otherwise false.
+        description: True if ticket is always issued in active state, otherwise false.
         type: boolean
       relativeValidity:
         description: Relative validity period of each activation in ISO 8601

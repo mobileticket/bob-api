@@ -183,7 +183,7 @@ paths:
     post:
       tags:
         - traveller
-      summary: Post request to perform transaction on travellers wallet
+      summary: Perform transaction on travellers wallet
       operationId: postTravellerWalletTransactionRequest
       consumes:
         - application/json
@@ -214,7 +214,7 @@ paths:
               description: URL of the created transaction
               type: string
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
         '409':
@@ -249,7 +249,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
-          description: Unauthorized
+          description: Unauthorised
     patch:
       tags:
         - traveller
@@ -289,7 +289,7 @@ paths:
               description: URL of the updated transaction
               type: string
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
   '/traveller/{travellerId}/notification':
@@ -412,7 +412,7 @@ paths:
     post:
       tags:
         - token
-      summary: Post request to purchase ticket on behalf of traveller
+      summary: Purchase ticket on behalf of traveller
       operationId: requestTokenTicket
       parameters:
         - name: X-BoB-AuthToken
@@ -477,7 +477,7 @@ paths:
     post:
       tags:
         - token
-      summary: Post request to perform transaction on wallet tied to token
+      summary: Perform transaction on wallet tied to token
       operationId: postTokenWalletTransactionRequest
       consumes:
         - application/json
@@ -508,7 +508,7 @@ paths:
               description: URL of the created transaction
               type: string
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
         '409':
@@ -543,7 +543,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformation'
         '401':
-          description: Unauthorized
+          description: Unauthorised
     patch:
       tags:
         - token
@@ -583,7 +583,7 @@ paths:
               description: URL of the updated transaction
               type: string
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
   '/mtb/{issuerSignature}/productSets':
@@ -612,7 +612,7 @@ paths:
           schema:
             $ref: '#/definitions/productSets'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden
   '/mtb/{issuerSignature}/activate':
@@ -645,7 +645,7 @@ paths:
         '204':
           description: Successful operation
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden
   '/productSet/{productSetId}':
@@ -673,7 +673,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden
   '/productSet/{productSetId}/status':
@@ -701,7 +701,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetStatus'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden
     put:
@@ -732,7 +732,7 @@ paths:
         '200':
           description: Successful operation
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden
   '/productSet/{productSetId}/issue':
@@ -766,7 +766,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, recreation failed
   '/productSet/{productSetId}/recreate':
@@ -801,7 +801,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformation'
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, recreation failed
   '/ticketNotification':
@@ -827,7 +827,7 @@ paths:
         '201':
           description: Created ok
         '401':
-          description: Unauthorized
+          description: Unauthorised
         '403':
           description: Forbidden, creation failed
 
@@ -862,6 +862,10 @@ definitions:
         example: '2020-08-28T23:20:50.52Z'
   travellerNotification:
     type: object
+    required:
+      - notificationId
+      - notificationStatus
+      - notificationMessage
     properties:
       notificationId:
         type: string
@@ -966,26 +970,26 @@ definitions:
       paymentMeans:
         type: array
         items:
-          $ref: '#/definitions/paymentMeans'
+          $ref: '#/definitions/paymentMean'
 
-  paymentMeans:
+  paymentMean:
     type: object
     properties:
-      paymentMeansId:
+      id:
         description: Identifier of the payment means (unique per traveller)
         type: string
         example: 3D456793-6384-4E50-AF00-636A2520065E
-      paymentMeansPreference:
+      preference:
         description: |
           Traveller's preference of the payment means (lower number means
           higher preference. Zero indicates no preference.)
         type: number
         example: 0
-      paymentMeansName:
+      name:
         description: User-distinguishable name of the payment means
         type: string
         example: Kundkassa
-      paymentMeansType:
+      type:
         description: Type of payment means
         type: string
         enum:
@@ -1015,11 +1019,14 @@ definitions:
         type: number
         example: 200
       depositAllowed:
-        description: Is deposit (negative transactionAmount) allowed?
+        description: True if deposit (negative transactionAmount) is allowed, otherwise false
         type: boolean
 
   walletTransactionRequest:
     type: object
+    required:
+      - transactionReference
+      - transactionAmount
     properties:
       transactionReference:
         description: Requestors transaction reference
@@ -1055,6 +1062,8 @@ definitions:
     type: object
     required:
       - transactionId
+      - transactionReference
+      - transactionAmount
     properties:
       transactionId:
         description: The transaction identifier
@@ -1111,14 +1120,17 @@ definitions:
 
   transactionUpdate:
     type: object
+    required:
+      - action
     properties:
-      transactionCommit:
+      action:
         description: |
-          Set to true to withdraw from the wallet and commit the transaction.
-        type: boolean
-      transactionCancel:
-        description: Set to true to cancel the wallet reservation or withdrawal.
-        type: boolean
+          commit - to withdraw from the wallet and commit the transaction
+          cancel - to cancel the wallet reservation or withdrawal
+        type: string
+        enum:
+          - commit
+          - cancel
 
   tokenChallenge:
     type: object
@@ -1165,8 +1177,8 @@ definitions:
     description: Product property assignments
     type: object
     required:
-     - name
-     - value
+      - name
+      - value
     properties:
       name:
         description: Product property name
@@ -1277,8 +1289,8 @@ definitions:
     description: Tickets issued by a participant
     type: object
     required:
-    - pid
-    - tickets
+      - pid
+      - tickets
     properties:
       pid:
         $ref: '#/definitions/pid'
