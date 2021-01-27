@@ -754,6 +754,8 @@ definitions:
         $ref: '#/definitions/ticketMetadata'
       ticketEvent:
         $ref: '#/definitions/ticketEvent'
+      ticketActivationStatus:
+        $ref: '#/definitions/ticketActivationStatus'
   ticketBundleRequest:
     description: List of ticket identifiers of tickets to be included in ticket bundle
     type: object
@@ -778,7 +780,8 @@ definitions:
     type: object
     properties:
       relativeValidityStart:
-        description: Start of ticket validity period as ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        description: Start of ticket's relative validity period in ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
+        example: 2020-01-22T03:00:00Z
         format: date-time
         type: string
       travellerPhotoURL:
@@ -971,6 +974,12 @@ definitions:
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
+      numberOfActivations:
+        description: |
+          Total number of times the product set can be activated
+        type: integer
+        format: int64
+        example: 1
       remainingActivations:
         description: |
           Remaining number of times the product set can be activated
