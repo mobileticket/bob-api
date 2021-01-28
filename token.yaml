@@ -193,13 +193,13 @@ paths:
             $ref: '#/definitions/hint'
       responses:
         '201':
-          description: created
+          description: Created
           headers:
             location:
               description: URL of hint
               type: string
         '401':
-          description: unauthorized
+          description: Unauthorised
   '/token/{thumbprint}/hint/{hintId}':
     get:
       summary: Get token hint
@@ -238,7 +238,7 @@ paths:
       description: |
         Delete token hint matching the query. This method is used for
         deleting a specific hint of tickets issued to the token. Only the
-        participant creating the hint may delete it.
+        participant that created the hint may delete it.
       operationId: deleteTokenHint
       produces:
         - application/json
@@ -262,10 +262,10 @@ paths:
           required: true
           type: string
       responses:
-        200:
-          description: successful operation
+        204:
+          description: Successfully deleted hint
         401:
-          description: unauthorized
+          description: Unauthorised
   '/token/{thumbprint}/psp':
     get:
       summary: Get preferred payment service provider registered to token
@@ -302,7 +302,7 @@ paths:
       summary: Set preferred payment service provider registered to token
       description: |
         Set preferred payment service provider registered to token. This method
-        is used for retrieving a payment service which the traveller has selected
+        is used for setting the payment service which the traveller has selected
         as preferred, and which should be used for withdrawing funds as
         appropriate. There can be only one preferred PSP per token.
       operationId: putTokenPsp
@@ -330,9 +330,9 @@ paths:
             $ref: '#/definitions/psp'
       responses:
         204:
-          description: successful operation
+          description: Successful operation
         401:
-          description: unauthorized
+          description: Unauthorised
     delete:
       summary: |
         Delete preferred payment service provider registered to token
@@ -357,9 +357,9 @@ paths:
           type: string
       responses:
         204:
-          description: successful operation
+          description: Successfully deleted psp
         401:
-          description: unauthorized
+          description: Unauthorised
 definitions:
   jwkPublic:
     type: object
@@ -422,7 +422,7 @@ definitions:
         $ref: '#/definitions/serial'
       revoked:
         type: boolean
-        example: False
+        example: false
       thumbprint:
         $ref: '#/definitions/thumbprint'
       publicKey:
@@ -471,8 +471,9 @@ definitions:
         example: 1
       expire:
         description: |
-          Expire time stamp as ISO 8601:2004 profile extended format to
-          indicate when the entry should be purged from the hint list
+          Expire time stamp as ISO 8601:2004 profile extended format
+          (MTS8, chapter 2.3) to indicate when the entry should be
+          purged from the hint list
         type: string
         format: date-time
         example: "1985-04-12T23:20:50.52Z"

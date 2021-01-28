@@ -449,16 +449,18 @@ definitions:
         description: 'True if ticket is active and ready to use, otherwise false.'
         type: boolean
       relativeValidity:
-        description: Validity period in ISO 8601 duration format
+        description: Validity period in ISO 8601 duration format (MTS8, chapter 2.4)
         type: string
         example: PT24H
       latestActivation:
-        description: Date and time for latest activation
+        description: Date and time for latest activation as ISO 8601:2004 profile
+          extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-28T14:20:39+00:00'
       latestActivationExpire:
-        description: Date and time for expiration of latest activation
+        description: Date and time for expiration of latest activation as ISO 8601:2004 profile
+          extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'

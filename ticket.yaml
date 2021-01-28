@@ -27,48 +27,48 @@ paths:
         - name: pid
           in: query
           description: Filter on participant ID requesting the ticket
-          required: False
+          required: false
           type: integer
           format: int64
         - name: requestId
           in: query
           description: Filter on request ID
-          required: False
+          required: false
           type: string
         - name: travellerId
           in: query
           description: Filter on travellers ID
-          required: False
+          required: false
           type: string
         - name: tokenId
           in: query
           description: Filter on token ID
-          required: False
+          required: false
           type: string
         - name: active
           in: query
           description: Filter on active tickets
-          required: False
+          required: false
           type: boolean
         - name: suspended
           in: query
           description: Filter on suspended tickets
-          required: False
+          required: false
           type: boolean
         - name: refunded
           in: query
           description: Filter on refunded tickets
-          required: False
+          required: false
           type: boolean
         - name: refundable
           in: query
           description: Filter on refundable tickets
-          required: False
+          required: false
           type: boolean
         - name: hindered
           in: query
           description: Filter on tickets with hinderedStatus set
-          required: False
+          required: false
           type: boolean
       responses:
         '200':
@@ -309,7 +309,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/recoverableStatus'
         '401':
@@ -337,7 +337,7 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           schema:
             $ref: '#/definitions/recoverStatus'
         '401':
@@ -566,7 +566,7 @@ paths:
           description: Unauthorised
         '404':
           description: Ticket not found
-  '/ticket/{ticketId}/suspended':
+  '/ticket/{ticketId}/suspendedStatus':
     get:
       tags:
         - ticket
@@ -947,7 +947,7 @@ definitions:
       tokenTransaction:
         $ref: '#/definitions/tokenTransaction'
   ticketActiveStatus:
-    description: True if ticket is active and ready to use, otherwise false.
+    description: True if ticket is active, otherwise false.
     type: boolean
   ticketActivationStatus:
     description: Activation status
@@ -956,19 +956,21 @@ definitions:
       - active
     properties:
       active:
-        description: 'True if ticket is active and ready to use, otherwise false.'
+        description: True if ticket is active, otherwise false.
         type: boolean
       relativeValidity:
-        description: Validity period in ISO 8601 duration format
+        description: Validity period in ISO 8601 duration format (MTS8, chapter 2.4)
         type: string
         example: PT24H
       latestActivation:
-        description: Date and time for latest activation
+        description: Date and time for latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-28T14:20:39+00:00'
       latestActivationExpire:
-        description: Date and time for expiration of latest activation
+        description: Date and time for expiration of latest activation, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
@@ -991,10 +993,11 @@ definitions:
       - suspended
     properties:
       suspended:
-        description: 'True if ticket is suspended from use, otherwise false.'
+        description: True if ticket is suspended from use, otherwise false.
         type: boolean
       suspensionExpire:
-        description: Date and time for expiration of the suspension status
+        description: Date and time for expiration of the suspension status, as
+          ISO 8601:2004 profile extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
         example: '2020-08-29T03:00:00+00:00'
