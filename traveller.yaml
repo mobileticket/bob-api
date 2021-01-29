@@ -1262,8 +1262,6 @@ definitions:
       description:
         description: Ticket description
         type: string
-        example: |
-          Lorem ipsum dolor sit amet ...
       rides:
         description: Ordered list of planned rides
         type: array
