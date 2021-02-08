@@ -1105,9 +1105,6 @@ definitions:
       - pid
       - productId
     properties:
-      transactionReference:
-        description: Requestors transaction reference
-        type: string
       pid:
         $ref: '#/definitions/pid'
       productId:
@@ -1116,6 +1113,9 @@ definitions:
       travellersPerCategory:
         description: Specify the number of travellers per category
         $ref: '#/definitions/travellersPerCategory'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
 
   issueRequest:
     type: object
