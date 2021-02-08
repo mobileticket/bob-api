@@ -425,23 +425,12 @@ paths:
           description: Token ID
           required: true
           type: string
-        - name: pid
-          in: query
-          description: Participant ID to purchase from
-          required: true
-          type: integer
-          format: int64
-        - name: productId
-          in: query
-          description: Product ID to purchase
-          required: true
-          type: string
-        - name: travellersPerCategory
-          description: Specify the number of travellers per category
-          required: false
+        - name: purchaseRequest
           in: body
+          description: Purchase request
+          required: true
           schema:
-            $ref: '#/definitions/travellersPerCategory'
+            $ref: '#/definitions/purchaseRequest'
       responses:
         '201':
           description: Successful operation
@@ -1109,6 +1098,24 @@ definitions:
         example: '2018-11-13T20:20:39+00:00'
       tokenProof:
         $ref: '#/definitions/tokenProof'
+
+  purchaseRequest:
+    type: object
+    required:
+      - pid
+      - productId
+    properties:
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
+      pid:
+        $ref: '#/definitions/pid'
+      productId:
+        description: Product ID to purchase
+        type: string
+      travellersPerCategory:
+        description: Specify the number of travellers per category
+        $ref: '#/definitions/travellersPerCategory'
 
   issueRequest:
     type: object
