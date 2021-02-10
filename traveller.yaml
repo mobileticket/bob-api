@@ -438,6 +438,8 @@ paths:
             location:
               description: URL of created ticket bundle
               type: string
+        '402':
+          description: Payment declined
   '/token/{tokenId}/wallet':
     get:
       tags:
