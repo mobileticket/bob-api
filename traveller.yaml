@@ -730,6 +730,32 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
+  '/productSet/{productSetId}/cancel':
+    post:
+      tags:
+        - productSet
+      summary: Cancel a pending product set
+      operationId: cancelProductSet
+      consumes:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetId
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden, recreation failed
   '/productSet/{productSetId}/issue':
     post:
       tags:
@@ -1296,6 +1322,7 @@ definitions:
       - recreated
       - refunded
       - revoked
+      - cancelled
     example: "issued"
 
   ticketBundle:
