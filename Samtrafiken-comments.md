@@ -39,4 +39,3 @@ The comments are unordered and unprioritised.
 4. Maybe also rename <code>timeConstraints</code> to temporal (compare with Product API)  
 5. Should title and description in object <code>ticket</code> really be "Product title" and "Product description"?
 8. Somewhere describe when a wallet is created? By which system?
-10. Changed <code>transactionUpdate</code> to use an enum instead. To avoid the possibility of setting both to true or both to false.
