@@ -835,7 +835,7 @@ paths:
     post:
       tags:
         - productSet
-      summary: Requst revokation of an issued product set
+      summary: Request revocation of an issued product set
       operationId: revokeProductSet
       consumes:
         - application/json
