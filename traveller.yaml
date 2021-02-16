@@ -670,37 +670,10 @@ paths:
         '403':
           description: Forbidden
   '/productSet/{productSetId}/status':
-    get:
-      tags:
-        - productSet
-      summary: Get product set status
-      operationId: getProductSetStatus
-      produces:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetStatus'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
     put:
       tags:
         - productSet
-      summary: Update product set status
+      summary: Request update of product set status
       operationId: putProductSetStatus
       consumes:
         - application/json
@@ -720,7 +693,7 @@ paths:
           description: Product Set Status to be updated
           required: true
           schema:
-            $ref: '#/definitions/productSetStatus'
+            $ref: '#/definitions/putProductSetStatus'
       responses:
         '204':
           description: Successful operation
@@ -730,40 +703,6 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
-  '/productSet/{productSetId}/issue':
-    post:
-      tags:
-        - productSet
-      summary: Create an equivalent product set
-      operationId: issueProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-        - name: issueRequest
-          in: body
-          description: Issue request
-          required: true
-          schema:
-            $ref: '#/definitions/issueRequest'
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, recreation failed
   '/productSet/{productSetId}/recreate':
     post:
       tags:
@@ -1291,12 +1230,26 @@ definitions:
     type: string
     enum:
       - activated
+      - cancelled
       - expired
       - issued
       - recreated
       - refunded
       - revoked
+      - suspended
     example: "issued"
+
+  putProductSetStatus:
+    description: Product set status
+    type: string
+    enum:
+      - activate
+      - cancel
+      - issue
+      - refund
+      - revoke
+    example: "issue"
+
 
   ticketBundle:
     description: Tickets issued by a participant
