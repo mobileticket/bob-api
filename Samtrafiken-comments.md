@@ -9,7 +9,6 @@ The comments are unordered and unprioritised.
 3. All new fields should have example values (in english where applicable).
 4. HTTP status codes should be added. One example is:
    1. 400 Bad Request - in some places, where maybe certain combination of parameters don't work together
-6. Every endpoint should have a <code>description</code>-tag adjacent to summary!
 
 ## Product API
 
@@ -40,7 +39,6 @@ The comments are unordered and unprioritised.
   
 ## Traveller API
 
-1. <code>PATCH /token/{tokenId}/wallet/transaction</code> - it feels strange to be able to update a transaction. Shouldn't a transaction be atomic? But after a discussion we think we understand why it's designed this way.
 2. <code>productProperty</code> and <code>travellersPerCategory(Item)</code> should be synced as well as possible with corresponding objects in Product API
 3. Should timeOfIssue in <code>timeConstraints</code> really be there? We don't think it's a constraint.
    1. Move it up/out one level?
@@ -67,6 +65,3 @@ The comments are unordered and unprioritised.
     1. /mtb/{issuerSignature}/activate should be .../activiation?
     2. /productSet/{productSetId}/issue should be .../issuance?
     3. /productSet/{productSetId}/recreate should be .../recreation?
-16. Should the list of statuses in <code>productSetStatus</code> also contain created?
-17. Change <code>PUT</code> to return 204, instead of 200. Ok?
-18. <code>POST /ticketNotification<code> clearer text for 403? Which creation failed?
