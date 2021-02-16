@@ -1321,7 +1321,6 @@ definitions:
     type: string
     enum:
       - activated
-      - cancelled
       - expired
       - issued
       - recreated
