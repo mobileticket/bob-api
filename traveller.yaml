@@ -913,7 +913,7 @@ paths:
         '401':
           description: Unauthorised
         '403':
-          description: Forbidden, creation failed
+          description: Forbidden, creation of ticket event notification failed
 
 definitions:
 
