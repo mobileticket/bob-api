@@ -91,6 +91,7 @@ paths:
             location:
               description: URL of traveller information
               type: string
+              format: uri
   '/traveller/{travellerId}':
     get:
       tags:
@@ -235,6 +236,7 @@ paths:
             location:
               description: URL of the created transaction
               type: string
+              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -319,6 +321,7 @@ paths:
             location:
               description: URL of the updated transaction
               type: string
+              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -358,6 +361,7 @@ paths:
             location:
               description: URL of created notification
               type: string
+              format: uri
   '/traveller/{travellerId}/notification/{notificationId}':
     get:
       tags:
@@ -485,6 +489,7 @@ paths:
             location:
               description: URL of created ticket bundle
               type: string
+              format: uri
         '402':
           description: Payment declined
   '/token/{tokenId}/wallet':
@@ -552,6 +557,7 @@ paths:
             location:
               description: URL of the created transaction
               type: string
+              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -635,6 +641,7 @@ paths:
             location:
               description: URL of the updated transaction
               type: string
+              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -741,15 +748,11 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
-  '/productSet/{productSetId}/status':
-    get:
+    delete:
       tags:
         - productSet
-      summary: Get product set status
-      description: |
-        Retrieve information on the status of a Product Set with the given
-        Product Set identifier.
-      operationId: getProductSetStatus
+      summary: Delete a recreated product set
+      operationId: deleteProductSetInformation
       produces:
         - application/json
       parameters:
@@ -764,58 +767,18 @@ paths:
           required: true
           type: string
       responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetStatus'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
-    put:
-      tags:
-        - productSet
-      summary: Update product set status
-      description: |
-        Set the provided status to true of a product set with the given product
-        set identifier.
-      operationId: putProductSetStatus
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-        - name: productSetStatus
-          in: body
-          description: Product Set Status to be updated
-          required: true
-          schema:
-            $ref: '#/definitions/productSetStatus'
-      responses:
         '204':
-          description: Successful operation
-        '400':
-          description: Invalid data in request
+          description: Product set deleted
         '401':
           description: Unauthorised
         '403':
           description: Forbidden
+
   '/productSet/{productSetId}/issue':
     post:
       tags:
         - productSet
-      summary: Create an equivalent product set
-      description: |
-        Set the provided status to true of a product set with the given product
-        set identifier.
+      summary: Issue the recreated product set
       operationId: issueProductSet
       consumes:
         - application/json
@@ -844,7 +807,67 @@ paths:
         '401':
           description: Unauthorised
         '403':
-          description: Forbidden, recreation failed
+          description: Forbidden, issuance failed
+
+  '/productSet/{productSetId}/refund':
+    post:
+      tags:
+        - productSet
+      summary: Request refund of an issued product set
+      operationId: refundProductSet
+      consumes:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetId
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden, refund failed
+
+  '/productSet/{productSetId}/revoke':
+    post:
+      tags:
+        - productSet
+      summary: Request revocation of an issued product set
+      operationId: revokeProductSet
+      consumes:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetId
+          in: path
+          description: Product set ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden, revocation failed
+
+
   '/productSet/{productSetId}/recreate':
     post:
       tags:
@@ -880,10 +903,16 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
+          headers:
+            location:
+              description: URL of recreated product set
+              type: string
+              format: uri
         '401':
           description: Unauthorised
         '403':
           description: Forbidden, recreation failed
+
   '/ticketNotification':
     post:
       tags:
@@ -1385,6 +1414,7 @@ definitions:
       - recreated
       - refunded
       - revoked
+      - suspended
     example: "issued"
 
   ticketBundle:
