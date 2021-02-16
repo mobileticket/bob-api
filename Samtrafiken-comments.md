@@ -39,7 +39,6 @@ The comments are unordered and unprioritised.
   
 ## Traveller API
 
-1. <code>PATCH /token/{tokenId}/wallet/transaction</code> - it feels strange to be able to update a transaction. Shouldn't a transaction be atomic? But after a discussion we think we understand why it's designed this way.
 2. <code>productProperty</code> and <code>travellersPerCategory(Item)</code> should be synced as well as possible with corresponding objects in Product API
 3. Should timeOfIssue in <code>timeConstraints</code> really be there? We don't think it's a constraint.
    1. Move it up/out one level?
