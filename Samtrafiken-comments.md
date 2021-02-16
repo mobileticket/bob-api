@@ -66,5 +66,4 @@ The comments are unordered and unprioritised.
     2. /productSet/{productSetId}/issue should be .../issuance?
     3. /productSet/{productSetId}/recreate should be .../recreation?
 16. Should the list of statuses in <code>productSetStatus</code> also contain created?
-17. Change <code>PUT</code> to return 204, instead of 200. Ok?
 18. <code>POST /ticketNotification<code> clearer text for 403? Which creation failed?
