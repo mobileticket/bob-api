@@ -41,8 +41,3 @@ The comments are unordered and unprioritised.
 6. <code>paymentMean</code> (was paymentMean**s**) have fields that starts with paymentMean... We removed the prefix. We think that is little bit of "kaka-på-kaka", but the BoB APIs are not consequent on this topic!
 8. Somewhere describe when a wallet is created? By which system?
 10. Changed <code>transactionUpdate</code> to use an enum instead. To avoid the possibility of setting both to true or both to false.
-14. <code>activationData</code>
-    1. No required fields?
-    2. Rename <code>activationDateTime</code> to activation. We rarely use DateTime-suffix in BoB.
-    3. Specify format according to MTS8 
-    4. What does activating for ticketId and eventId mean?
