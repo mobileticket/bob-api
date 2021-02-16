@@ -806,7 +806,7 @@ paths:
     post:
       tags:
         - productSet
-      summary: Requst refund of an issued product set
+      summary: Request refund of an issued product set
       operationId: refundProductSet
       consumes:
         - application/json
