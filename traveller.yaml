@@ -767,8 +767,8 @@ paths:
           required: true
           type: string
       responses:
-        '200':
-          description: Successful operation
+        '204':
+          description: Product set deleted
         '401':
           description: Unauthorised
         '403':
