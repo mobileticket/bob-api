@@ -490,6 +490,8 @@ paths:
               description: URL of created ticket bundle
               type: string
               format: uri
+          schema:
+            $ref: '#/definitions/productSetInformation'
         '402':
           description: Payment declined
   '/token/{tokenId}/wallet':
