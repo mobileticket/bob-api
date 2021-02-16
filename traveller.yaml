@@ -14,6 +14,9 @@ paths:
       tags:
         - traveller
       summary: Search for traveller
+      description: |
+        Get information on all travellers matching the search critera 
+        specified by the parameters. 
       operationId: searchTravellerInformation
       produces:
         - application/json
@@ -61,6 +64,9 @@ paths:
       tags:
         - traveller
       summary: Create traveller
+      description: |
+        Create a new entry in the traveller account database with the specified
+        traveller information. 
       operationId: createTravellerInformation
       consumes:
         - application/json
@@ -90,6 +96,9 @@ paths:
       tags:
         - traveller
       summary: Get traveller information
+      description: |
+        Get information on the traveller with the specified traveller 
+        identifier.
       operationId: getTravellerInformation
       produces:
         - application/json
@@ -113,6 +122,9 @@ paths:
       tags:
         - traveller
       summary: Update traveller information
+      description: |
+        Update traveller information in the traveller account database on the 
+        traveller with the specified traveller identifier.
       operationId: updateTravellerInformation
       consumes:
         - application/json
@@ -140,6 +152,9 @@ paths:
       tags:
         - traveller
       summary: Delete traveller information
+      description: |
+        Delete the traveller with the provided traveller identifier from the 
+        traveller account database.
       operationId: deleteTravellerInformation
       parameters:
         - name: X-BoB-AuthToken
@@ -160,6 +175,9 @@ paths:
       tags:
         - traveller
       summary: Get information on traveller's wallet
+      description: |
+        Retrieve information on the payment means available in the wallet of
+        the traveller with the provided traveller identifier.
       operationId: getTravellerWalletInformation
       produces:
         - application/json
@@ -184,6 +202,10 @@ paths:
       tags:
         - traveller
       summary: Perform transaction on travellers wallet
+      description: |
+        Create a transaction on the specified payment means of the traveller
+        with the specified traveller identifier, optionally first making a
+        reservation of the amount before the transaction is finally committed.
       operationId: postTravellerWalletTransactionRequest
       consumes:
         - application/json
@@ -224,6 +246,10 @@ paths:
       tags:
         - traveller
       summary: Get information on traveller's wallet transaction
+      description: |
+        Retrieve information on a specific transaction with the given
+        transaction identifier made on a wallet tied to the traveller with the
+        given traveller identifier.
       operationId: getTransactionInformation
       produces:
         - application/json
@@ -254,6 +280,11 @@ paths:
       tags:
         - traveller
       summary: Update transaction
+      description: |
+        Commit the specified transaction of the traveller with the
+        specified traveller identifier, which has been previously created as a
+        reservation of an amount, or revert a committed transaction by
+        cancelling it.
       operationId: updateTransactionInformation
       consumes:
         - application/json
@@ -297,6 +328,9 @@ paths:
       tags:
         - traveller
       summary: Post notification to traveller
+      description: |
+        Post a notification to the traveller with the specified traveller 
+        identifier.
       operationId: sendTravellerNotification
       consumes:
         - application/json
@@ -329,6 +363,9 @@ paths:
       tags:
         - traveller
       summary: Get notification sent to traveller
+      description: |
+        Retrieve information on a notification previously posted to the
+        traveller with the specified traveller identifier.
       operationId: getTravellerNotification
       produces:
         - application/json
@@ -358,6 +395,9 @@ paths:
       tags:
         - token
       summary: Get information on products sets tied to token
+      description: |
+        Retrieve information on the set of products which has been tied to a
+        token with the specified token identifier.
       operationId: getTokenProductSetInformation
       produces:
         - application/json
@@ -389,6 +429,9 @@ paths:
       tags:
         - token
       summary: Get challenge to authenticate token
+      description: |
+        Retrieve a challenge to be used as authentication input for verifying
+        prossession of private key of a token.
       operationId: getTokenChallenge
       produces:
         - application/json
@@ -413,6 +456,10 @@ paths:
       tags:
         - token
       summary: Purchase ticket on behalf of traveller
+      description: |
+        Make a purchase of the product with the provided product identifier,
+        from the participant with the given participant identifier, on behalf
+        of the traveller registered as holder of the given token ID.
       operationId: requestTokenTicket
       parameters:
         - name: X-BoB-AuthToken
@@ -445,6 +492,9 @@ paths:
       tags:
         - token
       summary: Get information on wallet tied to token
+      description: |
+        Retrieve information on the payment means in a wallet which has been 
+        tied to a token with the specified token identifier.
       operationId: getTokenWalletInformation
       produces:
         - application/json
@@ -469,6 +519,10 @@ paths:
       tags:
         - token
       summary: Perform transaction on wallet tied to token
+      description: |
+        Create a transaction with the given amount on the wallet tied to the
+        token with the given token identifier, optionally providing information
+        on the desired payment means.
       operationId: postTokenWalletTransactionRequest
       consumes:
         - application/json
@@ -509,6 +563,10 @@ paths:
       tags:
         - token
       summary: Get information on transaction tied to token
+      description: |
+        Retrieve information on a specific transaction with the given
+        transaction identifier made on a wallet tied to the token with the
+        given token identifier.
       operationId: getTokenTransactionInformation
       produces:
         - application/json
@@ -539,6 +597,10 @@ paths:
       tags:
         - token
       summary: Update transaction tied to token
+      description: |
+        Commit the specified transaction of the token with the specified token
+        identifier, which has been previously created as a reservation of an
+        amount, or revert a committed transaction by cancelling it.
       operationId: updateTokenTransactionInformation
       consumes:
         - application/json
@@ -582,6 +644,9 @@ paths:
       tags:
         - mtb
       summary: Get information on product sets in MTB
+      description: |
+        Retrieve information on the product set(s) contained within a specific
+        MTB with the provided Issuer Signature.
       operationId: getMTBProductSetInformation
       produces:
         - application/json
@@ -593,7 +658,7 @@ paths:
           type: string
         - name: issuerSignature
           in: path
-          description: MTB issuer signature
+          description: MTB Issuer Signature
           required: true
           type: string
           format: base64url
@@ -611,6 +676,10 @@ paths:
       tags:
         - mtb
       summary: Activate MTB
+      description: |
+        Activate tickets contained within a MTB with the given Issuer
+        Signature, possibly across multiple participants, by providing the
+        Ticket Identifier of the ticket triggering the activation.
       operationId: activateMTB
       produces:
         - application/json
@@ -646,6 +715,9 @@ paths:
       tags:
         - productSet
       summary: Get information on product set
+      description: |
+        Retrieve information on a Product Set with the given Product Set
+        identifier
       operationId: getProductSetInformation
       produces:
         - application/json
@@ -794,6 +866,10 @@ paths:
       tags:
         - productSet
       summary: Recreate an equivalent product set
+      description: |
+        Recreate an equivalent product set to that of the given product set
+        identifier, with the specified product set options, setting the status
+        to recreated if successful.
       operationId: recreateProductSet
       consumes:
         - application/json
@@ -834,6 +910,10 @@ paths:
       tags:
         - ticketNotification
       summary: Notification on ticket event
+      description: |
+        Post a ticket event notification, instructing the sales channel to
+        update itself on the status of the ticket with the specified ticket
+        identifier.
       operationId: createTicketNotification
       consumes:
         - application/json
