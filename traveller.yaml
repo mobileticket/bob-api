@@ -1646,9 +1646,13 @@ definitions:
 
   activationData:
     type: object
+    required:
+    - pid
+    - ticketId
     properties:
-      activationDateTime:
-        description: Date and time for activation (default NOW)
+      timeOfActivation:
+        description: Date and time for activation (default NOW) as ISO 8601:2004 profile 
+          extended format (MTS8, chapter 2.3)
         type: string
         format: date-time
       pid:
