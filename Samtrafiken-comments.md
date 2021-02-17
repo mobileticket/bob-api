@@ -10,12 +10,6 @@ The comments are unordered and unprioritised.
 4. HTTP status codes should be added. One example is:
    1. 400 Bad Request - in some places, where maybe certain combination of parameters don't work together
 
-## Product API
-
-1. <code>temporalValidity</code>
-   1. Clearer description of <code>absoluteValidity</code> where period is used in description...
-   2. <code>active</code> is not the only parameter that can set a ticket to active. <code>issueMtb</code> is also relevant.
-
 ## Ticket API
 
 2. <code>/definitions/ticketActivationStatus/remainingActivations</code> - should it really be product set?
