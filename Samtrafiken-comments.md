@@ -15,9 +15,6 @@ The comments are unordered and unprioritised.
 1. <code>temporalValidity</code>
    1. Clearer description of <code>absoluteValidity</code> where period is used in description...
    2. <code>active</code> is not the only parameter that can set a ticket to active. <code>issueMtb</code> is also relevant.
-   3. <code>numberOfActivations</code>, dormant is not a state and should probably be removed.
-      1. Maybe the last part "...if issued in dormant (inactive) state" should be removed?
-      2. Don't know if it's possible, but say one issue a ticket in active state, then make it inactive. Then numberOfActivations could tell if it's possible to activate the ticket again.
 
 ## Ticket API
 
