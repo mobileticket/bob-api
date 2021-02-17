@@ -1399,8 +1399,8 @@ definitions:
             "Bike is allowed, no extra fee. Not allowed between 0600-0900 and 1600-1800."
       status:
         $ref: '#/definitions/productSetStatus'
-      timeConstraints:
-        $ref: '#/definitions/timeConstraints'
+      temporalConstraints:
+        $ref: '#/definitions/temporalConstraints'
       spatialConstraints:
         type: array
         items:
@@ -1481,7 +1481,7 @@ definitions:
         items:
           $ref: '#/definitions/productProperty'
 
-  timeConstraints:
+  temporalConstraints:
     description: Bundle time constraints
     type: object
     required:
