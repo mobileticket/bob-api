@@ -9,7 +9,3 @@ The comments are unordered and unprioritised.
 3. All new fields should have example values (in english where applicable).
 4. HTTP status codes should be added. One example is:
    1. 400 Bad Request - in some places, where maybe certain combination of parameters don't work together
-
-## Ticket API
-
-4. <code>ticketUpdateRequest</code>, the text for startOfValidity seems to be copy-pasted from somewhere. There is in essence no manifest here.
