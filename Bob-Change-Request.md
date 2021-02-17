@@ -76,6 +76,8 @@ To use payment means held in a foreign sales system, a similar function to the h
 
 [card-purchase.txt](https://github.com/mobileticket/bob-api/blob/cr2020q1/seq/card-purchase.txt)
 
+To manage different payment means tried to a traveller, the concept of a wallet is introduced. A wallet contains different payment means which can be selected from. The payment means can have different preference, implying there may be a default payment means.
+
 
 ### Registration of preferred payment service provider
 
