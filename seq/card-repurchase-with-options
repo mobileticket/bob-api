@@ -1,0 +1,64 @@
+# https://sequencediagram.org/
+
+title Re-purchase in foreign sales channel via TVM
+
+actor "Traveller" as traveller
+participant "TVM" as foreignSales
+participant "Token Issuer\n(Token API)" as tokenIssuer
+participant "Home Sales Channel\n(Traveller API)" as homeSales
+
+
+traveller->foreignSales: Presents travel card
+
+foreignSales->tokenIssuer: Query for hints\n""GET /api/v1/token/{thumbprint}/hints""
+foreignSales<--tokenIssuer: List of sales channels
+
+loop for each hint
+foreignSales->homeSales: Card query\n""GET /api/v1/token/{tokenId}/productSets""
+foreignSales<--homeSales: Product set info
+end
+
+traveller<--foreignSales: Expired product
+traveller->foreignSales: Selects re-purchase
+
+foreignSales->>homeSales: Recreate product set\n""POST /productSet/{productSetIdentifier}/recreate""
+
+box over homeSales: Home Sales Channel re-iterates the same\nproduct searches as was done to purchase\nthe original product set. 
+
+foreignSales<--homeSales: Product set (recreated status with available options as productProperties)
+
+traveller<--foreignSales: Product Set information (including price and available options)
+
+traveller->foreignSales: Selects options
+
+foreignSales->>homeSales: Recreate product set with productProperties set\n""POST /productSet/{productSetIdentifier}/recreate""
+
+box over homeSales: Home Sales Channel re-iterates the same\nproduct searches as was done to recreate\nthe previous product set, but also sets the\ndesired productProperties.
+
+foreignSales-->>homeSales: Delete the previously recreated product set which will not be used\n""DELETE /productSet/{productSetIdentifier}""
+
+foreignSales<--homeSales: New re-created product set (recreated status with options set as productProperties)
+
+traveller<--foreignSales: Product Set information (including price and set options)
+
+
+
+
+traveller->foreignSales: Purchase product set
+
+alt
+traveller<->foreignSales: Local payment (undefined means)
+traveller<->foreignSales: Payment means registered at\nhome sales channel\n(see flow chart for remote payment)
+
+end 
+
+
+foreignSales->homeSales: Issue product set (set issued status)\n""POST /productSet/{productSetIdentifier}/issue""
+
+box over homeSales: Home Sales Channel calls off the\nmanifests and combines the product set 
+
+foreignSales<--homeSales: Product set (issued status)
+
+tokenIssuer<-homeSales: Provide hint of\n issued product set
+
+traveller<--foreignSales: Purchase completed
