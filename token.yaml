@@ -428,6 +428,10 @@ definitions:
       publicKey:
         $ref: '#/definitions/jwkPublic'
   tokenHints:
+    description: Token hints are used to locate tickets (both valid and
+      expired) which have been tied to a ticket. The hint only contains the 
+      participant identifier of the issuer of the ticket. To find out more
+      details on the ticket(s), the issuer must be queried using the Ticket API. 
     type: array
     items:
       $ref: '#/definitions/hintCompact'
