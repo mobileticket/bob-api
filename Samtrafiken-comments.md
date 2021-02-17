@@ -35,5 +35,4 @@ The comments are unordered and unprioritised.
   
 ## Traveller API
 
-5. Should title and description in object <code>ticket</code> really be "Product title" and "Product description"?
 8. Somewhere describe when a wallet is created? By which system?
