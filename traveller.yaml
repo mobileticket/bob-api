@@ -1453,10 +1453,10 @@ definitions:
       - ticketId
     properties:
       title:
-        description: Product title
+        description: Short description of ticket
         type: string
       description:
-        description: Product description
+        description: Long description of ticket
         type: string
       ticketId:
         description: Ticket Identifier
