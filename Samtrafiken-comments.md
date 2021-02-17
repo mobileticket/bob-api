@@ -13,7 +13,6 @@ The comments are unordered and unprioritised.
 ## Ticket API
 
 4. <code>ticketUpdateRequest</code>, the text for startOfValidity seems to be copy-pasted from somewhere. There is in essence no manifest here.
-6. Somewhere there needs to be a description of which system/function that set suspension status, that later can be retrived from <code>GET /ticket/{ticketId}/suspendedStatus</code>
 
 ## Token API
 
