@@ -1313,12 +1313,30 @@ definitions:
       value:
         description: Product property value
         type: string
+
+  productPropertyDeclaration:
+    description: |
+      Product properties declaration. Contains identifier, type, description
+      and an optional default value.
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        description: Product property name
+        type: string
+      default:
+        description: Product property default value
+        type: string
+      mandatory:
+        description: Product property prerequisite for product
+        type: boolean
       description:
         description: Product property description
         type: string
-      surcharge:
-        description: Product property surcharge
-        $ref: '#/definitions/fare'
+      type:
+        description: Product property type (primitive json types)
+        type: string
       surcharges:
         description: |
           Product property surcharges. Can be several entries when surcharges include product property surcharges, discounts, different
@@ -1480,6 +1498,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/productProperty'
+      availableProductProperties:
+        type: array
+        items:
+          $ref: '#/definitions/productPropertyDeclaration'
 
   temporalConstraints:
     description: Bundle time constraints
