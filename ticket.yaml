@@ -130,8 +130,7 @@ paths:
         - ticket
       summary: Get ticket data and information
       description: |
-        Get data and information about ticket with specified ticket identifier,
-        issued by this server.
+        Get data and information about ticket with specified ticket identifier.
       operationId: getTicket
       produces:
         - application/json
@@ -160,8 +159,7 @@ paths:
         - ticket
       summary: Update ticket information
       description: |
-        Update information about ticket with specified ticket identifier,
-        issued by this server.
+        Update information about ticket with specified ticket identifier.
       operationId: updateTicket
       produces:
         - application/json
@@ -636,7 +634,7 @@ paths:
       summary: Get ticket event
       description: |
         Get ticket event specified with event identifier and ticket identifier.
-        Note! this is the server event identifier and not the local event identfier.
+        Note! This is the server event identifier and not the local event identfier.
       operationId: ticketEvent
       produces:
         - application/json
