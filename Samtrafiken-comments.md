@@ -13,7 +13,3 @@ The comments are unordered and unprioritised.
 ## Ticket API
 
 4. <code>ticketUpdateRequest</code>, the text for startOfValidity seems to be copy-pasted from somewhere. There is in essence no manifest here.
-
-## Traveller API
-
-8. Somewhere describe when a wallet is created? By which system?
