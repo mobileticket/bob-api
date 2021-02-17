@@ -861,8 +861,7 @@ definitions:
         type: string
         example: R/2020-01/P1M
       numberOfActivations:
-        description: Number of times the product can be activated, if issued in dormant
-          (inactive) state
+        description: Number of times the product can be activated.
         type: integer
         format: int64
         example: 1
