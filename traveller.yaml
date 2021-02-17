@@ -1,11 +1,11 @@
 swagger: '2.0'
 info:
-  version: 2.0.0
+  version: 3.0.0
   title: BoB.Traveller.API
   description: |
     The traveller API contains information about travellers including their
     tokens, payment methods and recently bought products.
-basePath: /api/v2
+basePath: /api/v3
 schemes:
   - https
 paths:
