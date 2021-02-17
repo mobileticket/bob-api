@@ -14,10 +14,6 @@ The comments are unordered and unprioritised.
 
 4. <code>ticketUpdateRequest</code>, the text for startOfValidity seems to be copy-pasted from somewhere. There is in essence no manifest here.
 
-## Token API
-
-2. <code>GET /token/{thumbprint}/hint</code> in the end returns hintCompact that only contains the pid, but <code>GET /token/{thumbprint}/hint/{hintId}</code> returns hint that has both pid and expired. Any reason for not returning hint also when getting all hints for a thumbprint?
-  
 ## Traveller API
 
 8. Somewhere describe when a wallet is created? By which system?
