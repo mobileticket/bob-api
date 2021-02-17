@@ -982,7 +982,7 @@ definitions:
         example: 1
       remainingActivations:
         description: |
-          Remaining number of times the product set can be activated
+          Remaining number of times the ticket can be activated
         type: integer
         format: int64
         example: 1
