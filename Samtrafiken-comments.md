@@ -16,9 +16,6 @@ The comments are unordered and unprioritised.
 
 ## Token API
 
-1. hint
-   1. More descriptive info about what a hint is somewhere in the API description
-   2. Could there be another word that better conveys the information that this is a participant?
 2. <code>GET /token/{thumbprint}/hint</code> in the end returns hintCompact that only contains the pid, but <code>GET /token/{thumbprint}/hint/{hintId}</code> returns hint that has both pid and expired. Any reason for not returning hint also when getting all hints for a thumbprint?
   
 ## Traveller API
