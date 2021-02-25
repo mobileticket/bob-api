@@ -1348,7 +1348,7 @@ definitions:
       - productSetId
     properties:
       status:
-        $ref: '#/definitions/productSetStatus'
+        $ref: '#/definitions/productSetStatusUpdate'
 
   productSetStatus:
     description: Product set status
@@ -1361,6 +1361,16 @@ definitions:
       - refunded
       - revoked
       - suspended
+    example: "issued"
+
+  productSetStatusUpdate:
+    description: Product set status (updates)
+    type: string
+    enum:
+      - activated
+      - issued
+      - refunded
+      - revoked
     example: "issued"
 
   ticketBundle:
