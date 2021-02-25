@@ -1085,9 +1085,9 @@ definitions:
       paymentMeans:
         type: array
         items:
-          $ref: '#/definitions/paymentMean'
+          $ref: '#/definitions/paymentMeansItem'
 
-  paymentMean:
+  paymentMeansItem:
     type: object
     properties:
       id:
