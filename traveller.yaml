@@ -1167,6 +1167,9 @@ definitions:
       transactionCancelled:
         description: Set to true to cancel transaction.
         type: boolean
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
 
   purchaseRequest:
     type: object
@@ -1178,18 +1181,6 @@ definitions:
         type: string
       transactionReference:
         description: Requestors transaction reference
-        type: string
-
-  issueRequest:
-    type: object
-    required:
-      - transactionReference
-    properties:
-      transactionReference:
-        description: Requestors transaction reference
-        type: string
-      walletTransactionId:
-        description: Optional wallet transaction identifier
         type: string
 
   tokenChallenge:
