@@ -1221,6 +1221,18 @@ definitions:
       tokenProof:
         $ref: '#/definitions/tokenProof'
 
+  transactionUpdate:
+    type: object
+    required:
+      - action
+    properties:
+      transactionCommitted:
+        description: Set to true to finalise transaction.
+        type: boolean
+      transactionCancelled:
+        description: Set to true to cancel transaction.
+        type: boolean
+
   purchaseRequest:
     type: object
     properties:
@@ -1244,20 +1256,6 @@ definitions:
       walletTransactionId:
         description: Optional wallet transaction identifier
         type: string
-
-  transactionUpdate:
-    type: object
-    required:
-      - action
-    properties:
-      action:
-        description: |
-          commit - to withdraw from the wallet and commit the transaction
-          cancel - to cancel the wallet reservation or withdrawal
-        type: string
-        enum:
-          - commit
-          - cancel
 
   tokenChallenge:
     type: object
