@@ -775,14 +775,12 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
-
-  '/productSet/{productSetId}/issue':
-    post:
+    patch:
       tags:
         - productSet
-      summary: Issue the recreated product set
-      operationId: issueProductSet
-      consumes:
+      summary: Update a recreated product set
+      operationId: updateProductSetInformation
+      produces:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
@@ -795,80 +793,19 @@ paths:
           description: Product set ID
           required: true
           type: string
-        - name: issueRequest
+        - name: productSetInformation
           in: body
-          description: Issue request
+          description: Product set update
           required: true
           schema:
-            $ref: '#/definitions/issueRequest'
+            $ref: '#/definitions/productSetInformationUpdate'
       responses:
-        '200':
+        '201':
           description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
         '401':
           description: Unauthorised
         '403':
-          description: Forbidden, issuance failed
-
-  '/productSet/{productSetId}/refund':
-    post:
-      tags:
-        - productSet
-      summary: Request refund of an issued product set
-      operationId: refundProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, refund failed
-
-  '/productSet/{productSetId}/revoke':
-    post:
-      tags:
-        - productSet
-      summary: Request revocation of an issued product set
-      operationId: revokeProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, revocation failed
-
+          description: Forbidden
 
   '/productSet/{productSetId}/recreate':
     post:
@@ -1403,6 +1340,15 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/spatialConstraint'
+
+  productSetInformationUpdate:
+    description: Product Set Information Update
+    type: object
+    required:
+      - productSetId
+    properties:
+      status:
+        $ref: '#/definitions/productSetStatus'
 
   productSetStatus:
     description: Product set status
