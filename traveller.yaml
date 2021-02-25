@@ -1342,6 +1342,8 @@ definitions:
   productSetInformationUpdate:
     description: Product Set Information Update
     type: object
+    required:
+      - status
     properties:
       status:
         $ref: '#/definitions/productSetStatusUpdate'
