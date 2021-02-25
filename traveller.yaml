@@ -1160,8 +1160,6 @@ definitions:
 
   transactionUpdate:
     type: object
-    required:
-      - action
     properties:
       transactionCommitted:
         description: Set to true to finalise transaction.
