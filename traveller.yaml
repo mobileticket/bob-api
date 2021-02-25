@@ -802,8 +802,6 @@ paths:
         - productSet
       summary: Delete a recreated product set
       operationId: deleteProductSetInformation
-      produces:
-        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
