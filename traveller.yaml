@@ -719,6 +719,52 @@ paths:
           description: Forbidden
         '404':
           description: MTB for issuer signature not found
+
+  '/productSet':
+    post:
+      tags:
+        - productSet
+      summary: Recreate an equivalent product set
+      description: |
+        Recreate an equivalent product set to that of the given product set
+        identifier, with the specified product set options, setting the status
+        to recreated if successful.
+      operationId: recreateProductSet
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetId
+          in: query
+          description: Recreate product set from Product set ID
+          required: true
+          type: string
+        - name: productSetOptions
+          in: body
+          description: Product set options
+          schema:
+            $ref: '#/definitions/productSetOptions'
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+          headers:
+            location:
+              description: URL of recreated product set
+              type: string
+              format: uri
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden, recreation failed
+
   '/productSet/{productSetId}':
     get:
       tags:
@@ -806,51 +852,6 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
-
-  '/productSet/{productSetId}/recreate':
-    post:
-      tags:
-        - productSet
-      summary: Recreate an equivalent product set
-      description: |
-        Recreate an equivalent product set to that of the given product set
-        identifier, with the specified product set options, setting the status
-        to recreated if successful.
-      operationId: recreateProductSet
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-        - name: productSetOptions
-          in: body
-          description: Product set options
-          schema:
-            $ref: '#/definitions/productSetOptions'
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-          headers:
-            location:
-              description: URL of recreated product set
-              type: string
-              format: uri
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, recreation failed
 
   '/ticketNotification':
     post:
