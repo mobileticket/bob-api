@@ -680,6 +680,7 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
+
   '/mtb/{issuerSignature}/activate':
     post:
       tags:
@@ -751,7 +752,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetOptions'
       responses:
-        '200':
+        '201':
           description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
