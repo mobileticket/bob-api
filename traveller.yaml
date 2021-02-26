@@ -825,7 +825,7 @@ paths:
         - productSet
       summary: Update a recreated product set
       operationId: updateProductSetInformation
-      produces:
+      consumes:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
