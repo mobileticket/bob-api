@@ -1329,14 +1329,17 @@ definitions:
           type: string
           example: |
             "Bike is allowed, no extra fee. Not allowed between 0600-0900 and 1600-1800."
-      status:
-        $ref: '#/definitions/productSetStatus'
       temporalConstraints:
         $ref: '#/definitions/temporalConstraints'
       spatialConstraints:
         type: array
         items:
           $ref: '#/definitions/spatialConstraint'
+      status:
+        $ref: '#/definitions/productSetStatus'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
 
   productSetInformationUpdate:
     description: Product Set Information Update
@@ -1346,6 +1349,9 @@ definitions:
     properties:
       status:
         $ref: '#/definitions/productSetStatusUpdate'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
 
   productSetStatus:
     description: Product set status
