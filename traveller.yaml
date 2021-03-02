@@ -311,7 +311,7 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionUpdate'
+            $ref: '#/definitions/transactionInformationUpdate'
       responses:
         '201':
           description: Successful operation
@@ -633,7 +633,7 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionUpdate'
+            $ref: '#/definitions/transactionInformationUpdate'
       responses:
         '201':
           description: Successful operation
@@ -912,6 +912,7 @@ definitions:
         type: string
         format: date-time
         example: '2020-08-28T23:20:50.52Z'
+
   travellerNotification:
     type: object
     required:
@@ -1135,14 +1136,8 @@ definitions:
       paymentMeansId:
         description: Identifier of the payment means to use
         type: string
-      transactionCommitted:
-        description: |
-          Set to false if transaction is a reservation of an amount, true
-          if it has been finalised.
-        type: boolean
-      transactionCancelled:
-        description: Set to true if transaction has been cancelled
-        type: boolean
+      transactionStatus:
+        $ref: '#/definitions/transactionStatus'
       transactionExpire:
         description: Timestamp when a pending transaction expires and can no longer be committed, as
           ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
@@ -1158,18 +1153,31 @@ definitions:
       tokenProof:
         $ref: '#/definitions/tokenProof'
 
-  transactionUpdate:
+  transactionInformationUpdate:
     type: object
     properties:
-      transactionCommitted:
-        description: Set to true to finalise transaction.
-        type: boolean
-      transactionCancelled:
-        description: Set to true to cancel transaction.
-        type: boolean
+      transactionStatus:
+        $ref: '#/definitions/transactionStatusUpdate'
       transactionReference:
         description: Requestors transaction reference
         type: string
+
+  transactionStatus:
+    description: Transaction status
+    type: string
+    enum:
+      - pending
+      - commited
+      - cancelled
+    example: "pending"
+
+  transactionStatusUpdate:
+    description: Transaction status
+    type: string
+    enum:
+      - commited
+      - cancelled
+    example: "commited"
 
   purchaseRequest:
     type: object
