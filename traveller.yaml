@@ -313,7 +313,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformationUpdate'
       responses:
-        '201':
+        '200':
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
@@ -635,7 +635,7 @@ paths:
           schema:
             $ref: '#/definitions/transactionInformationUpdate'
       responses:
-        '201':
+        '200':
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
@@ -845,7 +845,7 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformationUpdate'
       responses:
-        '200':
+        '204':
           description: Successful operation
         '401':
           description: Unauthorised
