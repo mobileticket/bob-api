@@ -1064,22 +1064,22 @@ definitions:
         type: number
         example: 200
       depositAllowed:
-        description: True if deposit (negative transactionAmount) is allowed, otherwise false
+        description: True if deposit (negative amount) is allowed, otherwise false
         type: boolean
 
   walletTransactionRequest:
     type: object
     required:
       - transactionReference
-      - transactionAmount
+      - amount
     properties:
       transactionReference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
         example: 120
@@ -1106,37 +1106,37 @@ definitions:
   transactionInformation:
     type: object
     required:
-      - transactionId
+      - id
       - transactionReference
-      - transactionAmount
+      - amount
     properties:
-      transactionId:
+      id:
         description: The transaction identifier
         type: string
       transactionReference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
-      transactionCurrency:
+      currency:
         description: Currency code (ISO 4217)
         type: string
       paymentMeansId:
         description: Identifier of the payment means to use
         type: string
-      transactionStatus:
+      status:
         $ref: '#/definitions/transactionStatus'
-      transactionExpire:
+      expire:
         description: Timestamp when a pending transaction expires and can no longer be committed, as
           ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
-      transactionCancellableExpire:
+      cancellableExpire:
         description: Timestamp when a comitted transaction can no longer be cancelled, as
           ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
@@ -1148,7 +1148,7 @@ definitions:
   transactionInformationUpdate:
     type: object
     properties:
-      transactionStatus:
+      status:
         $ref: '#/definitions/transactionStatusUpdate'
       transactionReference:
         description: Requestors transaction reference
