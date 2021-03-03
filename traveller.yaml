@@ -845,8 +845,10 @@ paths:
           schema:
             $ref: '#/definitions/productSetInformationUpdate'
       responses:
-        '204':
+        '200':
           description: Successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
         '401':
           description: Unauthorised
         '403':
