@@ -70,6 +70,8 @@ paths:
       operationId: createTravellerInformation
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -210,6 +212,8 @@ paths:
       operationId: postTravellerWalletTransactionRequest
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -289,6 +293,8 @@ paths:
         cancelling it.
       operationId: updateTransactionInformation
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
@@ -460,6 +466,8 @@ paths:
         from the participant with the given participant identifier, on behalf
         of the traveller registered as holder of the given token ID.
       operationId: requestTokenTicket
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -527,6 +535,8 @@ paths:
         on the desired payment means.
       operationId: postTokenWalletTransactionRequest
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
@@ -607,6 +617,8 @@ paths:
       operationId: updateTokenTransactionInformation
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -681,6 +693,8 @@ paths:
         Signature, possibly across multiple participants, by providing the
         Ticket Identifier of the ticket triggering the activation.
       operationId: activateMTB
+      consumes:
+        - application/json
       produces:
         - application/json
       parameters:
@@ -816,6 +830,8 @@ paths:
       summary: Update a recreated product set
       operationId: updateProductSetInformation
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
