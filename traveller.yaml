@@ -70,6 +70,8 @@ paths:
       operationId: createTravellerInformation
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -210,6 +212,8 @@ paths:
       operationId: postTravellerWalletTransactionRequest
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -290,6 +294,8 @@ paths:
       operationId: updateTransactionInformation
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -311,17 +317,12 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionUpdate'
+            $ref: '#/definitions/transactionInformationUpdate'
       responses:
-        '201':
+        '200':
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-          headers:
-            location:
-              description: URL of the updated transaction
-              type: string
-              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -465,6 +466,8 @@ paths:
         from the participant with the given participant identifier, on behalf
         of the traveller registered as holder of the given token ID.
       operationId: requestTokenTicket
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -532,6 +535,8 @@ paths:
         on the desired payment means.
       operationId: postTokenWalletTransactionRequest
       consumes:
+        - application/json
+      produces:
         - application/json
       parameters:
         - name: X-BoB-AuthToken
@@ -612,6 +617,8 @@ paths:
       operationId: updateTokenTransactionInformation
       consumes:
         - application/json
+      produces:
+        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -633,17 +640,12 @@ paths:
           description: Transaction object
           required: true
           schema:
-            $ref: '#/definitions/transactionUpdate'
+            $ref: '#/definitions/transactionInformationUpdate'
       responses:
-        '201':
+        '200':
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-          headers:
-            location:
-              description: URL of the updated transaction
-              type: string
-              format: uri
         '401':
           description: Unauthorised
         '403':
@@ -680,6 +682,7 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
+
   '/mtb/{issuerSignature}/activate':
     post:
       tags:
@@ -690,6 +693,8 @@ paths:
         Signature, possibly across multiple participants, by providing the
         Ticket Identifier of the ticket triggering the activation.
       operationId: activateMTB
+      consumes:
+        - application/json
       produces:
         - application/json
       parameters:
@@ -719,6 +724,52 @@ paths:
           description: Forbidden
         '404':
           description: MTB for issuer signature not found
+
+  '/productSet':
+    post:
+      tags:
+        - productSet
+      summary: Recreate an equivalent product set
+      description: |
+        Recreate an equivalent product set to that of the given product set
+        identifier, with the specified product set options, setting the status
+        to recreated if successful.
+      operationId: recreateProductSet
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: X-BoB-AuthToken
+          in: header
+          description: JWT authentication token
+          required: true
+          type: string
+        - name: productSetId
+          in: query
+          description: Recreate product set from Product set ID
+          required: true
+          type: string
+        - name: productSetOptions
+          in: body
+          description: Product set options
+          schema:
+            $ref: '#/definitions/productSetOptions'
+      responses:
+        '201':
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/productSetInformation'
+          headers:
+            location:
+              description: URL of recreated product set
+              type: string
+              format: uri
+        '401':
+          description: Unauthorised
+        '403':
+          description: Forbidden, recreation failed
+
   '/productSet/{productSetId}':
     get:
       tags:
@@ -755,8 +806,6 @@ paths:
         - productSet
       summary: Delete a recreated product set
       operationId: deleteProductSetInformation
-      produces:
-        - application/json
       parameters:
         - name: X-BoB-AuthToken
           in: header
@@ -775,111 +824,11 @@ paths:
           description: Unauthorised
         '403':
           description: Forbidden
-
-  '/productSet/{productSetId}/issue':
-    post:
+    patch:
       tags:
         - productSet
-      summary: Issue the recreated product set
-      operationId: issueProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-        - name: issueRequest
-          in: body
-          description: Issue request
-          required: true
-          schema:
-            $ref: '#/definitions/issueRequest'
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, issuance failed
-
-  '/productSet/{productSetId}/refund':
-    post:
-      tags:
-        - productSet
-      summary: Request refund of an issued product set
-      operationId: refundProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, refund failed
-
-  '/productSet/{productSetId}/revoke':
-    post:
-      tags:
-        - productSet
-      summary: Request revocation of an issued product set
-      operationId: revokeProductSet
-      consumes:
-        - application/json
-      parameters:
-        - name: X-BoB-AuthToken
-          in: header
-          description: JWT authentication token
-          required: true
-          type: string
-        - name: productSetId
-          in: path
-          description: Product set ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Successful operation
-          schema:
-            $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden, revocation failed
-
-
-  '/productSet/{productSetId}/recreate':
-    post:
-      tags:
-        - productSet
-      summary: Recreate an equivalent product set
-      description: |
-        Recreate an equivalent product set to that of the given product set
-        identifier, with the specified product set options, setting the status
-        to recreated if successful.
-      operationId: recreateProductSet
+      summary: Update a recreated product set
+      operationId: updateProductSetInformation
       consumes:
         - application/json
       produces:
@@ -895,25 +844,21 @@ paths:
           description: Product set ID
           required: true
           type: string
-        - name: productSetOptions
+        - name: productSetInformation
           in: body
-          description: Product set options
+          description: Product set update
+          required: true
           schema:
-            $ref: '#/definitions/productSetOptions'
+            $ref: '#/definitions/productSetInformationUpdate'
       responses:
         '200':
           description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
-          headers:
-            location:
-              description: URL of recreated product set
-              type: string
-              format: uri
         '401':
           description: Unauthorised
         '403':
-          description: Forbidden, recreation failed
+          description: Forbidden
 
   '/ticketNotification':
     post:
@@ -975,6 +920,7 @@ definitions:
         type: string
         format: date-time
         example: '2020-08-28T23:20:50.52Z'
+
   travellerNotification:
     type: object
     required:
@@ -1134,22 +1080,22 @@ definitions:
         type: number
         example: 200
       depositAllowed:
-        description: True if deposit (negative transactionAmount) is allowed, otherwise false
+        description: True if deposit (negative amount) is allowed, otherwise false
         type: boolean
 
   walletTransactionRequest:
     type: object
     required:
       - transactionReference
-      - transactionAmount
+      - amount
     properties:
       transactionReference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
         example: 120
@@ -1176,43 +1122,37 @@ definitions:
   transactionInformation:
     type: object
     required:
-      - transactionId
+      - id
       - transactionReference
-      - transactionAmount
+      - amount
     properties:
-      transactionId:
+      id:
         description: The transaction identifier
         type: string
       transactionReference:
         description: Requestors transaction reference
         type: string
-      transactionDescription:
+      description:
         description: User-distinguishable description of the transaction
         type: string
-      transactionAmount:
+      amount:
         description: Total amount of the transaction (can be negative)
         type: number
-      transactionCurrency:
+      currency:
         description: Currency code (ISO 4217)
         type: string
       paymentMeansId:
         description: Identifier of the payment means to use
         type: string
-      transactionCommitted:
-        description: |
-          Set to false if transaction is a reservation of an amount, true
-          if it has been finalised.
-        type: boolean
-      transactionCancelled:
-        description: Set to true if transaction has been cancelled
-        type: boolean
-      transactionExpire:
+      status:
+        $ref: '#/definitions/transactionStatus'
+      expire:
         description: Timestamp when a pending transaction expires and can no longer be committed, as
           ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
         format: date-time
         example: "2018-11-13T20:20:39+00:00"
-      transactionCancellableExpire:
+      cancellableExpire:
         description: Timestamp when a comitted transaction can no longer be cancelled, as
           ISO 8601:2004 profile extended format (MTS8, chapter 2.3).
         type: string
@@ -1220,6 +1160,32 @@ definitions:
         example: '2018-11-13T20:20:39+00:00'
       tokenProof:
         $ref: '#/definitions/tokenProof'
+
+  transactionInformationUpdate:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/transactionStatusUpdate'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
+
+  transactionStatus:
+    description: Transaction status
+    type: string
+    enum:
+      - pending
+      - commited
+      - cancelled
+    example: "pending"
+
+  transactionStatusUpdate:
+    description: Transaction status
+    type: string
+    enum:
+      - commited
+      - cancelled
+    example: "commited"
 
   purchaseRequest:
     type: object
@@ -1232,32 +1198,6 @@ definitions:
       transactionReference:
         description: Requestors transaction reference
         type: string
-
-  issueRequest:
-    type: object
-    required:
-      - transactionReference
-    properties:
-      transactionReference:
-        description: Requestors transaction reference
-        type: string
-      walletTransactionId:
-        description: Optional wallet transaction identifier
-        type: string
-
-  transactionUpdate:
-    type: object
-    required:
-      - action
-    properties:
-      action:
-        description: |
-          commit - to withdraw from the wallet and commit the transaction
-          cancel - to cancel the wallet reservation or withdrawal
-        type: string
-        enum:
-          - commit
-          - cancel
 
   tokenChallenge:
     type: object
@@ -1415,14 +1355,29 @@ definitions:
           type: string
           example: |
             "Bike is allowed, no extra fee. Not allowed between 0600-0900 and 1600-1800."
-      status:
-        $ref: '#/definitions/productSetStatus'
       temporalConstraints:
         $ref: '#/definitions/temporalConstraints'
       spatialConstraints:
         type: array
         items:
           $ref: '#/definitions/spatialConstraint'
+      status:
+        $ref: '#/definitions/productSetStatus'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
+
+  productSetInformationUpdate:
+    description: Product Set Information Update
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        $ref: '#/definitions/productSetStatusUpdate'
+      transactionReference:
+        description: Requestors transaction reference
+        type: string
 
   productSetStatus:
     description: Product set status
@@ -1435,6 +1390,16 @@ definitions:
       - refunded
       - revoked
       - suspended
+    example: "issued"
+
+  productSetStatusUpdate:
+    description: Product set status (updates)
+    type: string
+    enum:
+      - activated
+      - issued
+      - refunded
+      - revoked
     example: "issued"
 
   ticketBundle:
