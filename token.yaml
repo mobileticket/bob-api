@@ -366,7 +366,6 @@ definitions:
     description: Public JSON Web Key (RFC 7517)
     required:
       - kty
-      - kid
     properties:
       kty:
         description: JWA key type
