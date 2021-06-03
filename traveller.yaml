@@ -27,7 +27,7 @@ paths:
           required: true
           type: string
         - name: name
-          description: Filter on name (exact)
+          description: Filter on name
           in: query
           required: false
           type: string
@@ -51,7 +51,7 @@ paths:
         - name: tokenId
           in: query
           description: Filter on token ID
-          required: False
+          required: false
           type: string
       responses:
         '200':
@@ -65,8 +65,7 @@ paths:
         - traveller
       summary: Create traveller
       description: |
-        Create a new entry in the traveller account database with the specified
-        traveller information. 
+        Create a new traveller with the specified information.
       operationId: createTravellerInformation
       consumes:
         - application/json
@@ -113,7 +112,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
       responses:
@@ -126,8 +125,8 @@ paths:
         - traveller
       summary: Update traveller information
       description: |
-        Update traveller information in the traveller account database on the 
-        traveller with the specified traveller identifier.
+        Update traveller information for traveller with the specified traveller
+        identifier.
       operationId: updateTravellerInformation
       consumes:
         - application/json
@@ -139,7 +138,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: travellerInformation
@@ -156,8 +155,7 @@ paths:
         - traveller
       summary: Delete traveller information
       description: |
-        Delete the traveller with the provided traveller identifier from the 
-        traveller account database.
+        Delete the traveller with the provided traveller identifier.
       operationId: deleteTravellerInformation
       parameters:
         - name: X-BoB-AuthToken
@@ -167,7 +165,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
       responses:
@@ -192,7 +190,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
       responses:
@@ -204,7 +202,7 @@ paths:
     post:
       tags:
         - traveller
-      summary: Perform transaction on travellers wallet
+      summary: Perform transaction on traveller's wallet
       description: |
         Create a transaction on the specified payment means of the traveller
         with the specified traveller identifier, optionally first making a
@@ -222,7 +220,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: walletTransaction
@@ -241,8 +239,6 @@ paths:
               description: URL of the created transaction
               type: string
               format: uri
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
         '409':
@@ -267,7 +263,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: transactionId
@@ -280,8 +276,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-        '401':
-          description: Unauthorised
     patch:
       tags:
         - traveller
@@ -304,7 +298,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: transactionId
@@ -323,8 +317,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
   '/traveller/{travellerId}/notification':
@@ -346,7 +338,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: travellerNotification
@@ -382,7 +374,7 @@ paths:
           type: string
         - name: travellerId
           in: path
-          description: Travellers ID
+          description: Traveller's ID
           required: true
           type: string
         - name: notificationId
@@ -436,7 +428,7 @@ paths:
       summary: Get challenge to authenticate token
       description: |
         Retrieve a challenge to be used as authentication input for verifying
-        prossession of private key of a token.
+        possession of private key of a token.
       operationId: getTokenChallenge
       produces:
         - application/json
@@ -565,8 +557,6 @@ paths:
               description: URL of the created transaction
               type: string
               format: uri
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
         '409':
@@ -604,8 +594,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-        '401':
-          description: Unauthorised
     patch:
       tags:
         - token
@@ -646,8 +634,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/transactionInformation'
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, transaction denied
   '/mtb/{issuerSignature}/productSets':
@@ -678,10 +664,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/productSets'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
 
   '/mtb/{issuerSignature}/activate':
     post:
@@ -718,10 +700,6 @@ paths:
       responses:
         '204':
           description: Successful operation
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
         '404':
           description: MTB for issuer signature not found
 
@@ -765,8 +743,6 @@ paths:
               description: URL of recreated product set
               type: string
               format: uri
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, recreation failed
 
@@ -776,7 +752,7 @@ paths:
         - productSet
       summary: Get information on product set
       description: |
-        Retrieve information on a Product Set with the given Product Set
+        Retrieve information on a Product Set with the given product set
         identifier
       operationId: getProductSetInformation
       produces:
@@ -797,10 +773,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
     delete:
       tags:
         - productSet
@@ -820,10 +792,6 @@ paths:
       responses:
         '204':
           description: Product set deleted
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
     patch:
       tags:
         - productSet
@@ -855,10 +823,6 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/productSetInformation'
-        '401':
-          description: Unauthorised
-        '403':
-          description: Forbidden
 
   '/ticketNotification':
     post:
@@ -886,8 +850,6 @@ paths:
       responses:
         '201':
           description: Created ok
-        '401':
-          description: Unauthorised
         '403':
           description: Forbidden, creation of ticket event notification failed
 
@@ -1070,7 +1032,8 @@ definitions:
       limit:
         description: Transaction limit if used without PIN
         type: number
-        example: 200
+        format: float
+        example: 200.0
       tokenProofRequired:
         description: True if token proof is required for all transactions
         type: boolean
@@ -1078,7 +1041,8 @@ definitions:
       balance:
         description: Current balance (if available)
         type: number
-        example: 200
+        format: float
+        example: 200.0
       depositAllowed:
         description: True if deposit (negative amount) is allowed, otherwise false
         type: boolean
@@ -1090,7 +1054,7 @@ definitions:
       - amount
     properties:
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
       description:
         description: User-distinguishable description of the transaction
@@ -1098,7 +1062,8 @@ definitions:
       amount:
         description: Total amount of the transaction (can be negative)
         type: number
-        example: 120
+        format: float
+        example: 120.0
       paymentMeansId:
         description: |
           Identifier of the payment means to use. If no paymentMeansId is
@@ -1130,7 +1095,7 @@ definitions:
         description: The transaction identifier
         type: string
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
       description:
         description: User-distinguishable description of the transaction
@@ -1138,6 +1103,7 @@ definitions:
       amount:
         description: Total amount of the transaction (can be negative)
         type: number
+        format: float
       currency:
         description: Currency code (ISO 4217)
         type: string
@@ -1167,7 +1133,7 @@ definitions:
       status:
         $ref: '#/definitions/transactionStatusUpdate'
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
 
   transactionStatus:
@@ -1196,7 +1162,7 @@ definitions:
         description: Product ID to purchase
         type: string
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
 
   tokenChallenge:
@@ -1285,6 +1251,28 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/fare'
+      group:
+        description: Product property group. Used for grouping properties together.
+        type: string
+      values:
+        description: List of possible values, with description and optional surcharges.
+        type: array
+        items:
+          type: object
+          required:
+            - value
+            - description
+          properties:
+            value:
+              type: string
+              description: Product property value
+            description:
+              type: string
+              description: Description of the product property value
+            surcharges:
+              type: array
+              items:
+                $ref: '#/definitions/fare'
 
   travellersPerCategory:
     description: Information about all travellers
@@ -1364,7 +1352,7 @@ definitions:
       status:
         $ref: '#/definitions/productSetStatus'
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
 
   productSetInformationUpdate:
@@ -1376,7 +1364,7 @@ definitions:
       status:
         $ref: '#/definitions/productSetStatusUpdate'
       transactionReference:
-        description: Requestors transaction reference
+        description: Requestor's transaction reference
         type: string
 
   productSetStatus:
@@ -1520,6 +1508,21 @@ definitions:
         type: integer
         format: int64
         example: 1
+      activationPeriod:
+        description: |
+          Period in which the product may be activated. For single activation
+          products this is the same as the relativeValidity and for multi
+          activation products this is the period in which all activations need
+          to be done. The activation period starts at startOfValidity and is
+          given in ISO 8601:2004 duration format (MTS8, chapter 2.4).
+        type: string
+        example: "P60D"
+      suspensionExpire:
+        description: |
+          If the product set is suspended, time when the suspension expires.
+        type: string
+        format: date-time
+        example: "2021-06-14T22:00:00+02:00"
       other:
         description: Other time constraints (text)
         type: array
